@@ -3,7 +3,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 module.exports = {
   mode: process.env.NODE_ENV || 'production',
   entry: {
-    main: './main.js'
+    main: './src/main.js'
   },
   target: 'web',
   output: {
