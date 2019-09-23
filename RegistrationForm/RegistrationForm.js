@@ -5,14 +5,16 @@ export default Vue.extend({
   data() {
     return {
       firstName: '',
-      lastName: ''
+      lastName: '',
+      gender: ''
     }
   },
   methods: {
     submit() {
-      console.log(this.firstName, this.lastName);
+      console.log(this.firstName, this.lastName, this.gender);
       this.firstName = '';
       this.lastName = '';
+      this.gender = '';
     }
   }
 })
