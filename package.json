@@ -1,0 +1,22 @@
+{
+  "name": "himmah",
+  "version": "1.0.0",
+  "description": "Himmah Administration App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YoussefOuirini/Himmah.git"
+  },
+  "keywords": [
+    "Himmah"
+  ],
+  "author": "Youssef Ouirini",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/YoussefOuirini/Himmah/issues"
+  },
+  "homepage": "https://github.com/YoussefOuirini/Himmah#readme"
+}
