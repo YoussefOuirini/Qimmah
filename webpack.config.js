@@ -1,3 +1,5 @@
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 module.exports = {
   mode: process.env.NODE_ENV || 'production',
   entry: {
@@ -7,5 +9,16 @@ module.exports = {
   output: {
     path: `${process.cwd()}/dist`,
     filename: '[name].js'
-  }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      }
+    ]
+  },
+  plugins: [
+    new VueLoaderPlugin()
+  ]
 };
