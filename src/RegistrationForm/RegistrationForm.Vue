@@ -25,6 +25,31 @@
     </div>
 
     <div>
+      <h2>Adres (straatnaam en huisnummer)</h2>
+      <input type="text" v-model="adress" />
+    </div>
+
+    <div>
+      <h2>Postcode</h2>
+      <input type="text" v-model="zipCode" />
+    </div>
+
+    <div>
+      <h2>Woonplaats</h2>
+      <input type="text" v-model="city" />
+    </div>
+
+    <div>
+      <h2>Email adres</h2>
+      <input type="text" v-model="email" />
+    </div>
+
+    <div>
+      <h2>Telefoonnummer</h2>
+      <input type="text" v-model="phoneNumber" />
+    </div>
+
+    <div>
       <h2>Submit</h2>
       <input type="submit" value="Submit" v-on:click="submit" />
     </div>

@@ -7,7 +7,12 @@ export default Vue.extend({
       firstName: '',
       lastName: '',
       gender: '',
-      birthDate: ''
+      birthDate: '',
+      adress: '',
+      zipCode: '',
+      city: '',
+      email: '',
+      phoneNumber: ''
     }
   },
   methods: {
