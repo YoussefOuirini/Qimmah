@@ -19,6 +19,11 @@
       <label for="Female">Female</label>
       <br>
     </div>
+
+    <div>
+      <input type="date" v-model="birthDate" />
+    </div>
+
     <div>
       <h2>Submit</h2>
       <input type="submit" value="Submit" v-on:click="submit" />
