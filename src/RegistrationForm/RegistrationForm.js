@@ -12,7 +12,8 @@ export default Vue.extend({
       zipCode: '',
       city: '',
       email: '',
-      phoneNumber: ''
+      phoneNumber: '',
+      arabic: ''
     }
   },
   methods: {
