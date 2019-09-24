@@ -25,7 +25,18 @@
     </div>
 
     <div v-if="underage">
-      <h2> Je hebt toestemming nodig van jouw ouders.</h2>
+      <div>
+        <h2>Voornaam ouder/verzorger</h2>
+        <input type="text" v-model="parent.firstName" />
+      </div>
+      <div>
+        <h2>Achternaam ouder/verzorger</h2>
+        <input type="text" v-model="parent.lastName" />
+      </div>
+      <div>
+        <h2>Email ouder/verzorger</h2>
+        <input type="text" v-model="parent.email" />
+      </div>
     </div>
 
     <div>

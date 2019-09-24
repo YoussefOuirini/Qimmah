@@ -15,7 +15,8 @@ export default Vue.extend({
       city: '',
       email: '',
       phoneNumber: '',
-      arabic: ''
+      arabic: '',
+      parent: {}
     }
   },
   methods: {
@@ -23,9 +24,10 @@ export default Vue.extend({
       const birthDateTimeStamp = new Date(this.birthDate).getTime();
       const ageLimitTimeStamp = this.getAgeLimitTimeStamp()
       if (birthDateTimeStamp > ageLimitTimeStamp) {
-        this.underage = true
+        this.underage = true;
       } else {
-        this.underage = false
+        this.underage = false;
+        this.parent = {};
       }
     },
     getAgeLimitTimeStamp() {
