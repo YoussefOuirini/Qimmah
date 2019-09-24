@@ -19,6 +19,21 @@ export default Vue.extend({
       parent: {}
     }
   },
+  computed: {
+    completedForm() {
+      if (this.underage) {
+        return this.completedParentForm && this.completedBasicForm;
+      } else {
+        return this.completedBasicForm;
+      }
+    },
+    completedBasicForm() {
+      return this.firstName && this.lastName && this.gender && this.birthDate && this.adress && this.zipCode && this.city && this.email && this.phoneNumber && this.arabic
+    },
+    completedParentForm() {
+      return this.parent.firstName && this.parent.lastName && this.parent.email
+    }
+  },
   methods: {
     checkAge() {
       const birthDateTimeStamp = new Date(this.birthDate).getTime();

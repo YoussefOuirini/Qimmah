@@ -75,13 +75,16 @@
         <br>
       </div>
 
-      <div v-if="arabic==='yes'">
+      <div v-if="arabic==='yes' && completedForm">
         <h2>Inschrijving indienen</h2>
         <input type="submit" value="Submit" v-on:click="submit" />
       </div>
       <div v-else-if="arabic ==='no'">
         <h4>Om mee te doen met Dar al-Qoran is het van belang om de arabisch taal machtig te zijn</h4>
         <h4>U kunt zich inschrijven voor de cursussen arabisch om eerst arabisch te leren. Daarna kunt u zich inschrijven.</h4>
+      </div>
+      <div v-else-if="!completedForm">
+        <h4>Vul alle gegevens correct in.</h4>
       </div>
     </form>
   </div>
