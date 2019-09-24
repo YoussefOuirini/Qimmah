@@ -1,4 +1,5 @@
 import Vue from "vue";
+import { config } from "../config";
 
 export default Vue.extend({
   name: "RegistrationForm",
@@ -8,6 +9,7 @@ export default Vue.extend({
       lastName: '',
       gender: '',
       birthDate: '',
+      underage: false,
       adress: '',
       zipCode: '',
       city: '',
@@ -17,6 +19,21 @@ export default Vue.extend({
     }
   },
   methods: {
+    checkAge() {
+      const birthDateTimeStamp = new Date(this.birthDate).getTime();
+      const ageLimitTimeStamp = this.getAgeLimitTimeStamp()
+      if (birthDateTimeStamp > ageLimitTimeStamp) {
+        this.underage = true
+      } else {
+        this.underage = false
+      }
+    },
+    getAgeLimitTimeStamp() {
+      const date = new Date();
+      date.setFullYear(date.getFullYear() - config.ageOfConsent)
+      const ageLimitTimeStamp = date.getTime();
+      return ageLimitTimeStamp
+    },
     submit() {
       alert(`U bent ingeschreven met de volgende informatie: ${this.firstName} ${this.lastName}.`);
     }

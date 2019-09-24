@@ -21,7 +21,11 @@
     </div>
 
     <div>
-      <input type="date" v-model="birthDate" />
+      <input type="date" v-model="birthDate" v-on:input="checkAge"/>
+    </div>
+
+    <div v-if="underage">
+      <h2> Je hebt toestemming nodig van jouw ouders.</h2>
     </div>
 
     <div>
@@ -65,7 +69,7 @@
     </div>
     <div v-else-if="arabic ==='no'">
       <h3>Om mee te doen met Dar al-Qoran is het van belang om de arabisch taal machtig te zijn</h3>
-      <h3>U kunt zich inschrijven voor de cursussen arabisch </h3>
+      <h3>U kunt zich inschrijven voor de cursussen arabisch om eerst arabisch te leren. Daarna kunt u zich inschrijven.</h3>
     </div>
 
   </div>
