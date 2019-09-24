@@ -17,7 +17,7 @@ export default Vue.extend({
   },
   methods: {
     submit() {
-      alert(`U bent ingeschreven met de volgende informatie: ${this.firstName} ${this.lastName} ${this.gender} ${this.birthDate}`);
+      alert(`U bent ingeschreven met de volgende informatie: ${this.firstName} ${this.lastName}.`);
     }
   }
 })
