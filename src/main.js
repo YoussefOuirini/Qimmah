@@ -1,6 +1,6 @@
 import Vue from "vue";
-import RegistrationForm from "./RegistrationForm/RegistrationForm.vue";
+import App from "./App.vue";
 
 new Vue({
-  render: h => h(RegistrationForm)
-}).$mount("#content");
+  render: h => h(App)
+}).$mount("#app");
