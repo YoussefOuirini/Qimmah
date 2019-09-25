@@ -9,7 +9,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "postinstall": "npm run build",
-    "start": "node server.js"
+    "start": "node server.js",
+    "poststart": "npm prune --production"
   },
   "repository": {
     "type": "git",
