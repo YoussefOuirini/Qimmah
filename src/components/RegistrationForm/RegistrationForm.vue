@@ -52,6 +52,7 @@
       <b-form-group
         id="input-group-4"
         label="Geslacht"
+        label-for="input-4"
       ><b-form-radio v-model="gender" name="gender" value="male">Man</b-form-radio>
         <b-form-radio v-model="gender" name="gender" value="female">Vrouw</b-form-radio>
       </b-form-group>
@@ -66,9 +67,22 @@
         <br>
       </div> -->
 
-      <div>
+      <!-- <div>
         <input type="date" required v-model="birthDate" v-on:input="checkAge"/>
-      </div>
+      </div> -->
+
+      <b-form-group
+        id="input-group-5"
+        label="Geboortedatum"
+        label-for="input-5"
+      ><b-form-input
+          id="input-5"
+          type= "date"
+          v-model="birthDate"
+          required
+          v-on:input="checkAge"
+        ></b-form-input>
+      </b-form-group>
 
       <div v-if="underage">
         <div>
