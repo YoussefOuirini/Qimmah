@@ -64,18 +64,17 @@
               id="input-6"
               v-model="parent.firstName"
               required
-              placeholder="Voornaam ouder/verzorger"
+              placeholder="Voornaam"
             ></b-form-input>
             <br>
             <b-form-input
               id="input-7"
               v-model="parent.lastName"
               required
-              placeholder="Achternaam ouder/verzorger"
+              placeholder="Achternaam"
             ></b-form-input>
           </b-form-group>
         </b-col>
-
         <b-card bg-variant="light">
           <b-form-group
             label-cols-lg="3"
