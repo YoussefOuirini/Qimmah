@@ -131,16 +131,15 @@
             </b-form-group>
           </b-form-group>
         </b-card>
-
-        <div>
-          <h2>Ik kan goed arabisch lezen en schrijven</h2>
-          <input type="radio" id="arabic" name="arabic" required value="yes" v-model="arabic">
-          <label for="Yes">Ja</label>
-          <br>
-          <input type="radio" id="arabic" name="arabic" value="no" v-model="arabic">
-          <label for="No">No</label>
-          <br>
-        </div>
+      </b-row>
+      <b-row>
+        <b-form-group
+          id="input-group-10"
+          label="Ik kan goed arabisch lezen en schrijven"
+          label-for="input-10"
+        ><b-form-radio v-model="arabic" name="arabic" value="yes">Ja</b-form-radio>
+          <b-form-radio v-model="arabic" name="arabic" value="no">Nee</b-form-radio>
+        </b-form-group>
         <div v-if="arabic==='yes' && completedForm">
           <b-button type="submit" variant="primary">Inschrijving indienen</b-button>
         </div>
