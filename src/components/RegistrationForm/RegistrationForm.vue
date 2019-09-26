@@ -68,10 +68,6 @@
           <h2>Achternaam ouder/verzorger</h2>
           <input type="text" required re v-model="parent.lastName" />
         </div>
-        <div>
-          <h2>Email ouder/verzorger</h2>
-          <input type="text" required v-model="parent.email" />
-        </div>
       </div>
 
       <div>
