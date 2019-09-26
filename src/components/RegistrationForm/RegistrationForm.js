@@ -31,12 +31,12 @@ export default Vue.extend({
         return this.completedBasicForm;
       }
     },
-    filledInAdress() {
+    filledInAddress() {
       const {streetname, houseNumber, zipCode, city} = this.address
       return streetname && houseNumber && zipCode &&city
     },
     completedBasicForm() {
-      return this.firstName && this.lastName && this.gender && this.birthDate && this.filledInAdress() && this.email && this.phoneNumber && this.arabic
+      return this.firstName && this.lastName && this.gender && this.birthDate && this.filledInAddress && this.email && this.phoneNumber && this.arabic
     },
     completedParentForm() {
       return this.parent.firstName && this.parent.lastName && this.parent.email
