@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container v-if="education=='qoraan'">
     <br>
     <b-row><h1 style="font-style:italic">Inschrijfformulier Dar al-Qoraan Al-Himmah</h1></b-row>
     <b-row><h2> Gegevens deelnemer </h2></b-row>
@@ -154,6 +154,21 @@
         </div>
       </b-row>
     </b-form>
+  </b-container>
+  <b-container v-else-if="!education">
+    <br>
+    <div>
+      <b-form-select v-model="education" class="mb-3">
+        <option :value="null">Kies waarvoor u zich wilt inschrijven</option>
+        <option value="qoraan">Dar al-Qoraan</option>
+        <option value="basisonderwijs">Basisonderwijs</option>
+        <option value="arabisch">Arabisch voor volwassenen</option>
+      </b-form-select>
+    </div>
+  </b-container>
+  <b-container v-else-if="education== 'basisonderwijs'||'arabisch'">
+    <br>
+    Wello {{education}} habbibi
   </b-container>
 </template>
 <script>

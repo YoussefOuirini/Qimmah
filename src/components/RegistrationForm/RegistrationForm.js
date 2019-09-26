@@ -19,7 +19,8 @@ export default Vue.extend({
       email: '',
       phoneNumber: '',
       arabic: '',
-      parent: {}
+      parent: {},
+      education: null
     }
   },
   computed: {
