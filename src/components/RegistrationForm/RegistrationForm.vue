@@ -4,74 +4,78 @@
     <h2> Gegevens deelnemer </h2>
     <b-form @submit="submit">
       <b-row>
-        <b-form-group id="input-group-1" label="Vul uw voornaam in" label-for="input-1">
-          <b-form-input
-            id="input-1"
-            v-model="firstName"
-            required
-            placeholder="Voornaam"
-          ></b-form-input>
-        </b-form-group>
+        <b-col>
+          <b-form-group id="input-group-1" label="Vul uw voornaam in" label-for="input-1">
+            <b-form-input
+              id="input-1"
+              v-model="firstName"
+              required
+              placeholder="Voornaam"
+            ></b-form-input>
+          </b-form-group>
 
-        <b-form-group id="input-group-2" label="Vul uw achternaam in" label-for="input-2">
-          <b-form-input
-            id="input-2"
-            v-model="lastName"
-            required
-            placeholder="Achternaam"
-          ></b-form-input>
-        </b-form-group>
+          <b-form-group id="input-group-2" label="Vul uw achternaam in" label-for="input-2">
+            <b-form-input
+              id="input-2"
+              v-model="lastName"
+              required
+              placeholder="Achternaam"
+            ></b-form-input>
+          </b-form-group>
 
-        <b-form-group
-          id="input-group-3"
-          label="Email adres:"
-          label-for="input-3"
-          description="Uw email wordt tevens uw gebruikersnaam."
-        ><b-form-input
-            id="input-3"
-            v-model="email"
-            type="email"
-            required
-            placeholder="Vul uw email in"
-          ></b-form-input>
-        </b-form-group>
+          <b-form-group
+            id="input-group-3"
+            label="Email adres:"
+            label-for="input-3"
+            description="Uw email wordt tevens uw gebruikersnaam."
+          ><b-form-input
+              id="input-3"
+              v-model="email"
+              type="email"
+              required
+              placeholder="Vul uw email in"
+            ></b-form-input>
+          </b-form-group>
 
-        <b-form-group
-          id="input-group-4"
-          label="Geslacht"
-          label-for="input-4"
-        ><b-form-radio v-model="gender" name="gender" value="male">Man</b-form-radio>
-          <b-form-radio v-model="gender" name="gender" value="female">Vrouw</b-form-radio>
-        </b-form-group>
+          <b-form-group
+            id="input-group-4"
+            label="Geslacht"
+            label-for="input-4"
+          ><b-form-radio v-model="gender" name="gender" value="male">Man</b-form-radio>
+            <b-form-radio v-model="gender" name="gender" value="female">Vrouw</b-form-radio>
+          </b-form-group>
+        </b-col>
+        <b-col>
+          <b-form-group
+            id="input-group-5"
+            label="Geboortedatum"
+            label-for="input-5"
+          ><b-form-input
+              id="input-5"
+              type= "date"
+              v-model="birthDate"
+              required
+              v-on:input="checkAge"
+            ></b-form-input>
+          </b-form-group>
 
-        <b-form-group
-          id="input-group-5"
-          label="Geboortedatum"
-          label-for="input-5"
-        ><b-form-input
-            id="input-5"
-            type= "date"
-            v-model="birthDate"
-            required
-            v-on:input="checkAge"
-          ></b-form-input>
-        </b-form-group>
+          <b-form-group v-if="underage" id="input-group-6" label="Vul de gegevens van de ouder/verzorger in" label-for="input-6">
+            <b-form-input
+              id="input-6"
+              v-model="parent.firstName"
+              required
+              placeholder="Voornaam ouder/verzorger"
+            ></b-form-input>
+            <br>
+            <b-form-input
+              id="input-7"
+              v-model="parent.lastName"
+              required
+              placeholder="Achternaam ouder/verzorger"
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
 
-        <b-form-group v-if="underage" id="input-group-6" label="Vul de gegevens van de ouder/verzorger in" label-for="input-6">
-          <b-form-input
-            id="input-6"
-            v-model="parent.firstName"
-            required
-            placeholder="Voornaam ouder/verzorger"
-          ></b-form-input>
-          <br>
-          <b-form-input
-            id="input-7"
-            v-model="parent.lastName"
-            required
-            placeholder="Achternaam ouder/verzorger"
-          ></b-form-input>
-        </b-form-group>
         <b-card bg-variant="light">
           <b-form-group
             label-cols-lg="3"
