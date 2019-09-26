@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form @submit="submit" @reset="onReset">
+    <b-form @submit="submit">
       <b-form-group id="input-group-1" label="Vul uw naam in" label-for="input-2">
         <b-form-input
           id="input-1"
@@ -30,7 +30,7 @@
         id="input-group-2"
         label="Email adres:"
         label-for="input-2"
-        description="We'll never share your email with anyone else."
+        description="Uw email wordt tevens uw gebruikersnaam."
       ><b-form-input
           id="input-3"
           v-model="email"
@@ -105,7 +105,8 @@
       </div>
 
       <div v-if="arabic==='yes' && completedForm">
-        <input type="submit" value="Inschrijving indienen" v-on:click="submit" />
+        <b-button type="submit" variant="primary">Inschrijving indienen</b-button>
+        <!-- <input type="submit" value="Inschrijving indienen" v-on:click="submit" /> -->
       </div>
       <div v-else-if="arabic ==='no'">
         <h4>Om mee te doen met Dar al-Qoran is het van belang om de arabisch taal machtig te zijn</h4>
