@@ -1,7 +1,22 @@
 <template>
   <div>
-    <form>
-      <div>
+    <b-form @submit="submit" @reset="onReset">
+      <b-form-group id="input-group-1" label="Vul uw naam in" label-for="input-2">
+        <b-form-input
+          id="input-1"
+          v-model="firstName"
+          required
+          placeholder="Vul uw voornaam in"
+        ></b-form-input>
+        <b-form-input
+          id="input-2"
+          v-model="lastName"
+          required
+          placeholder="Vul uw achternaam in"
+        ></b-form-input>
+      </b-form-group>
+
+      <!-- <div>
         <h2>Voornaam</h2>
         <input type="text" required v-model="firstName" />
       </div>
@@ -9,7 +24,26 @@
       <div>
         <h2>Achternaam</h2>
         <input type="text" required v-model="lastName" />
-      </div>
+      </div> -->
+
+      <b-form-group
+        id="input-group-2"
+        label="Email adres:"
+        label-for="input-2"
+        description="We'll never share your email with anyone else."
+      ><b-form-input
+          id="input-3"
+          v-model="email"
+          type="email"
+          required
+          placeholder="Vul uw email in"
+        ></b-form-input>
+      </b-form-group>
+
+      <!-- <div>
+        <h2>Email adres</h2>
+        <input type="text" required v-model="email" />
+      </div> -->
 
       <div>
         <h2>Geslacht</h2>
@@ -17,7 +51,7 @@
         <label for="Male">Man</label>
         <br>
         <input type="radio" id="gender" name="gender" value="Female" v-model="gender">
-        <label for="Female">Female</label>
+        <label for="Female">Vrouw</label>
         <br>
       </div>
 
@@ -56,11 +90,6 @@
       </div>
 
       <div>
-        <h2>Email adres</h2>
-        <input type="text" required v-model="email" />
-      </div>
-
-      <div>
         <h2>Telefoonnummer</h2>
         <input type="text" required v-model="phoneNumber" />
       </div>
@@ -85,7 +114,7 @@
       <div v-else-if="!completedForm">
         <h4>Vul alle gegevens correct in.</h4>
       </div>
-    </form>
+    </b-form>
   </div>
 </template>
 <script>
