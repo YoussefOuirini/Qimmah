@@ -85,29 +85,37 @@
             class="mb-0"
           >
             <b-form-group
-              label-cols-sm="3"
-              label="Adres:"
+              label-cols-sm="5"
+              label="Straatnaam:"
               label-align-sm="right"
               label-for="nested-street"
             >
-              <b-form-input id="nested-street" required v-model="adress" placeholder= "Straatnaam en huisnummer"></b-form-input>
+              <b-form-input id="nested-street" required v-model="address.streetname" placeholder= "Straatnaam"></b-form-input>
+            </b-form-group>
+            <b-form-group
+              label-cols-sm="5"
+              label="Huisnummer:"
+              label-align-sm="right"
+              label-for="nested-street"
+            >
+              <b-form-input id="nested-street" required v-model="address.houseNumber" placeholder= "Huisnummer"></b-form-input>
             </b-form-group>
 
             <b-form-group
-              label-cols-sm="3"
+              label-cols-sm="4"
               label="Postcode:"
               label-align-sm="right"
               label-for="nested-city"
             >
-              <b-form-input id="nested-city" required v-model="zipCode" placeholder="Bijv. 1012 AZ"></b-form-input>
+              <b-form-input id="nested-city" required v-model="address.zipCode" placeholder="Bijv. 1012 AZ"></b-form-input>
             </b-form-group>
             <b-form-group
-              label-cols-sm="3"
+              label-cols-sm="5"
               label="Woonplaats:"
               label-align-sm="right"
               label-for="nested-city"
             >
-              <b-form-input id="nested-city" required v-model="city" placeholder="Zaandam"></b-form-input>
+              <b-form-input id="nested-city" required v-model="address.city" placeholder="Zaandam"></b-form-input>
             </b-form-group>
           </b-form-group>
         </b-card>
