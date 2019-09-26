@@ -75,6 +75,18 @@
               placeholder="Achternaam"
             ></b-form-input>
           </b-form-group>
+          <b-form-group
+            id="input-group-7"
+            label="Telefoonnummer"
+            label-for="input-8"
+          ><b-form-input
+              id="input-8"
+              type= "tel"
+              placeholder="0612345678"
+              v-model="phoneNumber"
+              required
+            ></b-form-input>
+          </b-form-group>
         </b-col>
         <b-card bg-variant="light">
           <b-form-group
@@ -119,11 +131,6 @@
             </b-form-group>
           </b-form-group>
         </b-card>
-
-        <div>
-          <h2>Telefoonnummer</h2>
-          <input type="text" required v-model="phoneNumber" />
-        </div>
 
         <div>
           <h2>Ik kan goed arabisch lezen en schrijven</h2>
