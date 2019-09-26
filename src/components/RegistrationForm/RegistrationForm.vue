@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container>
     <b-form @submit="submit">
       <b-form-group id="input-group-1" label="Vul uw naam in" label-for="input-2">
         <b-form-input
@@ -45,7 +45,12 @@
         <input type="text" required v-model="email" />
       </div> -->
 
-      <div>
+      <b-form-group label="Geslacht">
+        <b-form-radio v-model="gender" name="gender" value="male">Man</b-form-radio>
+        <b-form-radio v-model="gender" name="gender" value="female">Vrouw</b-form-radio>
+      </b-form-group>
+
+      <!-- <div>
         <h2>Geslacht</h2>
         <input type="radio" id="gender" name="gender" required value="Male" v-model="gender">
         <label for="Male">Man</label>
@@ -53,7 +58,7 @@
         <input type="radio" id="gender" name="gender" value="Female" v-model="gender">
         <label for="Female">Vrouw</label>
         <br>
-      </div>
+      </div> -->
 
       <div>
         <input type="date" required v-model="birthDate" v-on:input="checkAge"/>
@@ -112,7 +117,7 @@
         <h4>Vul alle gegevens correct in.</h4>
       </div>
     </b-form>
-  </div>
+  </b-container>
 </template>
 <script>
   module.exports = require("./RegistrationForm.js");
