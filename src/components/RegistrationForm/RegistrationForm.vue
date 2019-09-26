@@ -1,7 +1,8 @@
 <template>
   <b-container>
+    <br>
     <b-row><h1>Inschrijfformulier Dar al-Qoraan Al-Himmah</h1></b-row>
-    <h2> Gegevens deelnemer </h2>
+    <b-row><h2> Gegevens deelnemer </h2></b-row>
     <b-form @submit="submit">
       <b-row>
         <b-col>
