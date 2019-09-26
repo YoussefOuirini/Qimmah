@@ -84,7 +84,7 @@
         ></b-form-input>
       </b-form-group>
 
-      <div v-if="underage">
+      <!-- <div v-if="underage">
         <div>
           <h2>Voornaam ouder/verzorger</h2>
           <input type="text" required v-model="parent.firstName" />
@@ -93,7 +93,23 @@
           <h2>Achternaam ouder/verzorger</h2>
           <input type="text" required re v-model="parent.lastName" />
         </div>
-      </div>
+      </div> -->
+
+      <b-form-group v-if="underage" id="input-group-6" label="Vul de gegevens van de ouder/verzorger in" label-for="input-6">
+        <b-form-input
+          id="input-6"
+          v-model="parent.firstName"
+          required
+          placeholder="Voornaam ouder/verzorger"
+        ></b-form-input>
+        <br>
+        <b-form-input
+          id="input-7"
+          v-model="parent.lastName"
+          required
+          placeholder="Achternaam ouder/verzorger"
+        ></b-form-input>
+      </b-form-group>
 
       <b-card bg-variant="light">
         <b-form-group
