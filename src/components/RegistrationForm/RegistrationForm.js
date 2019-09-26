@@ -10,13 +10,17 @@ export default Vue.extend({
       gender: '',
       birthDate: '',
       underage: false,
-      adress: '',
-      zipCode: '',
-      city: '',
+      address: {
+        streetname: '',
+        houseNumber: '',
+        zipCode: '',
+        city: '',
+      },
       email: '',
       phoneNumber: '',
       arabic: '',
-      parent: {}
+      parent: {},
+      education: null
     }
   },
   computed: {
@@ -27,8 +31,12 @@ export default Vue.extend({
         return this.completedBasicForm;
       }
     },
+    filledInAddress() {
+      const {streetname, houseNumber, zipCode, city} = this.address
+      return streetname && houseNumber && zipCode &&city
+    },
     completedBasicForm() {
-      return this.firstName && this.lastName && this.gender && this.birthDate && this.adress && this.zipCode && this.city && this.email && this.phoneNumber && this.arabic
+      return this.firstName && this.lastName && this.gender && this.birthDate && this.filledInAddress && this.email && this.phoneNumber && this.arabic
     },
     completedParentForm() {
       return this.parent.firstName && this.parent.lastName && this.parent.email
