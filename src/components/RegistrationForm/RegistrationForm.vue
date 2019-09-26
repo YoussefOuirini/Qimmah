@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <br>
-    <b-row><h1>Inschrijfformulier Dar al-Qoraan Al-Himmah</h1></b-row>
+    <b-row><h1 style="font-style:italic">Inschrijfformulier Dar al-Qoraan Al-Himmah</h1></b-row>
     <b-row><h2> Gegevens deelnemer </h2></b-row>
     <b-form @submit="submit">
       <b-row>
@@ -140,15 +140,17 @@
         ><b-form-radio v-model="arabic" name="arabic" value="yes">Ja</b-form-radio>
           <b-form-radio v-model="arabic" name="arabic" value="no">Nee</b-form-radio>
         </b-form-group>
+      </b-row>
+      <b-row>
         <div v-if="arabic==='yes' && completedForm">
           <b-button type="submit" variant="primary">Inschrijving indienen</b-button>
         </div>
         <div v-else-if="arabic ==='no'">
-          <h4>Om mee te doen met Dar al-Qoran is het van belang om de arabisch taal machtig te zijn</h4>
-          <h4>U kunt zich inschrijven voor de cursussen arabisch om eerst arabisch te leren. Daarna kunt u zich inschrijven.</h4>
+          <h6>Om mee te doen met Dar al-Qoran is het van belang om de arabisch taal machtig te zijn</h6>
+          <h6>U kunt zich inschrijven voor de cursussen arabisch om eerst arabisch te leren.</h6>
         </div>
         <div v-else-if="!completedForm">
-          <h4>Vul alle gegevens correct in.</h4>
+          <h4 style="color:crimson">Vul alle gegevens correct in.</h4>
         </div>
       </b-row>
     </b-form>
