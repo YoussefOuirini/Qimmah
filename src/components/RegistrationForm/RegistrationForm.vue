@@ -22,16 +22,6 @@
           ></b-form-input>
         </b-form-group>
 
-        <!-- <div>
-          <h2>Voornaam</h2>
-          <input type="text" required v-model="firstName" />
-        </div>
-
-        <div>
-          <h2>Achternaam</h2>
-          <input type="text" required v-model="lastName" />
-        </div> -->
-
         <b-form-group
           id="input-group-3"
           label="Email adres:"
@@ -46,11 +36,6 @@
           ></b-form-input>
         </b-form-group>
 
-        <!-- <div>
-          <h2>Email adres</h2>
-          <input type="text" required v-model="email" />
-        </div> -->
-
         <b-form-group
           id="input-group-4"
           label="Geslacht"
@@ -58,20 +43,6 @@
         ><b-form-radio v-model="gender" name="gender" value="male">Man</b-form-radio>
           <b-form-radio v-model="gender" name="gender" value="female">Vrouw</b-form-radio>
         </b-form-group>
-
-        <!-- <div>
-          <h2>Geslacht</h2>
-          <input type="radio" id="gender" name="gender" required value="Male" v-model="gender">
-          <label for="Male">Man</label>
-          <br>
-          <input type="radio" id="gender" name="gender" value="Female" v-model="gender">
-          <label for="Female">Vrouw</label>
-          <br>
-        </div> -->
-
-        <!-- <div>
-          <input type="date" required v-model="birthDate" v-on:input="checkAge"/>
-        </div> -->
 
         <b-form-group
           id="input-group-5"
@@ -85,17 +56,6 @@
             v-on:input="checkAge"
           ></b-form-input>
         </b-form-group>
-
-        <!-- <div v-if="underage">
-          <div>
-            <h2>Voornaam ouder/verzorger</h2>
-            <input type="text" required v-model="parent.firstName" />
-          </div>
-          <div>
-            <h2>Achternaam ouder/verzorger</h2>
-            <input type="text" required re v-model="parent.lastName" />
-          </div>
-        </div> -->
 
         <b-form-group v-if="underage" id="input-group-6" label="Vul de gegevens van de ouder/verzorger in" label-for="input-6">
           <b-form-input
@@ -164,7 +124,6 @@
         </div>
         <div v-if="arabic==='yes' && completedForm">
           <b-button type="submit" variant="primary">Inschrijving indienen</b-button>
-          <!-- <input type="submit" value="Inschrijving indienen" v-on:click="submit" /> -->
         </div>
         <div v-else-if="arabic ==='no'">
           <h4>Om mee te doen met Dar al-Qoran is het van belang om de arabisch taal machtig te zijn</h4>
