@@ -3,7 +3,7 @@
     <br>
     <b-row><h1 style="font-style:italic">Inschrijfformulier Dar al-Qoraan Al-Himmah</h1></b-row>
     <b-row><h2> Gegevens deelnemer </h2></b-row>
-    <b-form @submit="submit">
+    <b-form>
       <b-row>
         <b-col>
           <b-form-group id="input-group-1" label="Vul uw voornaam in" label-for="input-1">
@@ -143,7 +143,7 @@
       </b-row>
       <b-row>
         <div v-if="arabic==='yes' && completedForm">
-          <b-button type="submit" variant="primary">Inschrijving indienen</b-button>
+          <b-button v-on:click="submit" variant="primary">Inschrijving indienen</b-button>
         </div>
         <div v-else-if="arabic ==='no'">
           <h6>Om mee te doen met Dar al-Qoran is het van belang om de arabisch taal machtig te zijn</h6>
