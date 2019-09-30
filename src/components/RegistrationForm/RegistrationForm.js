@@ -1,5 +1,6 @@
 import Vue from "vue";
 import { config } from "../../config";
+import { writeRegistration } from "../../firebase";
 
 export default Vue.extend({
   name: "RegistrationForm",
@@ -39,7 +40,7 @@ export default Vue.extend({
       return this.firstName && this.lastName && this.gender && this.birthDate && this.filledInAddress && this.email && this.phoneNumber && this.arabic
     },
     completedParentForm() {
-      return this.parent.firstName && this.parent.lastName && this.parent.email
+      return this.parent.firstName && this.parent.lastName
     }
   },
   methods: {
@@ -60,7 +61,7 @@ export default Vue.extend({
       return ageLimitTimeStamp
     },
     submit() {
-      alert(`U bent ingeschreven met de volgende informatie: ${this.firstName} ${this.lastName}.`);
+      writeRegistration(this.$data);
     }
   }
 })
