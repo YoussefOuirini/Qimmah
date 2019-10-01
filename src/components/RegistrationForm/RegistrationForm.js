@@ -24,7 +24,8 @@ export default Vue.extend({
         parent: {},
         education: null
       },
-      loading: null
+      loading: false,
+      registrationResponseText: ""
     }
   },
   computed: {
@@ -40,8 +41,8 @@ export default Vue.extend({
       return streetname && houseNumber && zipCode && city
     },
     completedBasicForm() {
-      const {firstName, lastName, gender, birthDate, filledInAddress, email, phoneNumber, arabic} = this.form
-      return firstName && lastName && gender && birthDate && filledInAddress && email && phoneNumber && arabic
+      const {firstName, lastName, gender, birthDate, email, phoneNumber, arabic} = this.form
+      return firstName && lastName && gender && birthDate && email && phoneNumber && arabic && this.filledInAddress
     },
     completedParentForm() {
       return this.form.parent.firstName && this.form.parent.lastName
@@ -49,7 +50,7 @@ export default Vue.extend({
   },
   methods: {
     checkAge() {
-      const birthDateTimeStamp = new Date(this.birthDate).getTime();
+      const birthDateTimeStamp = new Date(this.form.birthDate).getTime();
       const ageLimitTimeStamp = this.getAgeLimitTimeStamp()
       if (birthDateTimeStamp > ageLimitTimeStamp) {
         this.form.underage = true;
@@ -65,7 +66,15 @@ export default Vue.extend({
       return ageLimitTimeStamp
     },
     submit() {
-      writeRegistration(this.form);
+      this.loading = true
+      writeRegistration(this.form).then((res)=> {
+        this.loading = false
+        if (res.id) {
+          this.registrationResponseText = "Inschrijving is successvol!"
+        } else {
+          this.registrationResponseText = "Inschrijving is mislukt :( Sorry baas! Probeer het later opnieuw!"
+        }
+      });
     }
   }
 })
