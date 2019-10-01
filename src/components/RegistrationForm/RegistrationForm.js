@@ -6,41 +6,45 @@ export default Vue.extend({
   name: "RegistrationForm",
   data() {
     return {
-      firstName: '',
-      lastName: '',
-      gender: '',
-      birthDate: '',
-      underage: false,
-      address: {
-        streetname: '',
-        houseNumber: '',
-        zipCode: '',
-        city: '',
+      form: {
+        firstName: '',
+        lastName: '',
+        gender: '',
+        birthDate: '',
+        underage: false,
+        address: {
+          streetname: '',
+          houseNumber: '',
+          zipCode: '',
+          city: '',
+        },
+        email: '',
+        phoneNumber: '',
+        arabic: '',
+        parent: {},
+        education: null
       },
-      email: '',
-      phoneNumber: '',
-      arabic: '',
-      parent: {},
-      education: null
+      loading: null
     }
   },
   computed: {
     completedForm() {
-      if (this.underage) {
+      if (this.form.underage) {
         return this.completedParentForm && this.completedBasicForm;
       } else {
         return this.completedBasicForm;
       }
     },
     filledInAddress() {
-      const {streetname, houseNumber, zipCode, city} = this.address
-      return streetname && houseNumber && zipCode &&city
+      const {streetname, houseNumber, zipCode, city} = this.form.address
+      return streetname && houseNumber && zipCode && city
     },
     completedBasicForm() {
-      return this.firstName && this.lastName && this.gender && this.birthDate && this.filledInAddress && this.email && this.phoneNumber && this.arabic
+      const {firstName, lastName, gender, birthDate, filledInAddress, email, phoneNumber, arabic} = this.form
+      return firstName && lastName && gender && birthDate && filledInAddress && email && phoneNumber && arabic
     },
     completedParentForm() {
-      return this.parent.firstName && this.parent.lastName
+      return this.form.parent.firstName && this.form.parent.lastName
     }
   },
   methods: {
@@ -48,10 +52,10 @@ export default Vue.extend({
       const birthDateTimeStamp = new Date(this.birthDate).getTime();
       const ageLimitTimeStamp = this.getAgeLimitTimeStamp()
       if (birthDateTimeStamp > ageLimitTimeStamp) {
-        this.underage = true;
+        this.form.underage = true;
       } else {
-        this.underage = false;
-        this.parent = {};
+        this.form.underage = false;
+        this.form.parent = {};
       }
     },
     getAgeLimitTimeStamp() {
@@ -61,7 +65,7 @@ export default Vue.extend({
       return ageLimitTimeStamp
     },
     submit() {
-      writeRegistration(this.$data);
+      writeRegistration(this.form);
     }
   }
 })

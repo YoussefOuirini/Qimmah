@@ -1,5 +1,5 @@
 <template>
-  <b-container v-if="education=='qoraan'">
+  <b-container v-if="form.education=='qoraan'">
     <br>
     <b-row><h1 style="font-style:italic">Inschrijfformulier Dar al-Qoraan Al-Himmah</h1></b-row>
     <b-row><h2> Gegevens deelnemer </h2></b-row>
@@ -9,7 +9,7 @@
           <b-form-group id="input-group-1" label="Vul uw voornaam in" label-for="input-1">
             <b-form-input
               id="input-1"
-              v-model="firstName"
+              v-model="form.firstName"
               required
               placeholder="Voornaam"
             ></b-form-input>
@@ -18,7 +18,7 @@
           <b-form-group id="input-group-2" label="Vul uw achternaam in" label-for="input-2">
             <b-form-input
               id="input-2"
-              v-model="lastName"
+              v-model="form.lastName"
               required
               placeholder="Achternaam"
             ></b-form-input>
@@ -31,7 +31,7 @@
             description="Uw email wordt tevens uw gebruikersnaam."
           ><b-form-input
               id="input-3"
-              v-model="email"
+              v-model="form.email"
               type="email"
               required
               placeholder="Vul uw email in"
@@ -42,8 +42,8 @@
             id="input-group-4"
             label="Geslacht"
             label-for="input-4"
-          ><b-form-radio v-model="gender" name="gender" value="male">Man</b-form-radio>
-            <b-form-radio v-model="gender" name="gender" value="female">Vrouw</b-form-radio>
+          ><b-form-radio v-model="form.gender" name="gender" value="male">Man</b-form-radio>
+            <b-form-radio v-model="form.gender" name="gender" value="female">Vrouw</b-form-radio>
           </b-form-group>
         </b-col>
         <b-col>
@@ -54,23 +54,23 @@
           ><b-form-input
               id="input-5"
               type= "date"
-              v-model="birthDate"
+              v-model="form.birthDate"
               required
               v-on:input="checkAge"
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group v-if="underage" id="input-group-6" label="Vul de gegevens van de ouder/verzorger in" label-for="input-6">
+          <b-form-group v-if="form.underage" id="input-group-6" label="Vul de gegevens van de ouder/verzorger in" label-for="input-6">
             <b-form-input
               id="input-6"
-              v-model="parent.firstName"
+              v-model="form.parent.firstName"
               required
               placeholder="Voornaam"
             ></b-form-input>
             <br>
             <b-form-input
               id="input-7"
-              v-model="parent.lastName"
+              v-model="form.parent.lastName"
               required
               placeholder="Achternaam"
             ></b-form-input>
@@ -83,7 +83,7 @@
               id="input-8"
               type= "tel"
               placeholder="0612345678"
-              v-model="phoneNumber"
+              v-model="form.phoneNumber"
               required
             ></b-form-input>
           </b-form-group>
@@ -102,7 +102,7 @@
               label-align-sm="right"
               label-for="nested-street"
             >
-              <b-form-input id="nested-street" required v-model="address.streetname" placeholder= "Straatnaam"></b-form-input>
+              <b-form-input id="nested-street" required v-model="form.address.streetname" placeholder= "Straatnaam"></b-form-input>
             </b-form-group>
             <b-form-group
               label-cols-sm="5"
@@ -110,7 +110,7 @@
               label-align-sm="right"
               label-for="nested-street"
             >
-              <b-form-input id="nested-street" required v-model="address.houseNumber" placeholder= "Huisnummer"></b-form-input>
+              <b-form-input id="nested-street" required v-model="form.address.houseNumber" placeholder= "Huisnummer"></b-form-input>
             </b-form-group>
 
             <b-form-group
@@ -119,7 +119,7 @@
               label-align-sm="right"
               label-for="nested-city"
             >
-              <b-form-input id="nested-city" required v-model="address.zipCode" placeholder="Bijv. 1012 AZ"></b-form-input>
+              <b-form-input id="nested-city" required v-model="form.address.zipCode" placeholder="Bijv. 1012 AZ"></b-form-input>
             </b-form-group>
             <b-form-group
               label-cols-sm="5"
@@ -127,7 +127,7 @@
               label-align-sm="right"
               label-for="nested-city"
             >
-              <b-form-input id="nested-city" required v-model="address.city" placeholder="Zaandam"></b-form-input>
+              <b-form-input id="nested-city" required v-model="form.address.city" placeholder="Zaandam"></b-form-input>
             </b-form-group>
           </b-form-group>
         </b-card>
@@ -137,15 +137,15 @@
           id="input-group-10"
           label="Ik kan goed arabisch lezen en schrijven"
           label-for="input-10"
-        ><b-form-radio v-model="arabic" name="arabic" value="yes">Ja</b-form-radio>
-          <b-form-radio v-model="arabic" name="arabic" value="no">Nee</b-form-radio>
+        ><b-form-radio v-model="form.arabic" name="arabic" value="yes">Ja</b-form-radio>
+          <b-form-radio v-model="form.arabic" name="arabic" value="no">Nee</b-form-radio>
         </b-form-group>
       </b-row>
       <b-row>
-        <div v-if="arabic==='yes' && completedForm">
+        <div v-if="form.arabic==='yes' && completedForm">
           <b-button v-on:click="submit" variant="primary">Inschrijving indienen</b-button>
         </div>
-        <div v-else-if="arabic ==='no'">
+        <div v-else-if="form.arabic ==='no'">
           <h6>Om mee te doen met Dar al-Qoran is het van belang om de arabisch taal machtig te zijn</h6>
           <h6>U kunt zich inschrijven voor de cursussen arabisch om eerst arabisch te leren.</h6>
         </div>
@@ -155,10 +155,10 @@
       </b-row>
     </b-form>
   </b-container>
-  <b-container v-else-if="!education">
+  <b-container v-else-if="!form.education">
     <br>
     <div>
-      <b-form-select v-model="education" class="mb-3">
+      <b-form-select v-model="form.education" class="mb-3">
         <option :value="null">Kies waarvoor u zich wilt inschrijven</option>
         <option value="qoraan">Dar al-Qoraan</option>
         <option value="basisonderwijs">Basisonderwijs</option>
@@ -166,9 +166,9 @@
       </b-form-select>
     </div>
   </b-container>
-  <b-container v-else-if="education== 'basisonderwijs'||'arabisch'">
+  <b-container v-else-if="form.education== 'basisonderwijs'||'arabisch'">
     <br>
-    Wello {{education}} habbibi
+    Wello {{form.education}} habbibi
   </b-container>
 </template>
 <script>
