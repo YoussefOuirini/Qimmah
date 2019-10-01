@@ -1,4 +1,7 @@
 import firebase from "firebase";
+import { config } from './config.js'
+
+firebase.initializeApp(config.firebase);
 
 var db = firebase.firestore();
 

@@ -1,11 +1,6 @@
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
-import firebase from "firebase";
-
 import App from './App.vue'
-import { config } from './config.js'
-
-firebase.initializeApp(config.firebase);
 
 Vue.config.productionTip = false
 
