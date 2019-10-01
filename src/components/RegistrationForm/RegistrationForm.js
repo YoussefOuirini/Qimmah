@@ -20,7 +20,7 @@ export default Vue.extend({
         },
         email: '',
         phoneNumber: '',
-        arabic: '',
+        arabic: false,
         parent: {},
         education: null
       },
