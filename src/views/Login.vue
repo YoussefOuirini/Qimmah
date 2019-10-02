@@ -21,8 +21,8 @@ export default {
   },
   methods: {
     login() {
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user)=> {
-        alert(`Ingelogd als ${user}`)
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(()=> {
+        this.$router.replace('home')
       }).catch((err)=> {
         alert(`Oops. ${err.message}`)
       })

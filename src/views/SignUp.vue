@@ -21,8 +21,8 @@
     },
     methods: {
       signUp() {
-        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user)=> {
-          alert(`Account aangemaakt voor ${user}!`)
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(()=> {
+          this.$router.replace('home')
         }).catch((err)=> {
           alert(`Oops. ${err.message}`)
         })
