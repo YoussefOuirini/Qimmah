@@ -1,5 +1,5 @@
 <template>
-  <b-container v-if="form.education=='qoraan' && loading == false && !registrationResponseText">
+  <b-container v-if="loading == false && !registrationResponseText">
     <br>
     <b-row><h1 style="font-style:italic">Inschrijfformulier Dar al-Qoraan Al-Himmah</h1></b-row>
     <b-row><h2> Gegevens deelnemer </h2></b-row>
@@ -26,16 +26,15 @@
 
           <b-form-group
             id="input-group-3"
-            label="Email adres:"
+            label="Welke studie:"
             label-for="input-3"
-            description="Uw email wordt tevens uw gebruikersnaam."
-          ><b-form-input
-              id="input-3"
-              v-model="form.email"
-              type="email"
-              required
-              placeholder="Vul uw email in"
-            ></b-form-input>
+            description="Onderwijs"
+          ><b-form-select v-model="form.education" class="mb-3">
+              <option :value="null">Kies waarvoor u uwzelf of uw kind wilt inschrijven</option>
+              <option value="qoraan">Dar al-Qoraan</option>
+              <option value="basisonderwijs">Basisonderwijs</option>
+              <option value="arabisch">Arabisch voor volwassenen</option>
+            </b-form-select>
           </b-form-group>
 
           <b-form-group
@@ -145,7 +144,7 @@
         <div v-if="form.arabic===true && completedForm">
           <b-button v-on:click="submit" variant="primary">Inschrijving indienen</b-button>
         </div>
-        <div v-else-if="form.arabic ===false">
+        <div v-else-if="form.arabic ===false && form.education === 'qoraan'">
           <h6>Om mee te doen met Dar al-Qoran is het van belang om de arabisch taal machtig te zijn</h6>
           <h6>U kunt zich inschrijven voor de cursussen arabisch om eerst arabisch te leren.</h6>
         </div>
@@ -155,26 +154,11 @@
       </b-row>
     </b-form>
   </b-container>
-  <b-container v-else-if="!form.education">
-    <br>
-    <div>
-      <b-form-select v-model="form.education" class="mb-3">
-        <option :value="null">Kies waarvoor u zich wilt inschrijven</option>
-        <option value="qoraan">Dar al-Qoraan</option>
-        <option value="basisonderwijs">Basisonderwijs</option>
-        <option value="arabisch">Arabisch voor volwassenen</option>
-      </b-form-select>
-    </div>
-  </b-container>
   <b-container v-else-if="loading==true">
     <b-spinner style="width: 25rem; height: 25rem;" label="Loading..."></b-spinner>
   </b-container>
   <b-container v-else-if="loading==false && registrationResponseText">
     {{registrationResponseText}}
-  </b-container>
-  <b-container v-else-if="form.education== 'basisonderwijs'||'arabisch'">
-    <br>
-    Wello {{form.education}} habbibi
   </b-container>
 </template>
 <script>
