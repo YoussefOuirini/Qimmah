@@ -28,7 +28,6 @@
             id="input-group-3"
             label="Welke studie:"
             label-for="input-3"
-            description="Onderwijs"
           ><b-form-select v-model="form.education" class="mb-3">
               <option :value="null">Kies waarvoor u uwzelf of uw kind wilt inschrijven</option>
               <option value="qoraan">Dar al-Qoraan</option>
