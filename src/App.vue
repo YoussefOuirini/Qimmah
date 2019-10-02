@@ -2,14 +2,12 @@
   <div id="app">
     <Header />
     <router-view></router-view>
-    <RegistrationForm />
     <Footer />
   </div>
 </template>
 
 <script>
   import Vue from "vue";
-  import RegistrationForm from "./components/RegistrationForm/RegistrationForm.vue";
   import Header from "./components/Header/Header.vue";
   import Footer from "./components/Footer/Footer.vue";
 
@@ -17,7 +15,6 @@
     name: "App",
     components: {
       Header,
-      RegistrationForm,
       Footer
     }
   })

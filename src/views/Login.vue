@@ -3,7 +3,7 @@
     <h3> Inloggen</h3>
     <b-input type="text" placeholder="Email"></b-input><br>
     <b-input type="password" placeholder="Wachtwoord"></b-input><br>
-    <b-button>Inloggen</b-button>
+    <b-button @click="login">Inloggen</b-button>
     <p>Nog geen account? <router-link to="/sign-up">Maak er een!</router-link></p>
   </b-container>
 </template>
@@ -14,7 +14,11 @@ export default {
   data() {
     return {};
   },
-  methods: {}
+  methods: {
+    login() {
+      this.$router.replace('home');
+    }
+  }
 }
 </script>
 
