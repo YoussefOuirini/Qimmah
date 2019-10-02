@@ -32,7 +32,7 @@
 </script>
 
 <style scoped>
-  .signUp {
+  .sign-up {
     margin-top: 40px;
   }
   input {
