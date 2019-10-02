@@ -3,8 +3,8 @@
     <h3> Inloggen</h3>
     <b-input type="text" placeholder="Email"></b-input><br>
     <b-input type="password" placeholder="Wachtwoord"></b-input><br>
-    <b-button>Connection</b-button>
-    <p>Nog geen account? Maak er een!</p>
+    <b-button>Inloggen</b-button>
+    <p>Nog geen account? <router-link to="/sign-up">Maak er een!</router-link></p>
   </b-container>
 </template>
 
@@ -22,14 +22,14 @@ export default {
   .login {
     margin-top: 40px
   }
-  b-input {
+  input {
     margin: 10px 0;
-    width: 20%;
+    width: auto;
     padding: 15px;
   }
-  b-button {
+  button {
     margin-top: 20px;
-    width: 10%;
+    width: 20%;
     cursor: pointer
   }
   p {

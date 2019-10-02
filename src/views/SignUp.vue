@@ -1,10 +1,10 @@
 <template>
   <b-container class="sign-up">
     <p>Maak een account aan</p>
-    <b-input type="text" pleaceholder="Email"></b-input><br>
+    <b-input type="text" placeholder="Email"></b-input><br>
     <b-input type="password" placeholder="Wachtwoord"></b-input><br>
     <b-button>Registreer</b-button>
-    <span>of ga terug naar login.</span>
+    <span>of ga terug naar <router-link to="/login">login</router-link>.</span>
   </b-container>
 </template>
 
@@ -24,14 +24,14 @@
   .signUp {
     margin-top: 40px;
   }
-  b-input {
+  input {
     margin: 10px 0;
     width: 20%;
     padding: 15px;
   }
-  b-button {
+  button {
     margin-top: 10px;
-    width: 10%;
+    width: 20%;
     cursor: pointer;
   }
   span {
