@@ -1,21 +1,32 @@
 <template>
   <b-container class="sign-up">
     <p>Maak een account aan</p>
-    <b-input type="text" placeholder="Email"></b-input><br>
+    <b-input type="email" placeholder="Email"></b-input><br>
     <b-input type="password" placeholder="Wachtwoord"></b-input><br>
     <b-button>Registreer</b-button>
-    <span>of ga terug naar <router-link to="/login">login</router-link>.</span>
+    <span>Of ga terug naar <router-link to="/login">login</router-link>.</span>
   </b-container>
 </template>
 
 <script>
+  import firebase from 'firebase';
+
   export default {
     name: "SignUp",
     data() {
-      return {}
+      return {
+        email: '',
+        password: ''
+      }
     },
     methods: {
-
+      signUp() {
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user)=> {
+          alert(`Account aangemaakt voor ${user}!`)
+        }).catch((err)=> {
+          alert(`Oops. ${err.message}`)
+        })
+      }
     }
   }
 </script>
