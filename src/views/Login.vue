@@ -5,7 +5,7 @@
     <b-input type="password" v-model="password" placeholder="Wachtwoord"></b-input><br>
     <b-button @click="login">Inloggen</b-button>
     <p>Of login met Google <br>
-      <b-button class= "social-button">
+      <b-button @click="socialLogin" class= "social-button">
         <img src="../assets/google-logo.png" alt="Google Logo">
       </b-button>
     </p>
@@ -29,6 +29,15 @@ export default {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(()=> {
         this.$router.replace('home')
       }).catch((err)=> {
+        alert(`Oops. ${err.message}`)
+      })
+    },
+    socialLogin() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase.auth().signInWithPopup(provider).then(() => {
+        this.$router.replace('home');
+      }).catch((err) => {
         alert(`Oops. ${err.message}`)
       })
     }
