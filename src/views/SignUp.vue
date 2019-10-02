@@ -1,9 +1,9 @@
 <template>
   <b-container class="sign-up">
     <p>Maak een account aan</p>
-    <b-input type="email" placeholder="Email"></b-input><br>
-    <b-input type="password" placeholder="Wachtwoord"></b-input><br>
-    <b-button>Registreer</b-button>
+    <b-input type="email" v-model="email" placeholder="Email"></b-input><br>
+    <b-input type="password" v-model="password" placeholder="Wachtwoord"></b-input><br>
+    <b-button @click="signUp">Registreer</b-button>
     <span>Of ga terug naar <router-link to="/login">login</router-link>.</span>
   </b-container>
 </template>
@@ -37,12 +37,12 @@
   }
   input {
     margin: 10px 0;
-    width: 20%;
+    width: 50%;
     padding: 15px;
   }
   button {
     margin-top: 10px;
-    width: 20%;
+    width: 50%;
     cursor: pointer;
   }
   span {
