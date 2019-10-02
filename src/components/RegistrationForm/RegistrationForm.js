@@ -1,56 +1,62 @@
 import Vue from "vue";
 import { config } from "../../config";
+import { writeRegistration } from "../../firebase";
 
 export default Vue.extend({
   name: "RegistrationForm",
   data() {
     return {
-      firstName: '',
-      lastName: '',
-      gender: '',
-      birthDate: '',
-      underage: false,
-      address: {
-        streetname: '',
-        houseNumber: '',
-        zipCode: '',
-        city: '',
+      form: {
+        firstName: '',
+        lastName: '',
+        gender: '',
+        birthDate: '',
+        underage: false,
+        address: {
+          streetname: '',
+          houseNumber: '',
+          zipCode: '',
+          city: '',
+        },
+        email: '',
+        phoneNumber: '',
+        arabic: false,
+        parent: {},
+        education: null
       },
-      email: '',
-      phoneNumber: '',
-      arabic: '',
-      parent: {},
-      education: null
+      loading: false,
+      registrationResponseText: ""
     }
   },
   computed: {
     completedForm() {
-      if (this.underage) {
+      if (this.form.underage) {
         return this.completedParentForm && this.completedBasicForm;
       } else {
         return this.completedBasicForm;
       }
     },
     filledInAddress() {
-      const {streetname, houseNumber, zipCode, city} = this.address
-      return streetname && houseNumber && zipCode &&city
+      const {streetname, houseNumber, zipCode, city} = this.form.address
+      return streetname && houseNumber && zipCode && city
     },
     completedBasicForm() {
-      return this.firstName && this.lastName && this.gender && this.birthDate && this.filledInAddress && this.email && this.phoneNumber && this.arabic
+      const {firstName, lastName, gender, birthDate, email, phoneNumber, arabic} = this.form
+      return firstName && lastName && gender && birthDate && email && phoneNumber && arabic && this.filledInAddress
     },
     completedParentForm() {
-      return this.parent.firstName && this.parent.lastName && this.parent.email
+      return this.form.parent.firstName && this.form.parent.lastName
     }
   },
   methods: {
     checkAge() {
-      const birthDateTimeStamp = new Date(this.birthDate).getTime();
+      const birthDateTimeStamp = new Date(this.form.birthDate).getTime();
       const ageLimitTimeStamp = this.getAgeLimitTimeStamp()
       if (birthDateTimeStamp > ageLimitTimeStamp) {
-        this.underage = true;
+        this.form.underage = true;
       } else {
-        this.underage = false;
-        this.parent = {};
+        this.form.underage = false;
+        this.form.parent = {};
       }
     },
     getAgeLimitTimeStamp() {
@@ -60,7 +66,15 @@ export default Vue.extend({
       return ageLimitTimeStamp
     },
     submit() {
-      alert(`U bent ingeschreven met de volgende informatie: ${this.firstName} ${this.lastName}.`);
+      this.loading = true
+      writeRegistration(this.form).then((res)=> {
+        this.loading = false
+        if (res.id) {
+          this.registrationResponseText = "Inschrijving is successvol!"
+        } else {
+          this.registrationResponseText = "Inschrijving is mislukt :( Sorry baas! Probeer het later opnieuw!"
+        }
+      });
     }
   }
 })
