@@ -1,22 +1,31 @@
 <template>
   <b-container class="login">
     <h3> Inloggen</h3>
-    <b-input type="text" placeholder="Email"></b-input><br>
-    <b-input type="password" placeholder="Wachtwoord"></b-input><br>
+    <b-input type="text" v-model="email" placeholder="Email"></b-input><br>
+    <b-input type="password" v-model="password" placeholder="Wachtwoord"></b-input><br>
     <b-button @click="login">Inloggen</b-button>
     <p>Nog geen account? <router-link to="/registreer">Maak er een!</router-link></p>
   </b-container>
 </template>
 
 <script>
+import firebase from 'firebase';
+
 export default {
   name: 'Login',
   data() {
-    return {};
+    return {
+      email: '',
+      password: ''
+    };
   },
   methods: {
     login() {
-      this.$router.replace('home');
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user)=> {
+        alert(`Ingelogd als ${user}`)
+      }).catch((err)=> {
+        alert(`Oops. ${err.message}`)
+      })
     }
   }
 }
@@ -28,7 +37,7 @@ export default {
   }
   input {
     margin: 10px 0;
-    width: auto;
+    width: 50%;
     padding: 15px;
   }
   button {
