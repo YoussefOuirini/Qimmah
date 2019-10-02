@@ -4,7 +4,7 @@
     <b-input type="text" placeholder="Email"></b-input><br>
     <b-input type="password" placeholder="Wachtwoord"></b-input><br>
     <b-button @click="login">Inloggen</b-button>
-    <p>Nog geen account? <router-link to="/sign-up">Maak er een!</router-link></p>
+    <p>Nog geen account? <router-link to="/registreer">Maak er een!</router-link></p>
   </b-container>
 </template>
 

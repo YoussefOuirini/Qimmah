@@ -19,7 +19,7 @@ export const router = new Router ({
       component: Login
     },
     {
-      path: '/sign-up',
+      path: '/registreer',
       name: 'SignUp',
       component: SignUp
     }
