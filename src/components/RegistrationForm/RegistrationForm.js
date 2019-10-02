@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { config } from "../../config";
 import { writeRegistration } from "../../firebase";
+import firebase from "firebase";
 
 export default Vue.extend({
   name: "RegistrationForm",
@@ -18,7 +19,6 @@ export default Vue.extend({
           zipCode: '',
           city: '',
         },
-        email: '',
         phoneNumber: '',
         arabic: false,
         parent: {},
@@ -36,16 +36,16 @@ export default Vue.extend({
         return this.completedBasicForm;
       }
     },
-    filledInAddress() {
-      const {streetname, houseNumber, zipCode, city} = this.form.address
-      return streetname && houseNumber && zipCode && city
-    },
     completedBasicForm() {
-      const {firstName, lastName, gender, birthDate, email, phoneNumber, arabic} = this.form
-      return firstName && lastName && gender && birthDate && email && phoneNumber && arabic && this.filledInAddress
+      const {firstName, lastName, gender, birthDate, phoneNumber, education} = this.form
+      return firstName && lastName && gender && birthDate && phoneNumber && education && this.filledInAddress
     },
     completedParentForm() {
       return this.form.parent.firstName && this.form.parent.lastName
+    },
+    filledInAddress() {
+      const {streetname, houseNumber, zipCode, city} = this.form.address
+      return streetname && houseNumber && zipCode && city
     }
   },
   methods: {
@@ -67,7 +67,11 @@ export default Vue.extend({
     },
     submit() {
       this.loading = true
-      writeRegistration(this.form).then((res)=> {
+
+      const user = firebase.auth().currentUser;
+      const registration = this.form;
+      registration.email = user.email;
+      writeRegistration(registration).then((res)=> {
         this.loading = false
         if (res.id) {
           this.registrationResponseText = "Inschrijving is successvol!"

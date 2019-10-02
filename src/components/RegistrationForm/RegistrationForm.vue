@@ -131,7 +131,7 @@
           </b-form-group>
         </b-card>
       </b-row>
-      <b-row>
+      <b-row v-if="form.education === 'qoraan'">
         <b-form-group
           id="input-group-10"
           label="Ik kan goed arabisch lezen en schrijven"
@@ -141,10 +141,10 @@
         </b-form-group>
       </b-row>
       <b-row>
-        <div v-if="form.arabic===true && completedForm">
+        <div v-if="form.arabic=== true && completedForm">
           <b-button v-on:click="submit" variant="primary">Inschrijving indienen</b-button>
         </div>
-        <div v-else-if="form.arabic ===false && form.education === 'qoraan'">
+        <div v-else-if="form.arabic === false && form.education === 'qoraan'">
           <h6>Om mee te doen met Dar al-Qoran is het van belang om de arabisch taal machtig te zijn</h6>
           <h6>U kunt zich inschrijven voor de cursussen arabisch om eerst arabisch te leren.</h6>
         </div>
