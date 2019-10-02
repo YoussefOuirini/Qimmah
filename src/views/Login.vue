@@ -4,6 +4,11 @@
     <b-input type="text" v-model="email" placeholder="Email"></b-input><br>
     <b-input type="password" v-model="password" placeholder="Wachtwoord"></b-input><br>
     <b-button @click="login">Inloggen</b-button>
+    <p>Of login met Google <br>
+      <b-button class= "social-button">
+        <img src="../assets/google-logo.png" alt="Google Logo">
+      </b-button>
+    </p>
     <p>Nog geen account? <router-link to="/registreer">Maak er een!</router-link></p>
   </b-container>
 </template>
@@ -52,5 +57,20 @@ export default {
   p a {
     text-decoration: underline;
     cursor: pointer;
+  }
+  .social-button {
+    width: 75px;
+    background: white;
+    padding: 10px;
+    border-radius: 100%;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    outline: 0;
+    border: 0;
+  }
+  .social-button:active {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1); 
+  }
+  .social-button img {
+    width: 100%
   }
 </style>
