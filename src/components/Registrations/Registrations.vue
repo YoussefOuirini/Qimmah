@@ -1,13 +1,16 @@
 <template>
-  <div>
-    
-  </div>
+  <b-container>
+
+  </b-container>
 </template>
 
 <script>
   import Vue from "vue";
 
   export default Vue.extend ({
-    name: "Registrations"
+    name: "Registrations",
+    methods: {
+      
+    }
   })
 </script>
