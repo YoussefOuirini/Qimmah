@@ -1,7 +1,7 @@
 <template>
   <b-container v-if="loading == false && !registrationResponseText">
     <br>
-    <b-row><h1 style="font-style:italic">Inschrijfformulier Dar al-Qoraan Al-Himmah</h1></b-row>
+    <b-row><h1 style="font-style:italic">Inschrijfformulier Onderwijs Al-Himmah</h1></b-row>
     <b-row><h2> Gegevens deelnemer </h2></b-row>
     <b-form>
       <b-row>
@@ -44,7 +44,7 @@
             <b-form-radio v-model="form.gender" name="gender" value="female">Vrouw</b-form-radio>
           </b-form-group>
         </b-col>
-        <b-col>
+        <b-col m="6">
           <b-form-group
             id="input-group-5"
             label="Geboortedatum"
@@ -86,78 +86,80 @@
             ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-card bg-variant="light">
-          <b-form-group
-            label-cols-lg="3"
-            label="Adres"
-            label-size="lg"
-            label-class="font-weight-bold pt-0"
-            class="mb-0"
-          >
+        <b-col>
+          <b-card bg-variant="light">
             <b-form-group
-              label-cols-sm="5"
-              label="Straatnaam:"
-              label-align-sm="right"
-              label-for="nested-street"
+              label-cols-lg="3"
+              label="Adres"
+              label-size="lg"
+              label-class="font-weight-bold pt-0"
+              class="mb-0"
             >
-              <b-form-input id="nested-street" required v-model="form.address.streetname" placeholder= "Straatnaam"></b-form-input>
-            </b-form-group>
-            <b-form-group
-              label-cols-sm="5"
-              label="Huisnummer:"
-              label-align-sm="right"
-              label-for="nested-street"
-            >
-              <b-form-input id="nested-street" required v-model="form.address.houseNumber" placeholder= "Huisnummer"></b-form-input>
-            </b-form-group>
+              <b-form-group
+                label-cols-sm="5"
+                label="Straatnaam:"
+                label-align-sm="right"
+                label-for="nested-street"
+              >
+                <b-form-input id="nested-street" required v-model="form.address.streetname" placeholder= "Straatnaam"></b-form-input>
+              </b-form-group>
+              <b-form-group
+                label-cols-sm="5"
+                label="Huisnummer:"
+                label-align-sm="right"
+                label-for="nested-street"
+              >
+                <b-form-input id="nested-street" required v-model="form.address.houseNumber" placeholder= "Huisnummer"></b-form-input>
+              </b-form-group>
 
-            <b-form-group
-              label-cols-sm="4"
-              label="Postcode:"
-              label-align-sm="right"
-              label-for="nested-city"
-            >
-              <b-form-input id="nested-city" required v-model="form.address.zipCode" placeholder="Bijv. 1012 AZ"></b-form-input>
+              <b-form-group
+                label-cols-sm="4"
+                label="Postcode:"
+                label-align-sm="right"
+                label-for="nested-city"
+              >
+                <b-form-input id="nested-city" required v-model="form.address.zipCode" placeholder="Bijv. 1012 AZ"></b-form-input>
+              </b-form-group>
+              <b-form-group
+                label-cols-sm="5"
+                label="Woonplaats:"
+                label-align-sm="right"
+                label-for="nested-city"
+              >
+                <b-form-input id="nested-city" required v-model="form.address.city" placeholder="Zaandam"></b-form-input>
+              </b-form-group>
             </b-form-group>
+          </b-card>
+          <b-row v-if="form.education === 'qoraan'">
             <b-form-group
-              label-cols-sm="5"
-              label="Woonplaats:"
-              label-align-sm="right"
-              label-for="nested-city"
-            >
-              <b-form-input id="nested-city" required v-model="form.address.city" placeholder="Zaandam"></b-form-input>
+              id="input-group-10"
+              label="Ik kan goed arabisch lezen en schrijven"
+              label-for="input-10"
+            ><b-form-radio v-model="form.arabic" name="arabic" v-bind:value="true">Ja</b-form-radio>
+              <b-form-radio v-model="form.arabic" name="arabic" v-bind:value="false">Nee</b-form-radio>
             </b-form-group>
-          </b-form-group>
-        </b-card>
-      </b-row>
-      <b-row v-if="form.education === 'qoraan'">
-        <b-form-group
-          id="input-group-10"
-          label="Ik kan goed arabisch lezen en schrijven"
-          label-for="input-10"
-        ><b-form-radio v-model="form.arabic" name="arabic" v-bind:value="true">Ja</b-form-radio>
-          <b-form-radio v-model="form.arabic" name="arabic" v-bind:value="false">Nee</b-form-radio>
-        </b-form-group>
+          </b-row>
+          <b-row v-if="form.arabic === false && form.education === 'qoraan'">
+            <h6 style="font-style:oblique; color:lightSalmon">Om mee te doen met Dar al-Qoran is het van belang om de arabisch taal machtig te zijn</h6>
+            <h6 style="font-style:italic; color:red">U kunt zich inschrijven voor de cursussen arabisch om eerst arabisch te leren.</h6>
+          </b-row>
+        </b-col>
       </b-row>
       <b-row>
         <div v-if="form.arabic=== true && completedForm">
           <b-button v-on:click="submit" variant="primary">Inschrijving indienen</b-button>
-        </div>
-        <div v-else-if="form.arabic === false && form.education === 'qoraan'">
-          <h6>Om mee te doen met Dar al-Qoran is het van belang om de arabisch taal machtig te zijn</h6>
-          <h6>U kunt zich inschrijven voor de cursussen arabisch om eerst arabisch te leren.</h6>
         </div>
         <div v-else-if="!completedForm">
           <h4 style="color:crimson">Vul alle gegevens correct in.</h4>
         </div>
       </b-row>
     </b-form>
+    <b-row v-if="loading==false && registrationResponseText">
+     <h4 style="color:green"> {{registrationResponseText}} </h4>
+    </b-row>
   </b-container>
   <b-container v-else-if="loading==true">
     <b-spinner style="width: 25rem; height: 25rem;" label="Loading..."></b-spinner>
-  </b-container>
-  <b-container v-else-if="loading==false && registrationResponseText">
-    {{registrationResponseText}}
   </b-container>
 </template>
 <script>
