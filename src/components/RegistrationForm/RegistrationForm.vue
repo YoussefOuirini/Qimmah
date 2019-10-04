@@ -62,7 +62,7 @@
                 label-align-sm="right"
                 label-for="nested-city"
               >
-                <b-form-input id="nested-city" required v-model="form.address.zipCode" placeholder="Bijv. 1012 AZ"></b-form-input>
+                <b-form-input id="nested-city" required v-model="form.address.zipCode" placeholder="1012 AZ"></b-form-input>
               </b-form-group>
               <b-form-group
                 label-cols-sm="6"
