@@ -7,11 +7,15 @@
 <script>
   import Vue from "vue";
   import { getRegistrations } from "@/firebase";
+  import { EventBus } from "../../EventBus"
 
   export default Vue.extend ({
     name: "Registrations",
     mounted() {
-      this.loadRegistrations()
+      this.loadRegistrations(),
+      EventBus.$on('registration', () => {
+        this.loadRegistrations;
+      })
     },
     data() {
       return {

@@ -2,6 +2,7 @@ import Vue from "vue";
 import { config } from "../../config";
 import { writeRegistration } from "../../firebase";
 import firebase from "firebase";
+import { EventBus } from "../../EventBus.js";
 
 export default Vue.extend({
   name: "RegistrationForm",
@@ -77,6 +78,7 @@ export default Vue.extend({
       registration.email = user.email;
       writeRegistration(registration).then((res)=> {
         this.loading = false
+        EventBus.reloadRegistration();
         if (res.id) {
           this.registrationResponseText = "Inschrijving is successvol!"
         } else {
