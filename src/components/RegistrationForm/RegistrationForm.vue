@@ -125,8 +125,8 @@
           ><b-form-select v-model="form.education" class="mb-3">
               <option :value="null">Kies waarvoor u uwzelf of uw kind wilt inschrijven</option>
               <option value="qoraan">Dar al-Qoraan</option>
-              <option value="basisonderwijs">Basisonderwijs</option>
-              <option value="arabisch">Arabisch voor volwassenen</option>
+              <option v-if="form.underage===true" value="basisonderwijs">Basisonderwijs</option>
+              <option v-else value="arabisch">Arabisch voor volwassenen</option>
             </b-form-select>
           </b-form-group>
           <b-row v-if="form.education === 'qoraan'">
