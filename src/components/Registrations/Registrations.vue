@@ -1,6 +1,6 @@
 <template>
   <b-container v-if="isLoaded === true">
-    <b-table striped hover :items="registrations"></b-table>
+    <b-table striped hover :items="registrations" :fields="fields"></b-table>
   </b-container>
 </template>
 
@@ -16,6 +16,20 @@
     data() {
       return {
         isLoaded: false,
+        fields: [{
+          key: 'firstName',
+          label: 'Voornaam'
+        },{
+          key: 'lastName',
+          label: 'Achternaam'
+        }, {
+          key: 'education',
+          label: 'Ingeschreven voor studie'
+        }, {
+          key: 'phoneNumber',
+          label: 'Telefoonnummer'
+        }
+        ],
         registrations: []
       }
     },
