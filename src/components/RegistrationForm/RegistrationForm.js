@@ -38,7 +38,11 @@ export default Vue.extend({
     },
     completedBasicForm() {
       const {firstName, lastName, gender, birthDate, phoneNumber, education} = this.form
-      return firstName && lastName && gender && birthDate && phoneNumber && education && this.filledInAddress
+      let completedBasicForm = firstName && lastName && gender && birthDate && phoneNumber && education && this.filledInAddress;
+      if (education === "qoraan") {
+        return completedBasicForm && (this.form.arabic === true)
+      }
+      return completedBasicForm
     },
     completedParentForm() {
       return this.form.parent.firstName && this.form.parent.lastName

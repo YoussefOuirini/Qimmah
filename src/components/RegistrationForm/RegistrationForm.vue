@@ -1,5 +1,5 @@
 <template>
-  <b-container v-if="loading == false && !registrationResponseText">
+  <b-container v-if="loading == false">
     <br>
     <b-row><h1 style="font-style:italic">Inschrijfformulier Onderwijs Al-Himmah</h1></b-row>
     <b-row><h2> Gegevens deelnemer </h2></b-row>
@@ -144,8 +144,9 @@
           </b-row>
         </b-col>
       </b-row>
+      <br>
       <b-row>
-        <div v-if="form.arabic=== true && completedForm">
+        <div v-if="completedForm">
           <b-button v-on:click="submit" variant="primary">Inschrijving indienen</b-button>
         </div>
         <div v-else-if="!completedForm">
@@ -153,6 +154,7 @@
         </div>
       </b-row>
     </b-form>
+    <br>
     <b-row v-if="loading==false && registrationResponseText">
      <h4 style="color:green"> {{registrationResponseText}} </h4>
     </b-row>
