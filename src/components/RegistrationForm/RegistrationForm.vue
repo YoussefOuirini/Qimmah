@@ -146,7 +146,7 @@
       </b-row>
       <br>
       <b-row>
-        <div v-if="completedForm">
+        <div v-if="completedForm && loading === false">
           <b-button v-on:click="submit" variant="primary">Inschrijving indienen</b-button>
         </div>
         <div v-else-if="!completedForm">
