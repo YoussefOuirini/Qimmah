@@ -1,8 +1,6 @@
 <template>
   <b-container v-if="isLoaded === true">
-    <b-row v-for="registration in registrations" v-bind:key="registration.id">
-      {{registration}}
-    </b-row>
+    <b-table striped hover :items="registrations"></b-table>
   </b-container>
 </template>
 
