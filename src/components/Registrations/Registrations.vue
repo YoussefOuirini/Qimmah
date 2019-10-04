@@ -14,7 +14,7 @@
     mounted() {
       this.loadRegistrations(),
       EventBus.$on('registration', () => {
-        this.loadRegistrations;
+        this.loadRegistrations();
       })
     },
     data() {
