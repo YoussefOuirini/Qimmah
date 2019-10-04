@@ -1,5 +1,5 @@
 <template>
-  <b-container v-if="isLoaded === true">
+  <b-container v-if="isLoaded === true && registrations.length > 0">
     <b-table striped hover :items="registrations" :fields="fields"></b-table>
   </b-container>
 </template>
