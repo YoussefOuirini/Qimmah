@@ -25,24 +25,55 @@
           </b-form-group>
 
           <b-form-group
-            id="input-group-3"
-            label="Welke studie:"
-            label-for="input-3"
-          ><b-form-select v-model="form.education" class="mb-3">
-              <option :value="null">Kies waarvoor u uwzelf of uw kind wilt inschrijven</option>
-              <option value="qoraan">Dar al-Qoraan</option>
-              <option value="basisonderwijs">Basisonderwijs</option>
-              <option value="arabisch">Arabisch voor volwassenen</option>
-            </b-form-select>
-          </b-form-group>
-
-          <b-form-group
             id="input-group-4"
             label="Geslacht"
             label-for="input-4"
           ><b-form-radio v-model="form.gender" name="gender" value="male">Man</b-form-radio>
             <b-form-radio v-model="form.gender" name="gender" value="female">Vrouw</b-form-radio>
           </b-form-group>
+          <b-card bg-variant="light">
+            <b-form-group
+              label-cols-lg="3"
+              label="Adres"
+              label-size="lg"
+              label-class="font-weight-bold pt-0"
+              class="mb-0"
+            >
+              <b-form-group
+                label-cols-sm="7"
+                label="Straatnaam:"
+                label-align-sm="right"
+                label-for="nested-street"
+              >
+                <b-form-input id="nested-street" required v-model="form.address.streetname" placeholder= "Smitsven"></b-form-input>
+              </b-form-group>
+              <b-form-group
+                label-cols-sm="7"
+                label="Huisnummer:"
+                label-align-sm="right"
+                label-for="nested-street"
+              >
+                <b-form-input id="nested-street" required v-model="form.address.houseNumber" placeholder= "12"></b-form-input>
+              </b-form-group>
+
+              <b-form-group
+                label-cols-sm="5"
+                label="Postcode:"
+                label-align-sm="right"
+                label-for="nested-city"
+              >
+                <b-form-input id="nested-city" required v-model="form.address.zipCode" placeholder="Bijv. 1012 AZ"></b-form-input>
+              </b-form-group>
+              <b-form-group
+                label-cols-sm="6"
+                label="Woonplaats:"
+                label-align-sm="right"
+                label-for="nested-city"
+              >
+                <b-form-input id="nested-city" required v-model="form.address.city" placeholder="Zaandam"></b-form-input>
+              </b-form-group>
+            </b-form-group>
+          </b-card>
         </b-col>
         <b-col m="6">
           <b-form-group
@@ -87,49 +118,17 @@
           </b-form-group>
         </b-col>
         <b-col>
-          <b-card bg-variant="light">
-            <b-form-group
-              label-cols-lg="3"
-              label="Adres"
-              label-size="lg"
-              label-class="font-weight-bold pt-0"
-              class="mb-0"
-            >
-              <b-form-group
-                label-cols-sm="5"
-                label="Straatnaam:"
-                label-align-sm="right"
-                label-for="nested-street"
-              >
-                <b-form-input id="nested-street" required v-model="form.address.streetname" placeholder= "Straatnaam"></b-form-input>
-              </b-form-group>
-              <b-form-group
-                label-cols-sm="5"
-                label="Huisnummer:"
-                label-align-sm="right"
-                label-for="nested-street"
-              >
-                <b-form-input id="nested-street" required v-model="form.address.houseNumber" placeholder= "Huisnummer"></b-form-input>
-              </b-form-group>
-
-              <b-form-group
-                label-cols-sm="4"
-                label="Postcode:"
-                label-align-sm="right"
-                label-for="nested-city"
-              >
-                <b-form-input id="nested-city" required v-model="form.address.zipCode" placeholder="Bijv. 1012 AZ"></b-form-input>
-              </b-form-group>
-              <b-form-group
-                label-cols-sm="5"
-                label="Woonplaats:"
-                label-align-sm="right"
-                label-for="nested-city"
-              >
-                <b-form-input id="nested-city" required v-model="form.address.city" placeholder="Zaandam"></b-form-input>
-              </b-form-group>
-            </b-form-group>
-          </b-card>
+          <b-form-group
+            id="input-group-3"
+            label="Welke studie:"
+            label-for="input-3"
+          ><b-form-select v-model="form.education" class="mb-3">
+              <option :value="null">Kies waarvoor u uwzelf of uw kind wilt inschrijven</option>
+              <option value="qoraan">Dar al-Qoraan</option>
+              <option value="basisonderwijs">Basisonderwijs</option>
+              <option value="arabisch">Arabisch voor volwassenen</option>
+            </b-form-select>
+          </b-form-group>
           <b-row v-if="form.education === 'qoraan'">
             <b-form-group
               id="input-group-10"
