@@ -40,7 +40,7 @@
               class="mb-0"
             >
               <b-form-group
-                label-cols-sm="7"
+                label-cols-sm="6"
                 label="Straatnaam:"
                 label-align-sm="right"
                 label-for="nested-street"
