@@ -14,3 +14,12 @@ export async function writeRegistration(registration) {
       throw new Error(error)
     });
 }
+
+export async function getRegistrations() {
+  const querySnapshot = await db.collection("registrations").where("email", "==", firebase.auth().currentUser.email).get();
+  let registrations = [];
+  querySnapshot.forEach((doc) => {
+    registrations.push(doc.data())
+  });
+  return registrations;
+}
