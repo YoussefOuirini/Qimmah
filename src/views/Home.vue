@@ -17,7 +17,7 @@
   import Registrations from "../components/Registrations/Registrations.vue"
 
   export default Vue.extend({
-    name: "App",
+    name: "Home",
     components: {
       RegistrationForm,
       Registrations

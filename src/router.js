@@ -5,6 +5,7 @@ import Router from 'vue-router';
 import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import SignUp from './views/SignUp.vue'
+import Teacher from './views/Teacher.vue'
 
 Vue.use(Router);
 
@@ -22,6 +23,14 @@ const router = new Router ({
       path: '/home',
       name: 'home',
       component: Home,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/teacher',
+      name: 'teacher',
+      component: Teacher,
       meta: {
         requiresAuth: true
       }
