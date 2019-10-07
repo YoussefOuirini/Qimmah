@@ -139,7 +139,7 @@
             </b-form-group>
           </b-row>
           <b-row v-if="form.arabic === false && form.education === 'qoraan'">
-            <h6 style="font-style:oblique; color:lightSalmon">Om mee te doen met Dar al-Qoran is het van belang om de arabisch taal machtig te zijn</h6>
+            <h6 style="font-style:oblique; color:lightSalmon">Om mee te doen met Dar al-Qoran is het van belang om de arabisch te kunnen lezen.</h6>
             <h6 style="font-style:italic; color:red">U kunt zich inschrijven voor de cursussen arabisch om eerst arabisch te leren.</h6>
           </b-row>
         </b-col>
