@@ -53,6 +53,7 @@ router.beforeEach((to, from, next)=> {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 
   if (requiresAuth && !currentUser) next('login');
+  else if (requiresAuth && to === 'teacher' && currentUser.getIdTokenResult().claims.moderator) next('teacher')
   else if (!requiresAuth && currentUser) next('home');
   else next();
 })
