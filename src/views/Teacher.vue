@@ -18,12 +18,17 @@
         :per-page="perPage"
         aria-controls="users"
       ></b-pagination>
-      <b-table 
+      <b-table
         id="users" 
-        striped hover 
+        striped hover selectable
+        select-mode="single"
         :items="foundUsers" 
         :fields="fields"
+        @row-selected="onRowSelected"
       ></b-table>
+    </div>
+    <div v-if="selectedUser.length">
+      {{selectedUser}}
     </div>
   </b-container>
 </template>
@@ -41,6 +46,7 @@ export default Vue.extend({
     return {
       users: [],
       foundUsers: [],
+      selectedUser: [],
       search: { text: ""},
       perPage: 10,
       fields: [{
@@ -69,6 +75,9 @@ export default Vue.extend({
           return user;
         }
       })
+    },
+    onRowSelected(user) {
+      this.selectedUser = user
     }
   }
 })
