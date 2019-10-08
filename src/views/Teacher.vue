@@ -74,6 +74,9 @@ export default Vue.extend({
     },
     searchUsers() {
       this.foundUsers = this.users.filter((user) => {
+        if(!this.search.text) {
+          return;
+        }
         if(user.email.toLowerCase().search(this.search.text.toLowerCase()) != -1) {
           return user;
         }
