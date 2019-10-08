@@ -5,7 +5,7 @@
         @input="searchUsers()"
         v-model="search.text"
         type="text"
-        placeholder="Search by Name"
+        placeholder="Zoek met email"
       ></b-form-input>
       <span class="search-icon">
         <i class="fas fa-search"></i>
@@ -65,7 +65,7 @@ export default Vue.extend({
     },
     searchUsers() {
       this.foundUsers = this.users.filter((user) => {
-        if(user.email.toLowerCase().search(this.search.text) != -1) {
+        if(user.email.toLowerCase().search(this.search.text.toLowerCase()) != -1) {
           return user;
         }
       })
