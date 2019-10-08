@@ -27,8 +27,11 @@
         @row-selected="onRowSelected"
       ></b-table>
     </div>
-    <div v-if="selectedUser.length">
-      {{selectedUser}}
+    <div v-if="selectedUser">
+      <b-button-group>
+        <b-button variant="warning"> Maak gebruiker leraar </b-button>
+        <b-button variant="danger"> Maak gebruiker admin</b-button>
+      </b-button-group>
     </div>
   </b-container>
 </template>
@@ -77,7 +80,7 @@ export default Vue.extend({
       })
     },
     onRowSelected(user) {
-      this.selectedUser = user
+      this.selectedUser = user[0]
     }
   }
 })
