@@ -1,7 +1,18 @@
 <template>
-  <b-container>
-    <b-table striped hover :items="users" :fields="fields"></b-table>
-  </b-container>
+  <div class="overflow-auto">
+      <b-pagination
+      v-if="rows > perPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      aria-controls="users"
+    ></b-pagination>
+    <b-table 
+      id="users" 
+      striped hover 
+      :items="users" 
+      :fields="fields"
+    ></b-table>
+  </div>
 </template>
 
 <script>
@@ -16,6 +27,7 @@ export default Vue.extend({
   data() {
     return {
       users: [],
+      perPage: 10,
       fields: [{
           key: 'email',
           label: 'Email'
@@ -23,6 +35,11 @@ export default Vue.extend({
           key: 'customClaims',
           label: 'Autoriteit'
         }],
+    }
+  },
+  computed: {
+    rows() {
+      return this.users.length
     }
   },
   methods: {
