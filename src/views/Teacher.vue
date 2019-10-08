@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <div class="search-bar">
+    <div v-if="users.length" class="search-bar">
       <b-form-input
         @input="searchUsers()"
         v-model="search.text"
@@ -29,9 +29,10 @@
     </div>
     <div v-if="selectedUser">
       <b-button-group>
-        <b-button variant="warning"> Maak gebruiker leraar </b-button>
-        <b-button variant="danger"> Maak gebruiker admin</b-button>
+        <b-button @click="setUserRole" value="teacher" variant="warning"> Maak gebruiker leraar </b-button>
+        <b-button @click="setUserRole" value="admin" variant="danger"> Maak gebruiker admin</b-button>
       </b-button-group>
+      <p v-if="response.data">{{ response }}</p>
     </div>
   </b-container>
 </template>
@@ -49,7 +50,8 @@ export default Vue.extend({
     return {
       users: [],
       foundUsers: [],
-      selectedUser: [],
+      selectedUser: '',
+      response: "",
       search: { text: ""},
       perPage: 10,
       fields: [{
@@ -84,6 +86,10 @@ export default Vue.extend({
     },
     onRowSelected(user) {
       this.selectedUser = user[0]
+    },
+    async setUserRole() {
+      const addModerator = firebase.functions().httpsCallable('addModerator');
+      this.response = await addModerator({email: this.selectedUser.email})
     }
   }
 })
