@@ -19,7 +19,8 @@
         aria-controls="users"
       ></b-pagination>
       <b-table
-        id="users" 
+        id="users"
+        ref="usersTable"
         striped hover selectable
         select-mode="single"
         :items="foundUsers" 
@@ -32,7 +33,6 @@
         <b-button @click="setUser('teacher')" value="teacher" variant="warning"> Maak gebruiker leraar </b-button>
         <b-button @click="setUser('moderator')" value="moderator" variant="danger"> Maak gebruiker moderator</b-button>
       </b-button-group>
-      <p v-if="response.data">{{ response }}</p>
     </div>
   </b-container>
 </template>
@@ -51,7 +51,6 @@ export default Vue.extend({
       users: [],
       foundUsers: [],
       selectedUser: '',
-      response: "",
       search: { text: ""},
       perPage: 10,
       fields: [{
@@ -75,6 +74,7 @@ export default Vue.extend({
       this.users = allUsers.data;
     },
     searchUsers() {
+      this.selectedUser = '';
       this.foundUsers = this.users.filter((user) => {
         if(!this.search.text) {
           return;
@@ -89,7 +89,11 @@ export default Vue.extend({
     },
     async setUser(role) {
       const addModerator = firebase.functions().httpsCallable('addModerator');
-      this.response = await addModerator({email: this.selectedUser.email, role })
+      await addModerator({email: this.selectedUser.email, role });
+      await this.getUsers();
+      this.foundUsers = [];
+      this.search.text = '';
+      this.$refs.usersTable.refresh()
     }
   }
 })
