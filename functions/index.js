@@ -17,12 +17,12 @@ async function getUsers() {
 
 exports.addModerator = functions.https.onCall((data, context) => {
    if (context.auth.token.moderator) {
-     return setUserRole(data.email)
+     return setUserRole(data.email, data.role)
    }
-   return { error: 'User not authorized to change user role.' }
+   return { error: 'User not authorized to change user role.'}
 })
 
-async function setUserRole(email) {
+async function setUserRole(email, role) {
   const user = await admin.auth().getUserByEmail(email);
-  return admin.auth().setCustomUserClaims(user.uid, {moderator: true});
+  return admin.auth().setCustomUserClaims(user.uid, {[role]: true});
 }

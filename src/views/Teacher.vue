@@ -29,8 +29,8 @@
     </div>
     <div v-if="selectedUser">
       <b-button-group>
-        <b-button @click="setUserRole" value="teacher" variant="warning"> Maak gebruiker leraar </b-button>
-        <b-button @click="setUserRole" value="admin" variant="danger"> Maak gebruiker admin</b-button>
+        <b-button @click="setUser('teacher')" value="teacher" variant="warning"> Maak gebruiker leraar </b-button>
+        <b-button @click="setUser('moderator')" value="moderator" variant="danger"> Maak gebruiker moderator</b-button>
       </b-button-group>
       <p v-if="response.data">{{ response }}</p>
     </div>
@@ -87,9 +87,9 @@ export default Vue.extend({
     onRowSelected(user) {
       this.selectedUser = user[0]
     },
-    async setUserRole() {
+    async setUser(role) {
       const addModerator = firebase.functions().httpsCallable('addModerator');
-      this.response = await addModerator({email: this.selectedUser.email})
+      this.response = await addModerator({email: this.selectedUser.email, role })
     }
   }
 })
