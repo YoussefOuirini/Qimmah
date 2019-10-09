@@ -16,7 +16,20 @@
          </b-input-group-append>
         </b-input-group>
     </b-form-group>
-    <b-table v-if="isLoaded" striped hover :items="groups" :fields="groupFields"></b-table>
+    <b-table v-if="isLoaded" striped hover :items="groups" :fields="groupFields">
+      <template v-slot:cell(addTeacherToGroup)>
+        <b-form-select
+          v-model="selectedTeacher"
+          :options="teachers"
+          text-field="email"
+          value-field="email"
+        >
+          <template v-slot:first>
+            <option :value="null" disabled>-- Selecteer een leraar --</option>
+          </template>
+        </b-form-select>
+      </template>
+    </b-table>
   </b-container>
 </template>
 
@@ -26,8 +39,9 @@ import { createGroup, getGroups } from "../../firebase.js"
 
 export default Vue.extend ({
   name: "Groups",
+  props: ['users'],
   mounted() {
-    this.loadGroups()
+    this.loadGroups();
   },
   data() {
     return {
@@ -40,7 +54,11 @@ export default Vue.extend ({
       }, {
         key: "teacher",
         label: "Leraar"
-      }]
+      },{
+        key: 'addTeacherToGroup',
+        label: 'Leraar toevoegen aan klas'
+      }],
+      selectedTeacher: ''
     }
   },
   computed: {
@@ -58,6 +76,13 @@ export default Vue.extend ({
     },
     validFeedback() {
       return this.state === true ? 'Druk op klas toevoegen om de klas aan te maken!' : ''
+    },
+    teachers() {
+      return this.users.filter((user) => {
+        if (user.customClaims.teacher) {
+          return user
+        }
+      })
     }
   },
   methods: {

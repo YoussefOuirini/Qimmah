@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <Groups />
+    <Groups v-if="users.length" v-bind:users="users"/>
     <div v-if="users.length" class="search-bar">
       <b-form-input
         @input="searchUsers()"
