@@ -1,5 +1,6 @@
 <template>
   <b-container>
+    <Groups />
     <div v-if="users.length" class="search-bar">
       <b-form-input
         @input="searchUsers()"
@@ -34,7 +35,6 @@
         <b-button @click="setUser('moderator')" value="moderator" variant="danger"> Maak gebruiker moderator</b-button>
       </b-button-group>
     </div>
-    <Groups />
   </b-container>
 </template>
 
