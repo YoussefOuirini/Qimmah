@@ -102,6 +102,9 @@ export default Vue.extend ({
   },
   methods: {
     async addGroup() {
+      if (this.groupAlreadyExists) {
+        return;
+      }
       this.isLoaded = false;
       await createGroup({groupName: this.groupName});
       await this.loadGroups();
