@@ -16,18 +16,31 @@
          </b-input-group-append>
         </b-input-group>
     </b-form-group>
+    <b-table v-if="isLoaded" striped hover :items="groups" :fields="groupFields"></b-table>
   </b-container>
 </template>
 
 <script>
 import Vue from "vue";
-import { createGroup } from "../../firebase.js"
+import { createGroup, getGroups } from "../../firebase.js"
 
 export default Vue.extend ({
   name: "Groups",
+  mounted() {
+    this.loadGroups()
+  },
   data() {
     return {
-      groupName: ""
+      isLoaded: true,
+      groupName: "",
+      groups: [],
+      groupFields: [{
+        key: "groupName",
+        label: "Klas",
+      }, {
+        key: "teacher",
+        label: "Leraar"
+      }]
     }
   },
   computed: {
@@ -48,8 +61,14 @@ export default Vue.extend ({
     }
   },
   methods: {
-    submit() {
-      createGroup({groupName: this.groupName})
+    async submit() {
+      this.isLoaded = false,
+      await createGroup({groupName: this.groupName})
+      await this.loadGroups();
+      this.isLoaded = true
+    },
+    async loadGroups() {
+      this.groups = await getGroups();
     }
   }
 })

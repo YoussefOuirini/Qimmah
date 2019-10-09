@@ -38,6 +38,15 @@ export async function createGroup(group) {
     });
 }
 
+export async function getGroups() {
+  const querySnapshot = await db.collection("groups").get();
+  let groups = [];
+  querySnapshot.forEach((doc) => {
+    groups.push(doc.data())
+  });
+  return groups;
+}
+
 export async function checkIfUserIsModerator() {
   const idTokenResult = await firebase.auth().currentUser.getIdTokenResult();
   return idTokenResult.claims.moderator;
