@@ -34,15 +34,20 @@
         <b-button @click="setUser('moderator')" value="moderator" variant="danger"> Maak gebruiker moderator</b-button>
       </b-button-group>
     </div>
+    <Groups />
   </b-container>
 </template>
 
 <script>
 import Vue from 'vue';
 import firebase from 'firebase';
+import Groups from '../components/Groups/Groups.vue'
 
 export default Vue.extend({
   name: "Teacher",
+  components: {
+    Groups 
+  },
   mounted() {
     this.getUsers()
   },

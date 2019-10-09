@@ -1,11 +1,11 @@
 <template>
-  <b-container></b-container>
+  <b-container><p>Groups</p></b-container>
 </template>
 
 <script>
 import Vue from "vue";
 
-export default new Vue({
+export default Vue.extend ({
   name: "Groups",
   data() {
     return {

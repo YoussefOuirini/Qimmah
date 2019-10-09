@@ -18,7 +18,7 @@
         <div class="wrap">
           <b-nav>
             <b-nav-item><router-link to="/home">Home</router-link></b-nav-item>
-            <b-nav-item v-if="userIsModerator"><router-link to="/teacher">Leraren</router-link></b-nav-item>
+            <b-nav-item v-if="userIsModerator"><router-link to="/leraar">Leraren</router-link></b-nav-item>
           </b-nav>
         </div><!-- .wrap -->
       </div><!-- .navigation-top -->
