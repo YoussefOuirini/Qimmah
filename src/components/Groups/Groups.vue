@@ -12,22 +12,25 @@
        <b-input-group class="mt-3">
          <b-form-input id="group" v-model="groupName" :state="state" trim></b-form-input>
          <b-input-group-append>
-          <b-button @click="submit" variant="primary">Klas toevoegen</b-button>
+          <b-button @click="addGroup" variant="primary">Klas toevoegen</b-button>
          </b-input-group-append>
         </b-input-group>
     </b-form-group>
     <b-table v-if="isLoaded" striped hover :items="groups" :fields="groupFields">
-      <template v-slot:cell(addTeacherToGroup)>
-        <b-form-select
-          v-model="selectedTeacher"
-          :options="teachers"
-          text-field="email"
-          value-field="email"
-        >
-          <template v-slot:first>
-            <option :value="null" disabled>-- Selecteer een leraar --</option>
-          </template>
-        </b-form-select>
+      <template v-slot:cell(addTeacher)>
+        <b-form inline>
+          <b-form-select
+            v-bind:value="selectedTeacher"
+            :options="teachers"
+            text-field="email"
+            value-field="email"
+          >
+            <template v-slot:first>
+              <option :value="null" disabled>-- Selecteer een leraar --</option>
+            </template>
+          </b-form-select>
+          <b-button @click="addTeacher" size="sm">Leraar Toevoegen</b-button>
+        </b-form>
       </template>
     </b-table>
   </b-container>
@@ -55,7 +58,7 @@ export default Vue.extend ({
         key: "teacher",
         label: "Leraar"
       },{
-        key: 'addTeacherToGroup',
+        key: 'addTeacher',
         label: 'Leraar toevoegen aan klas'
       }],
       selectedTeacher: ''
@@ -86,7 +89,7 @@ export default Vue.extend ({
     }
   },
   methods: {
-    async submit() {
+    async addGroup() {
       this.isLoaded = false,
       await createGroup({groupName: this.groupName})
       await this.loadGroups();
@@ -94,6 +97,9 @@ export default Vue.extend ({
     },
     async loadGroups() {
       this.groups = await getGroups();
+    },
+    addTeacher() {
+      console.log('adding teacher')
     }
   }
 })
