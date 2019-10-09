@@ -12,7 +12,7 @@
        <b-input-group class="mt-3">
          <b-form-input id="group" v-model="groupName" :state="state" trim></b-form-input>
          <b-input-group-append>
-          <b-button @click="addGroup" variant="primary">Klas toevoegen</b-button>
+          <b-button @click="addGroup" variant="primary" :disabled="groupAlreadyExists">Klas toevoegen</b-button>
          </b-input-group-append>
         </b-input-group>
     </b-form-group>
