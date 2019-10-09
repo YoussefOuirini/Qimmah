@@ -25,6 +25,10 @@ export async function getRegistrations() {
 }
 
 export async function createGroup(group) {
+  const userIsModerator = await checkIfUserIsModerator();
+  if (!userIsModerator) {
+    return new Error('User not authorized.')
+  }
   return db.collection("groups").add(group)
     .then((docRef)=> {
       return docRef
@@ -32,4 +36,9 @@ export async function createGroup(group) {
     .catch((error)=> {
       throw new Error(error)
     });
+}
+
+export async function checkIfUserIsModerator() {
+  const idTokenResult = await firebase.auth().currentUser.getIdTokenResult();
+  return idTokenResult.claims.moderator;
 }
