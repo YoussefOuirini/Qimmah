@@ -12,7 +12,7 @@
        <b-input-group class="mt-3">
          <b-form-input id="group" v-model="groupName" :state="state" trim></b-form-input>
          <b-input-group-append>
-          <b-button variant="success">Klas toevoegen</b-button>
+          <b-button @click="submit" variant="primary">Klas toevoegen</b-button>
          </b-input-group-append>
         </b-input-group>
     </b-form-group>
@@ -21,6 +21,7 @@
 
 <script>
 import Vue from "vue";
+import { createGroup } from "../../firebase.js"
 
 export default Vue.extend ({
   name: "Groups",
@@ -43,11 +44,13 @@ export default Vue.extend ({
       }
     },
     validFeedback() {
-      return this.state === true ? 'Thank you' : ''
+      return this.state === true ? 'Druk op klas toevoegen om de klas aan te maken!' : ''
     }
   },
   methods: {
-
+    submit() {
+      createGroup({groupName: this.groupName})
+    }
   }
 })
 </script>

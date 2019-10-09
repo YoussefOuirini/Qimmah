@@ -23,3 +23,13 @@ export async function getRegistrations() {
   });
   return registrations;
 }
+
+export async function createGroup(group) {
+  return db.collection("groups").add(group)
+    .then((docRef)=> {
+      return docRef
+    })
+    .catch((error)=> {
+      throw new Error(error)
+    });
+}
