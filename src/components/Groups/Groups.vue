@@ -2,7 +2,7 @@
   <b-container>
     <b-form-group
       id="group"
-      description="De naam zal worden toegevoegd aan de klas."
+      description="De naam zal worden toegevoegd aan de klassen."
       label="Creëer een nieuwe klas."
       label-for="group"
       :invalid-feedback="invalidFeedback"
@@ -71,10 +71,12 @@ export default Vue.extend ({
   },
   computed: {
     state() {
-      return this.groupName.length >= 4 ? true : false
+      return (this.groupName.length >= 4 && !this.groupAlreadyExists) ? true : false
     },
     invalidFeedback() {
-      if (this.groupName.length > 4) {
+      if (this.groupAlreadyExists) {
+        return 'Klas bestaat al.'
+      } else if (this.groupName.length > 4) {
         return ''
       } else if (this.groupName.length > 0) {
         return 'Vul minstens 4 letters in.'
@@ -84,6 +86,11 @@ export default Vue.extend ({
     },
     validFeedback() {
       return this.state === true ? 'Druk op klas toevoegen om de klas aan te maken!' : ''
+    },
+    groupAlreadyExists() {
+      return this.groups.some((group) => {
+        return group.groupName === this.groupName
+      })
     },
     teachers() {
       return this.users.filter((user) => {
