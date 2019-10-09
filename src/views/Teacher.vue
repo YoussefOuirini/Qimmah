@@ -27,7 +27,11 @@
         :items="foundUsers" 
         :fields="fields"
         @row-selected="onRowSelected"
-      ></b-table>
+      >
+        <template v-slot:cell(customClaims)="data">
+          Leraar: {{ data.value.teacher }}, Moderator: {{data.value.moderator}}
+        </template>
+      </b-table>
     </div>
     <div v-if="selectedUser">
       <b-button-group>
