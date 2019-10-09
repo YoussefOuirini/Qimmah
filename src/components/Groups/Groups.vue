@@ -45,7 +45,7 @@
 
 <script>
 import Vue from "vue";
-import { createGroup, getGroups } from "../../firebase.js"
+import { createGroup, getGroups, addTeacherToGroup } from "../../firebase.js"
 
 export default Vue.extend ({
   name: "Groups",
@@ -65,8 +65,8 @@ export default Vue.extend ({
         key: "teacher",
         label: "Leraar"
       }],
-      selectedGroup: '',
-      selectedTeacher: ''
+      selectedGroup: {},
+      selectedTeacher: {}
     }
   },
   computed: {
@@ -95,16 +95,19 @@ export default Vue.extend ({
   },
   methods: {
     async addGroup() {
-      this.isLoaded = false,
-      await createGroup({groupName: this.groupName})
+      this.isLoaded = false;
+      await createGroup({groupName: this.groupName});
       await this.loadGroups();
-      this.isLoaded = true
+      this.isLoaded = true;
     },
     async loadGroups() {
       this.groups = await getGroups();
     },
-    addTeacher() {
-      console.log(this.selectedTeacher);
+    async addTeacher() {
+      this.isLoaded = false;
+      await addTeacherToGroup(this.selectedTeacher, this.selectedGroup);
+      await this.loadGroups();
+      this.isLoaded = true;
     }
   }
 })
