@@ -16,23 +16,30 @@
          </b-input-group-append>
         </b-input-group>
     </b-form-group>
-    <b-table v-if="isLoaded" striped hover :items="groups" :fields="groupFields">
-      <template v-slot:cell(addTeacher)>
-        <b-form inline>
-          <b-form-select
-            v-bind:value="selectedTeacher"
-            :options="teachers"
-            text-field="email"
-            value-field="email"
-          >
-            <template v-slot:first>
-              <option :value="null" disabled>-- Selecteer een leraar --</option>
-            </template>
-          </b-form-select>
-          <b-button @click="addTeacher" size="sm">Leraar Toevoegen</b-button>
-        </b-form>
-      </template>
-    </b-table>
+    <b-table v-if="isLoaded" striped hover :items="groups" :fields="groupFields"></b-table>
+    <b-form inline>
+      <b-form-select
+        v-model="selectedGroup"
+        :options="groups"
+        text-field="groupName"
+        value-field="groupName"
+      >
+        <template v-slot:first>
+          <option :value="null" disabled>-- Selecteer een klas --</option>
+        </template>
+      </b-form-select>
+      <b-form-select
+        v-model="selectedTeacher"
+        :options="teachers"
+        text-field="email"
+        value-field="email"
+      >
+        <template v-slot:first>
+          <option :value="null" disabled>-- Selecteer een leraar --</option>
+        </template>
+      </b-form-select>
+      <b-button @click="addTeacher" size="sm">Leraar Toevoegen aan klas</b-button>
+    </b-form><br>
   </b-container>
 </template>
 
@@ -57,10 +64,8 @@ export default Vue.extend ({
       }, {
         key: "teacher",
         label: "Leraar"
-      },{
-        key: 'addTeacher',
-        label: 'Leraar toevoegen aan klas'
       }],
+      selectedGroup: '',
       selectedTeacher: ''
     }
   },
@@ -99,7 +104,7 @@ export default Vue.extend ({
       this.groups = await getGroups();
     },
     addTeacher() {
-      console.log('adding teacher')
+      console.log(this.selectedTeacher);
     }
   }
 })
