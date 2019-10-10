@@ -103,10 +103,7 @@ export default Vue.extend({
       const addModerator = firebase.functions().httpsCallable('addModerator');
       await addModerator({email: this.selectedUser.email, role });
       await this.getUsers();
-      this.foundUsers = [];
-      this.search.text = '';
-      this.$refs.usersTable.refresh()
-    }
+    },
   }
 })
 </script>
