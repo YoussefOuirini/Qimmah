@@ -7,6 +7,9 @@ export const EventBus = new Vue({
     },
     reloadUsers() {
       this.$emit('moderatorUpdated')
+    },
+    reloadLoggedinUser() {
+      this.$emit('userLoginChange')
     }
   }
 });

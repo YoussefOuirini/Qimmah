@@ -15,6 +15,7 @@
 
 <script>
 import firebase from 'firebase';
+import { EventBus } from '../EventBus.js';
 
 export default {
   name: 'Login',
@@ -27,6 +28,7 @@ export default {
   methods: {
     login() {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(()=> {
+        EventBus.reloadLoggedinUser();
         this.$router.replace('home')
       }).catch((err)=> {
         alert(`Oops. ${err.message}`)
@@ -36,6 +38,7 @@ export default {
       const provider = new firebase.auth.GoogleAuthProvider();
 
       firebase.auth().signInWithPopup(provider).then(() => {
+        EventBus.reloadLoggedinUser();
         this.$router.replace('home');
       }).catch((err) => {
         alert(`Oops. ${err.message}`)
