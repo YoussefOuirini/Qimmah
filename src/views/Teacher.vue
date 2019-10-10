@@ -28,8 +28,11 @@
         :fields="fields"
         @row-selected="onRowSelected"
       >
-        <template v-slot:cell(customClaims)="data">
-          Leraar: {{ data.value.teacher }}, Moderator: {{data.value.moderator}}
+        <template v-slot:cell(leraar)="data">
+          {{ data.item.customClaims.teacher }}
+        </template>
+        <template v-slot:cell(moderator)="data">
+          {{ data.item.customClaims.moderator }}
         </template>
       </b-table>
     </div>
@@ -68,8 +71,11 @@ export default Vue.extend({
           key: 'email',
           label: 'Email'
         },{
-          key: 'customClaims',
-          label: 'Autorisatie'
+          key: 'leraar',
+          label: 'Leraar'
+        },{
+          key: 'moderator',
+          label: 'Moderator'
         }],
     }
   },
