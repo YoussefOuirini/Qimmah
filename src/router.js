@@ -57,7 +57,7 @@ router.beforeEach(async (to, from, next)=> {
   else if (requiresAuth && to.name === 'school') {
     const isModerator = await checkIfUserIsModerator();
     if (isModerator) {
-      next();
+      next(); 
     } else{
       next('false');
     }
