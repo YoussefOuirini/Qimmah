@@ -24,5 +24,5 @@ exports.addModerator = functions.https.onCall((data, context) => {
 
 async function setUserRole(email, role) {
   const user = await admin.auth().getUserByEmail(email);
-  return admin.auth().setCustomUserClaims(user.uid, {[role]: true});
+  return admin.auth().setCustomUserClaims(user.uid, role);
 }

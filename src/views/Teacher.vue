@@ -35,8 +35,10 @@
     </div>
     <div v-if="selectedUser">
       <b-button-group>
-        <b-button @click="setUser('teacher')" value="teacher" variant="warning"> Maak gebruiker leraar </b-button>
-        <b-button @click="setUser('moderator')" value="moderator" variant="danger"> Maak gebruiker moderator</b-button>
+        <b-button v-if="!selectedUser.customClaims.teacher" @click="setUser({'teacher': true})" value="teacher" variant="warning"> Maak {{selectedUser.email}} leraar </b-button>
+        <b-button v-if="!selectedUser.customClaims.moderator" @click="setUser({'moderator': true})" value="moderator" variant="danger"> Maak {{selectedUser.email}} moderator</b-button>
+        <b-button v-if="selectedUser.customClaims.teacher" @click="setUser({'teacher': false})">Verwijder {{selectedUser.email}} als leraar </b-button>
+        <b-button v-if="selectedUser.customClaims.moderator" @click="setUser({'moderator': false})">Verwijder {{selectedUser.email}} als moderator</b-button>
       </b-button-group>
     </div>
   </b-container>
@@ -96,7 +98,8 @@ export default Vue.extend({
     onRowSelected(user) {
       this.selectedUser = user[0]
     },
-    async setUser(role) {
+    async setUser(newRole) {
+      const role = Object.assign(this.selectedUser.customClaims, newRole);
       const addModerator = firebase.functions().httpsCallable('addModerator');
       await addModerator({email: this.selectedUser.email, role });
       await this.getUsers();
