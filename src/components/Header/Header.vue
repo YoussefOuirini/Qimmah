@@ -18,9 +18,14 @@
         <div class="wrap">
           <b-nav>
             <b-nav-item><router-link to="/home">Home</router-link></b-nav-item>
+            <b-nav-item v-if="userIsModerator"><router-link to="/school">School</router-link></b-nav-item>
           </b-nav>
         </div><!-- .wrap -->
       </div><!-- .navigation-top -->
     </header><!-- #masthead -->
   </div><!-- #page -->
 </template>
+
+<script>
+  module.exports = require("./Header.js");
+</script>

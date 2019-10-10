@@ -14,10 +14,11 @@
 
   import Vue from "vue";
   import RegistrationForm from "../components/RegistrationForm/RegistrationForm.vue";
-  import Registrations from "../components/Registrations/Registrations.vue"
+  import Registrations from "../components/Registrations/Registrations.vue";
+  import { EventBus } from "../EventBus";
 
   export default Vue.extend({
-    name: "App",
+    name: "Home",
     components: {
       RegistrationForm,
       Registrations
@@ -25,6 +26,7 @@
     methods: {
       logout() {
         firebase.auth().signOut().then(() => {
+          EventBus.reloadLoggedinUser();
           this.$router.replace('login')
         })
       }
