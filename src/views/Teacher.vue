@@ -35,10 +35,10 @@
     </div>
     <div v-if="selectedUser">
       <b-button-group>
-        <b-button v-if="!selectedUser.customClaims.teacher" @click="setUser({'teacher': true})" value="teacher" variant="warning"> Maak {{selectedUser.email}} leraar </b-button>
-        <b-button v-if="!selectedUser.customClaims.moderator" @click="setUser({'moderator': true})" value="moderator" variant="danger"> Maak {{selectedUser.email}} moderator</b-button>
-        <b-button v-if="selectedUser.customClaims.teacher" @click="setUser({'teacher': false})">Verwijder {{selectedUser.email}} als leraar </b-button>
-        <b-button v-if="selectedUser.customClaims.moderator" @click="setUser({'moderator': false})">Verwijder {{selectedUser.email}} als moderator</b-button>
+        <b-button v-if="!selectedUser.customClaims.teacher" @click="setUser({'teacher': true})" variant="primary"> Maak {{selectedUser.email}} leraar </b-button>
+        <b-button v-if="selectedUser.customClaims.teacher" @click="setUser({'teacher': false})" variant="danger">Verwijder {{selectedUser.email}} als leraar </b-button>
+        <b-button v-if="!selectedUser.customClaims.moderator" @click="setUser({'moderator': true})" variant="warning"> Maak {{selectedUser.email}} moderator</b-button>
+        <b-button v-if="selectedUser.customClaims.moderator" @click="setUser({'moderator': false})" variant="danger">Verwijder {{selectedUser.email}} als moderator</b-button>
       </b-button-group>
     </div>
   </b-container>
