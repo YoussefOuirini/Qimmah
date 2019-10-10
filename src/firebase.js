@@ -58,8 +58,10 @@ export async function addTeacherToGroup(teacherEmail, groupName) {
 }
 
 export async function checkIfUserIsModerator() {
-  const idTokenResult = await firebase.auth().currentUser.getIdTokenResult();
-  return idTokenResult.claims.moderator;
+  if (firebase.auth().currentUser) {
+    const idTokenResult = await firebase.auth().currentUser.getIdTokenResult();
+    return idTokenResult.claims.moderator;
+  }
 }
 
 async function getGroup(groupName) {
