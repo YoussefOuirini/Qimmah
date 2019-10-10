@@ -28,10 +28,10 @@
         @row-selected="onRowSelected"
       >
         <template v-slot:cell(leraar)="data">
-          {{ data.item.customClaims.teacher }}
+          {{ data.value }}
         </template>
         <template v-slot:cell(moderator)="data">
-          {{ data.item.customClaims.moderator }}
+          {{ data.value }}
         </template>
       </b-table>
     </div>
@@ -65,10 +65,24 @@ export default Vue.extend({
           label: 'Email'
         },{
           key: 'leraar',
-          label: 'Leraar'
+          label: 'Leraar',
+          formatter: (value, key, item) => {
+            if (item.customClaims.teacher) {
+              return "Ja"
+            } else {
+              return "Nee"
+            }
+          }
         },{
           key: 'moderator',
-          label: 'Moderator'
+          label: 'Moderator',
+          formatter: (value, key, item) => {
+            if (item.customClaims.moderator) {
+              return "Ja"
+            } else {
+              return "Nee"
+            }
+          }
         }],
     }
   },
