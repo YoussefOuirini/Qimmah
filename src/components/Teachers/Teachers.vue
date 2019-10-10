@@ -1,6 +1,5 @@
 <template>
   <b-container>
-    <Groups v-if="users.length" v-bind:users="users"/>
     <div v-if="users.length" class="search-bar">
       <b-form-input
         @input="searchUsers()"
@@ -50,19 +49,12 @@
 <script>
 import Vue from 'vue';
 import firebase from 'firebase';
-import Groups from '../components/Groups/Groups.vue'
 
 export default Vue.extend({
-  name: "Teacher",
-  components: {
-    Groups 
-  },
-  mounted() {
-    this.getUsers()
-  },
+  name: "Teachers",
+  props: ['users'],
   data() {
     return {
-      users: [],
       foundUsers: [],
       selectedUser: '',
       search: { text: ""},
@@ -85,11 +77,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    async getUsers() {
-      const getAllUsers = firebase.functions().httpsCallable('getAllUsers');
-      const allUsers = await getAllUsers();
-      this.users = allUsers.data;
-    },
     searchUsers() {
       this.selectedUser = '';
       this.foundUsers = this.users.filter((user) => {
@@ -108,7 +95,6 @@ export default Vue.extend({
       const role = Object.assign(this.selectedUser.customClaims, newRole);
       const addModerator = firebase.functions().httpsCallable('addModerator');
       await addModerator({email: this.selectedUser.email, role });
-      await this.getUsers();
     },
   }
 })
