@@ -49,6 +49,7 @@
 <script>
 import Vue from 'vue';
 import firebase from 'firebase';
+import { EventBus } from "../../EventBus"
 
 export default Vue.extend({
   name: "Teachers",
@@ -95,6 +96,7 @@ export default Vue.extend({
       const role = Object.assign(this.selectedUser.customClaims, newRole);
       const addModerator = firebase.functions().httpsCallable('addModerator');
       await addModerator({email: this.selectedUser.email, role });
+      EventBus.reloadUsers();
     },
   }
 })

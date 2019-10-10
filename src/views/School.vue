@@ -10,6 +10,7 @@ import Vue from 'vue';
 import firebase from 'firebase';
 import Teachers from '../components/Teachers/Teachers.vue'
 import Groups from '../components/Groups/Groups.vue'
+import { EventBus } from "../EventBus"
 
 export default Vue.extend({
   name: "School",
@@ -18,7 +19,10 @@ export default Vue.extend({
     Groups
   },
   mounted() {
-    this.getUsers()
+    this.getUsers();
+    EventBus.$on('moderatorUpdated', () => {
+      this.getUsers();
+    })
   },
   data() {
     return {
