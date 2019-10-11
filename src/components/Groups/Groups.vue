@@ -16,23 +16,17 @@
          </b-input-group-append>
         </b-input-group>
     </b-form-group>
-    <b-table 
+    <b-table
+      id="groups"
+      ref="groupsTable"
       v-if="isLoaded && groups.length"
-      striped hover
+      striped hover selectable
+      select-mode="single"
       :items="groups"
       :fields="groupFields"
+      @row-selected="onRowSelectedGroup"
     ></b-table>
     <b-form v-if="groups.length" inline>
-      <b-form-select
-        v-model="selectedGroupForTeacher"
-        :options="groups"
-        text-field="groupName"
-        value-field="groupName"
-      >
-        <template v-slot:first>
-          <option :value="null" disabled>-- Selecteer een klas --</option>
-        </template>
-      </b-form-select>
       <b-form-select
         v-model="selectedTeacher"
         :options="teachers"
@@ -53,7 +47,7 @@
         select-mode="single"
         :items="registrations"
         :fields="registrationFields"
-        @row-selected="onRowSelected"
+        @row-selected="onRowSelectedStudent"
       >
       </b-table>
       <b-form v-if="selectedStudent && groups.length" inline>
@@ -153,12 +147,15 @@ export default Vue.extend ({
     },
     async addTeacher() {
       this.isLoaded = false;
-      await updateGroupTeacher({teacher: this.selectedTeacher}, this.selectedGroupForTeacher);
+      await updateGroupTeacher({teacher: this.selectedTeacher}, this.selectedGroupForTeacher.groupName);
       await this.loadGroups();
       this.isLoaded = true;
     },
-    onRowSelected(student) {
+    onRowSelectedStudent(student) {
       this.selectedStudent = student[0]
+    },
+    onRowSelectedGroup(group) {
+      this.selectedGroupForTeacher = group[0]
     },
     async addStudent() {
       this.isLoaded = false;
