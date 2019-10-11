@@ -88,10 +88,8 @@ export default Vue.extend ({
       this.registrations = await getAllRegistrations();
     },
     async addTeacher() {
-      this.isLoaded = false;
       await updateGroupTeacher({teacher: this.selectedTeacher}, this.selectedGroupForTeacher.groupName);
       await this.loadGroups();
-      this.isLoaded = true;
     },
     onRowSelectedStudent(student) {
       this.selectedStudent = student[0]

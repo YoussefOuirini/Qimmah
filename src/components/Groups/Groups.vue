@@ -1,44 +1,48 @@
 <template>
-  <b-container v-if="isLoaded">
-    <b-form-group
-      id="group"
-      description="De naam zal worden toegevoegd aan de klassen."
-      label="Creëer een nieuwe klas."
-      label-for="group"
-      :invalid-feedback="invalidFeedback"
-      :valid-feedback="validFeedback"
-      :state="state"
-    >
-      <b-input-group class="mt-3">
-        <b-form-input id="group" v-model="groupName" :state="state" trim></b-form-input>
-        <b-input-group-append>
-        <b-button @click="addGroup" variant="primary" :disabled="groupAlreadyExists">Klas toevoegen</b-button>
-        </b-input-group-append>
-      </b-input-group>
-    </b-form-group>
-    <b-table
-      id="groups"
-      ref="groupsTable"
-      v-if="groups.length"
-      striped hover selectable
-      select-mode="single"
-      :items="groups"
-      :fields="groupFields"
-      @row-selected="onRowSelectedGroup"
-    ></b-table>
-    <b-form v-if="selectedGroupForTeacher" inline>
-      <b-form-select
-        v-model="selectedTeacher"
-        :options="teachers"
-        text-field="email"
-        value-field="email"
+  <b-container>
+    <b-container>
+      <b-form-group
+        id="group"
+        description="De naam zal worden toegevoegd aan de klassen."
+        label="Creëer een nieuwe klas."
+        label-for="group"
+        :invalid-feedback="invalidFeedback"
+        :valid-feedback="validFeedback"
+        :state="state"
       >
-        <template v-slot:first>
-          <option :value="null" disabled>-- Selecteer een leraar --</option>
-        </template>
-      </b-form-select>
-      <b-button @click="addTeacher" size="sm">Leraar Toevoegen aan klas</b-button>
-    </b-form><br>
+        <b-input-group class="mt-3">
+          <b-form-input id="group" v-model="groupName" :state="state" trim></b-form-input>
+          <b-input-group-append>
+            <b-button @click="addGroup" variant="primary" :disabled="groupAlreadyExists">Klas toevoegen</b-button>
+          </b-input-group-append>
+        </b-input-group>
+      </b-form-group>
+    </b-container>
+    <b-container>
+      <b-table
+        id="groups"
+        ref="groupsTable"
+        v-if="groups.length"
+        striped hover selectable
+        select-mode="single"
+        :items="groups"
+        :fields="groupFields"
+        @row-selected="onRowSelectedGroup"
+      ></b-table>
+      <b-form v-if="selectedGroupForTeacher" inline>
+        <b-form-select
+          v-model="selectedTeacher"
+          :options="teachers"
+          text-field="email"
+          value-field="email"
+        >
+          <template v-slot:first>
+            <option :value="null" disabled>-- Selecteer een leraar --</option>
+          </template>
+        </b-form-select>
+        <b-button @click="addTeacher" size="sm">Leraar Toevoegen aan klas</b-button>
+      </b-form><br>
+    </b-container>
     <b-container v-if="registrations.length">
       <b-table
         id="students"
