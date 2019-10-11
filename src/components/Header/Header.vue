@@ -19,6 +19,7 @@
           <b-nav>
             <b-nav-item><router-link to="/home">Home</router-link></b-nav-item>
             <b-nav-item v-if="userIsModerator"><router-link to="/school">School</router-link></b-nav-item>
+            <b-nav-item v-if="userIsTeacher"><router-link to="/klas">Klas</router-link></b-nav-item>
           </b-nav>
         </div><!-- .wrap -->
       </div><!-- .navigation-top -->

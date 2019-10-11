@@ -34,7 +34,7 @@ export async function getAllRegistrations() {
 }
 
 export async function createGroup(group) {
-  const userIsModerator = await checkIfUserIsModerator();
+  const userIsModerator = await checkUserClaim('moderator');
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
@@ -64,7 +64,7 @@ export async function getGroups() {
 }
 
 export async function removeStudentFromGroups(student, groups) {
-  const userIsModerator = await checkIfUserIsModerator();
+  const userIsModerator = await checkUserClaim('moderator');
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
@@ -78,7 +78,7 @@ export async function removeStudentFromGroups(student, groups) {
 }
 
 export async function writeStudentToGroup(student, groupName) {
-  const userIsModerator = await checkIfUserIsModerator();
+  const userIsModerator = await checkUserClaim('moderator');
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
@@ -87,7 +87,7 @@ export async function writeStudentToGroup(student, groupName) {
 }
 
 export async function updateGroupTeacher(teacher, groupName) {
-  const userIsModerator = await checkIfUserIsModerator();
+  const userIsModerator = await checkUserClaim('moderator');
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
@@ -97,7 +97,7 @@ export async function updateGroupTeacher(teacher, groupName) {
 }
 
 export async function updateRegistration(registration, groupName) {
-  const userIsModerator = await checkIfUserIsModerator();
+  const userIsModerator = await checkUserClaim('moderator');
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
@@ -111,11 +111,11 @@ export async function updateRegistration(registration, groupName) {
   });
 }
 
-export async function checkIfUserIsModerator() {
+export async function checkUserClaim(customClaim) {
   const loggedInUser = firebase.auth().currentUser;
   if (loggedInUser) {
     const idTokenResult = await loggedInUser.getIdTokenResult();
-    return idTokenResult.claims.moderator;
+    return idTokenResult.claims[customClaim];
   }
 }
 
