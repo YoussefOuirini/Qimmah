@@ -119,6 +119,27 @@ export async function checkUserClaim(customClaim) {
   }
 }
 
+export async function getGroupsOf(teacherEmail) {
+  const querySnapshot = await db.collection("groups").where("teacher", "==", teacherEmail).get();
+  let teachersGroups = [];
+  querySnapshot.forEach(async (doc) => {
+    const teachersGroup = doc.data()
+    const students = await getStudentsOf(teacherEmail, teachersGroup);
+    const completeGroup = Object.assign(teachersGroup, {students});
+    teachersGroups.push(completeGroup)
+  });
+  return teachersGroups;
+}
+
+async function getStudentsOf(teacherEmail, teachersGroup) {
+  const querySnapshot = await db.collection("groups").doc(teachersGroup.groupName).collection('students').get();
+  let students = [];
+  querySnapshot.forEach((student) => {
+    students.push(student.data())
+  });
+  return students;
+}
+
 async function getGroup(groupName) {
   const querySnapshot = await db.collection("groups").where("groupName", "==", groupName).get();
   let groups = [];
