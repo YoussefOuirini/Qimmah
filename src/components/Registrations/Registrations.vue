@@ -1,13 +1,21 @@
 <template>
   <b-container v-if="isLoaded === true && registrations.length > 0">
-    <b-table striped hover :items="registrations" :fields="fields"></b-table>
+    <b-table 
+      striped hover selectable
+      select-mode="single"
+      :items="registrations"
+      :fields="fields"
+      @row-selected="onRowSelectedRegistration"
+    ></b-table>
+    <b-button v-if="selectedRegistration" @click="deleteRegistration" variant="danger">Verwijder registratie</b-button>
   </b-container>
 </template>
 
 <script>
   import Vue from "vue";
-  import { getRegistrations } from "@/firebase";
-  import { EventBus } from "../../EventBus"
+  import { getUsersRegistrations } from "@/firebase";
+  import { EventBus } from "../../EventBus";
+  import { deleteStudent} from "../../firebase.js";
 
   export default Vue.extend ({
     name: "Registrations",
@@ -32,15 +40,26 @@
         }, {
           key: 'phoneNumber',
           label: 'Telefoonnummer'
+        }, {
+          key: 'group',
+          label: 'Klas'
         }
         ],
-        registrations: []
+        registrations: [],
+        selectedRegistration: ''
       }
     },
     methods: {
       async loadRegistrations() {
-        this.registrations = await getRegistrations()
+        this.registrations = await getUsersRegistrations()
         this.isLoaded = true;
+      },
+      onRowSelectedRegistration(registration) {
+        this.selectedRegistration = registration[0]
+      },
+      async deleteRegistration() {
+        await deleteStudent(this.selectedRegistration);
+        this.loadRegistrations();
       }
     }
   })

@@ -12,7 +12,7 @@
       </span>
     </div>
     <div v-if="rows" class="overflow-auto">
-        <b-pagination
+      <b-pagination
         v-if="rows > perPage"
         :total-rows="rows"
         :per-page="perPage"
@@ -67,7 +67,7 @@ export default Vue.extend({
           key: 'leraar',
           label: 'Leraar',
           formatter: (value, key, item) => {
-            if (item.customClaims.teacher) {
+            if (item.customClaims && item.customClaims.teacher) {
               return "Ja"
             } else {
               return "Nee"
@@ -75,9 +75,9 @@ export default Vue.extend({
           }
         },{
           key: 'moderator',
-          label: 'Moderator',
+          label: 'Beheerder',
           formatter: (value, key, item) => {
-            if (item.customClaims.moderator) {
+            if (item.customClaims && item.customClaims.moderator) {
               return "Ja"
             } else {
               return "Nee"
