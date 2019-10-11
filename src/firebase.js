@@ -56,6 +56,20 @@ export async function getGroups() {
   return groups;
 }
 
+export async function removeStudentFromGroups(student, groups) {
+  const userIsModerator = await checkIfUserIsModerator();
+  if (!userIsModerator) {
+    return new Error('User not authorized.')
+  }
+  const studentDocName = `${student.firstName}${student.lastName}${student.education}`;
+  groups.forEach((group) => {
+    db.collection('groups').doc(group.groupName).collection('students').doc(studentDocName).delete()
+      .catch((error) => {
+        return new Error("Error removing document: ", error)
+      });
+  })
+}
+
 export async function writeStudentToGroup(student, groupName) {
   const userIsModerator = await checkIfUserIsModerator();
   if (!userIsModerator) {
@@ -70,9 +84,9 @@ export async function updateGroupTeacher(teacher, groupName) {
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
-  const group = await getGroup(groupName)
+  const group = await getGroup(groupName);
   const groupRef = await db.collection("groups").doc(group);
-  return groupRef.update(teacher)
+  return groupRef.update(teacher);
 }
 
 export async function updateRegistration(registration, groupName) {

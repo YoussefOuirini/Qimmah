@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { createGroup, getGroups, updateGroupTeacher, getAllRegistrations, writeStudentToGroup, updateRegistration } from "../../firebase.js"
+import { createGroup, getGroups, updateGroupTeacher, getAllRegistrations, writeStudentToGroup, updateRegistration, removeStudentFromGroups } from "../../firebase.js"
 
 export default Vue.extend ({
   name: "Groups",
@@ -98,6 +98,7 @@ export default Vue.extend ({
       this.selectedGroupForTeacher = group[0]
     },
     async addStudentToGroup() {
+      await removeStudentFromGroups(this.selectedStudent, this.groups);
       await writeStudentToGroup(this.selectedStudent, this.selectedGroupForStudent);
       await updateRegistration(this.selectedStudent, this.selectedGroupForStudent);
       await this.loadRegistrations();
