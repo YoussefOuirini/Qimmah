@@ -45,26 +45,32 @@
       </b-form-select>
       <b-button @click="addTeacher" size="sm">Leraar Toevoegen aan klas</b-button>
     </b-form><br>
-    <b-table
-      id="students"
-      ref="studentsTable"
-      striped hover selectable
-      select-mode="single"
-      :items="registrations"
-      :fields="registrationFields"
-      @row-selected="onRowSelected"
-    >
-    </b-table>
-    <b-form v-if="selectedStudent" inline>
-      <b-form-select v-model="selectedGroupForStudent" :options="groups" text-field="groupName"></b-form-select>
-      <b-button @click="addStudent" size="sm">{{selectedStudent.firstName}} {{selectedStudent.lastName}} toevoegen aan klas</b-button>
-    </b-form><br>
+    <b-container>
+      <b-table
+        id="students"
+        ref="studentsTable"
+        striped hover selectable
+        select-mode="single"
+        :items="registrations"
+        :fields="registrationFields"
+        @row-selected="onRowSelected"
+      >
+      </b-table>
+      <b-form v-if="selectedStudent && groups.length" inline>
+        <b-form-select v-model="selectedGroupForStudent" :options="groups" text-field="groupName">
+          <template v-slot:first>
+            <option :value="null" disabled>-- Selecteer een klas --</option>
+          </template>
+        </b-form-select>
+        <b-button @click="addStudent" size="sm">{{selectedStudent.firstName}} {{selectedStudent.lastName}} toevoegen aan klas</b-button>
+      </b-form><br>
+    </b-container>
   </b-container>
 </template>
 
 <script>
 import Vue from "vue";
-import { createGroup, getGroups, addTeacherToGroup, getAllRegistrations } from "../../firebase.js"
+import { createGroup, getGroups, updateGroup, getAllRegistrations } from "../../firebase.js"
 
 export default Vue.extend ({
   name: "Groups",
@@ -147,16 +153,18 @@ export default Vue.extend ({
     },
     async addTeacher() {
       this.isLoaded = false;
-      await addTeacherToGroup(this.selectedTeacher, this.selectedGroupForTeacher);
+      await updateGroup({teacher: this.selectedTeacher}, this.selectedGroupForTeacher);
       await this.loadGroups();
       this.isLoaded = true;
     },
     onRowSelected(student) {
       this.selectedStudent = student[0]
     },
-    addStudent(student, selectedGroupForStudent) {
-      console.log(this.selectedStudent);
-      console.log(selectedGroupForStudent)
+    async addStudent() {
+      this.isLoaded = false;
+      await updateGroup({student: this.selectedStudent}, this.selectedGroupForStudent)
+      await this.loadGroups();
+      this.isLoaded = true;
     }
   }
 })
