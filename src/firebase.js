@@ -38,9 +38,9 @@ export async function createGroup(group) {
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
-  return db.collection("groups").add(group)
-    .then((docRef)=> {
-      return docRef
+  return db.collection("groups").doc(group.groupName).set(group)
+    .then(()=> {
+      return {success: true}
     })
     .catch((error)=> {
       throw new Error(error)
@@ -57,9 +57,8 @@ export async function getGroups() {
 }
 
 export async function writeStudentToGroup(student, groupName) {
-  var studentDocumentRef = db.collection('registrations').doc(`${student.firstName}${student.lastName}${student.education}`);
-  student.studentDocumentRef = studentDocumentRef;
-  const updateRes = await updateGroup(student, groupName);
+  const studentDocumentRef = await db.collection('registrations').doc(`${student.firstName}${student.lastName}${student.education}`);
+  const updateRes = await updateGroup({studentDocumentRef}, groupName);
   return updateRes;
 }
 

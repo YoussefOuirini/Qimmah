@@ -162,7 +162,7 @@ export default Vue.extend ({
     },
     async addStudent() {
       this.isLoaded = false;
-      await writeStudentToGroup({student: this.selectedStudent}, this.selectedGroupForStudent)
+      await writeStudentToGroup(this.selectedStudent, this.selectedGroupForStudent)
       await this.loadGroups();
       this.isLoaded = true;
     }
