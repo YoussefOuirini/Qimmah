@@ -21,12 +21,19 @@ export default Vue.extend ({
         key: "teacher",
         label: "Leraar"
       }],
-      registrationFields: [
-        'firstName',
-        'lastName',
-        'education',
-        'group',
-      ],
+      registrationFields: [{
+        key: "firstName",
+        label: "Voornaam"
+      }, {
+        key: "lastName",
+        label: "Achternaam"
+      }, {
+        key: "education",
+        label: "Onderwijs"
+      }, {
+        key: "group",
+        label: "Klas"
+      }],
       selectedGroupForTeacher: '',
       selectedGroupForStudent: '',
       selectedTeacher: '',
@@ -92,11 +99,12 @@ export default Vue.extend ({
     onRowSelectedGroup(group) {
       this.selectedGroupForTeacher = group[0]
     },
-    async addStudent() {
+    async addStudentToGroup() {
       this.isLoaded = false;
       await writeStudentToGroup(this.selectedStudent, this.selectedGroupForStudent);
       await updateRegistration(this.selectedStudent, this.selectedGroupForStudent);
-      await this.loadGroups();
+      await this.loadRegistrations();
+      this.selectedStudent = "";
       this.isLoaded = true;
     }
   }
