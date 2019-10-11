@@ -26,7 +26,7 @@
       :fields="groupFields"
       @row-selected="onRowSelectedGroup"
     ></b-table>
-    <b-form v-if="groups.length" inline>
+    <b-form v-if="selectedGroupForTeacher" inline>
       <b-form-select
         v-model="selectedTeacher"
         :options="teachers"
@@ -91,10 +91,10 @@ export default Vue.extend ({
         'education',
         'group',
       ],
-      selectedGroupForTeacher: {},
-      selectedGroupForStudent: {},
-      selectedTeacher: {},
-      selectedStudent: {}
+      selectedGroupForTeacher: '',
+      selectedGroupForStudent: '',
+      selectedTeacher: '',
+      selectedStudent: ''
     }
   },
   computed: {
