@@ -65,14 +65,14 @@ export async function writeStudentToGroup(student, groupName) {
   return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(student);
 }
 
-export async function updateGroup(newUpdate, groupName) {
+export async function updateGroupTeacher(teacher, groupName) {
   const userIsModerator = await checkIfUserIsModerator();
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
   const group = await getGroup(groupName)
   const groupRef = await db.collection("groups").doc(group);
-  return groupRef.update(newUpdate)
+  return groupRef.update(teacher)
 }
 
 export async function checkIfUserIsModerator() {
