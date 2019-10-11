@@ -17,7 +17,7 @@
         </b-input-group>
     </b-form-group>
     <b-table v-if="isLoaded && groups.length" striped hover :items="groups" :fields="groupFields"></b-table>
-    <b-form v-if="groups.length && teachers.length" inline>
+    <b-form v-if="groups.length" inline>
       <b-form-select
         v-model="selectedGroup"
         :options="groups"
