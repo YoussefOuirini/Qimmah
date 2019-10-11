@@ -67,7 +67,7 @@ export default Vue.extend({
           key: 'leraar',
           label: 'Leraar',
           formatter: (value, key, item) => {
-            if (item.customClaims.teacher) {
+            if (item.customClaims && item.customClaims.teacher) {
               return "Ja"
             } else {
               return "Nee"
@@ -77,7 +77,7 @@ export default Vue.extend({
           key: 'moderator',
           label: 'Beheerder',
           formatter: (value, key, item) => {
-            if (item.customClaims.moderator) {
+            if (item.customClaims && item.customClaims.moderator) {
               return "Ja"
             } else {
               return "Nee"

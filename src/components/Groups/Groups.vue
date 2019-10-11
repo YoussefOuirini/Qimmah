@@ -94,7 +94,7 @@ export default Vue.extend ({
     },
     teachers() {
       return this.users.filter((user) => {
-        if (user.customClaims.teacher) {
+        if (user.customClaims && user.customClaims.teacher) {
           return user
         }
       })
