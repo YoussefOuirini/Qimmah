@@ -47,6 +47,13 @@ export async function createGroup(group) {
     });
 }
 
+export async function deleteStudent(student) {
+  const studentDocName = `${student.firstName}${student.lastName}${student.education}`;
+  await db.collection('registrations').doc(studentDocName).delete();
+  const allGroups = await getGroups();
+  await removeStudentFromGroups(student, allGroups);
+}
+
 export async function getGroups() {
   const querySnapshot = await db.collection("groups").get();
   let groups = [];
