@@ -57,9 +57,8 @@ export async function getGroups() {
 }
 
 export async function writeStudentToGroup(student, groupName) {
-  const studentDocumentRef = await db.collection('registrations').doc(`${student.firstName}${student.lastName}${student.education}`);
-  const updateRes = await updateGroup({studentDocumentRef}, groupName);
-  return updateRes;
+  const studentDocName = `${student.firstName}${student.lastName}${student.education}`;
+  return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(student);
 }
 
 export async function updateGroup(newUpdate, groupName) {
