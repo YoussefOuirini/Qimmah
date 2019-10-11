@@ -32,6 +32,9 @@
         }, {
           key: 'phoneNumber',
           label: 'Telefoonnummer'
+        }, {
+          key: 'group',
+          label: 'Klas'
         }
         ],
         registrations: []
