@@ -6,7 +6,7 @@
 
 <script>
   import Vue from "vue";
-  import { getRegistrations } from "@/firebase";
+  import { getUsersRegistrations } from "@/firebase";
   import { EventBus } from "../../EventBus"
 
   export default Vue.extend ({
@@ -39,7 +39,7 @@
     },
     methods: {
       async loadRegistrations() {
-        this.registrations = await getRegistrations()
+        this.registrations = await getUsersRegistrations()
         this.isLoaded = true;
       }
     }

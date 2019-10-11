@@ -15,7 +15,7 @@ export async function writeRegistration(registration) {
     });
 }
 
-export async function getRegistrations() {
+export async function getUsersRegistrations() {
   const querySnapshot = await db.collection("registrations").where("email", "==", firebase.auth().currentUser.email).get();
   let registrations = [];
   querySnapshot.forEach((doc) => {
@@ -56,14 +56,14 @@ export async function getGroups() {
   return groups;
 }
 
-export async function addTeacherToGroup(teacherEmail, groupName) {
+export async function updateGroup(newUpdate, groupName) {
   const userIsModerator = await checkIfUserIsModerator();
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
   const group = await getGroup(groupName)
-  const updateResponse = await updateGroup(group, {teacher: teacherEmail});
-  return updateResponse
+  const groupRef = await db.collection("groups").doc(group);
+  return groupRef.update(newUpdate)
 }
 
 export async function checkIfUserIsModerator() {
@@ -81,9 +81,4 @@ async function getGroup(groupName) {
     groups.push(doc.id)
   });
   return groups[0];
-}
-
-async function updateGroup(group, newUpdate) {
-  const groupRef = db.collection("groups").doc(group);
-  return groupRef.update(newUpdate)
 }
