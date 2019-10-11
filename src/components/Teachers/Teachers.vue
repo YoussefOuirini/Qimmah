@@ -75,7 +75,7 @@ export default Vue.extend({
           }
         },{
           key: 'moderator',
-          label: 'Moderator',
+          label: 'Beheerder',
           formatter: (value, key, item) => {
             if (item.customClaims.moderator) {
               return "Ja"
