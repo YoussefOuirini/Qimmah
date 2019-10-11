@@ -100,12 +100,10 @@ export default Vue.extend ({
       this.selectedGroupForTeacher = group[0]
     },
     async addStudentToGroup() {
-      this.isLoaded = false;
       await writeStudentToGroup(this.selectedStudent, this.selectedGroupForStudent);
       await updateRegistration(this.selectedStudent, this.selectedGroupForStudent);
       await this.loadRegistrations();
       this.selectedStudent = "";
-      this.isLoaded = true;
     }
   }
 })
