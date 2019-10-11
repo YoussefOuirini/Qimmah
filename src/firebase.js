@@ -75,6 +75,21 @@ export async function updateGroupTeacher(teacher, groupName) {
   return groupRef.update(teacher)
 }
 
+export async function updateRegistration(registration, groupName) {
+  const userIsModerator = await checkIfUserIsModerator();
+  if (!userIsModerator) {
+    return new Error('User not authorized.')
+  }
+  const registrationRef = db.collection("registrations").doc(`${registration.firstName}${registration.lastName}${registration.education}`);
+  return registrationRef.update({
+    group: groupName
+  }).then(() => {
+    return {success: true}
+  }).catch((error) => {
+    return new Error('Error updating document: ', error)
+  });
+}
+
 export async function checkIfUserIsModerator() {
   const loggedInUser = firebase.auth().currentUser;
   if (loggedInUser) {

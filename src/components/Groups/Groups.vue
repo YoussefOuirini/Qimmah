@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container v-if="isLoaded">
     <b-form-group
       id="group"
       description="De naam zal worden toegevoegd aan de klassen."
@@ -9,17 +9,17 @@
       :valid-feedback="validFeedback"
       :state="state"
     >
-       <b-input-group class="mt-3">
-         <b-form-input id="group" v-model="groupName" :state="state" trim></b-form-input>
-         <b-input-group-append>
-          <b-button @click="addGroup" variant="primary" :disabled="groupAlreadyExists">Klas toevoegen</b-button>
-         </b-input-group-append>
-        </b-input-group>
+      <b-input-group class="mt-3">
+        <b-form-input id="group" v-model="groupName" :state="state" trim></b-form-input>
+        <b-input-group-append>
+        <b-button @click="addGroup" variant="primary" :disabled="groupAlreadyExists">Klas toevoegen</b-button>
+        </b-input-group-append>
+      </b-input-group>
     </b-form-group>
     <b-table
       id="groups"
       ref="groupsTable"
-      v-if="isLoaded && groups.length"
+      v-if="groups.length"
       striped hover selectable
       select-mode="single"
       :items="groups"
@@ -48,8 +48,7 @@
         :items="registrations"
         :fields="registrationFields"
         @row-selected="onRowSelectedStudent"
-      >
-      </b-table>
+      ></b-table>
       <b-form v-if="selectedStudent && groups.length" inline>
         <b-form-select v-model="selectedGroupForStudent" :options="groups" text-field="groupName">
           <template v-slot:first>
@@ -64,7 +63,7 @@
 
 <script>
 import Vue from "vue";
-import { createGroup, getGroups, updateGroupTeacher, getAllRegistrations, writeStudentToGroup } from "../../firebase.js"
+import { createGroup, getGroups, updateGroupTeacher, getAllRegistrations, writeStudentToGroup, updateRegistration } from "../../firebase.js"
 
 export default Vue.extend ({
   name: "Groups",
@@ -159,7 +158,8 @@ export default Vue.extend ({
     },
     async addStudent() {
       this.isLoaded = false;
-      await writeStudentToGroup(this.selectedStudent, this.selectedGroupForStudent)
+      await writeStudentToGroup(this.selectedStudent, this.selectedGroupForStudent);
+      await updateRegistration(this.selectedStudent, this.selectedGroupForStudent);
       await this.loadGroups();
       this.isLoaded = true;
     }
