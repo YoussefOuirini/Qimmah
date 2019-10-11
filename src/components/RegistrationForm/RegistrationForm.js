@@ -79,7 +79,7 @@ export default Vue.extend({
       writeRegistration(registration).then((res)=> {
         this.loading = false
         EventBus.reloadRegistration();
-        if (res.id) {
+        if (res.success) {
           this.registrationResponseText = "Inschrijving is successvol!"
         } else {
           this.registrationResponseText = "Inschrijving is mislukt :( Sorry baas! Probeer het later opnieuw!"

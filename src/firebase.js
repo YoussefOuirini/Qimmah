@@ -6,9 +6,9 @@ firebase.initializeApp(config.firebase);
 var db = firebase.firestore();
 
 export async function writeRegistration(registration) {
-  return db.collection("registrations").add(registration)
-    .then((docRef)=> {
-      return docRef
+  return db.collection("registrations").doc(`${registration.firstName}${registration.lastName}${registration.education}`).set(registration)
+    .then(()=> {
+      return {success: true}
     })
     .catch((error)=> {
       throw new Error(error)
