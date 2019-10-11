@@ -45,7 +45,7 @@
       </b-form-select>
       <b-button @click="addTeacher" size="sm">Leraar Toevoegen aan klas</b-button>
     </b-form><br>
-    <b-container>
+    <b-container v-if="registrations.length">
       <b-table
         id="students"
         ref="studentsTable"
