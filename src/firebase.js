@@ -57,6 +57,10 @@ export async function getGroups() {
 }
 
 export async function writeStudentToGroup(student, groupName) {
+  const userIsModerator = await checkIfUserIsModerator();
+  if (!userIsModerator) {
+    return new Error('User not authorized.')
+  }
   const studentDocName = `${student.firstName}${student.lastName}${student.education}`;
   return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(student);
 }
