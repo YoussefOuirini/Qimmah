@@ -70,7 +70,7 @@
 
 <script>
 import Vue from "vue";
-import { createGroup, getGroups, updateGroup, getAllRegistrations } from "../../firebase.js"
+import { createGroup, getGroups, updateGroup, getAllRegistrations, writeStudentToGroup } from "../../firebase.js"
 
 export default Vue.extend ({
   name: "Groups",
@@ -162,7 +162,7 @@ export default Vue.extend ({
     },
     async addStudent() {
       this.isLoaded = false;
-      await updateGroup({student: this.selectedStudent}, this.selectedGroupForStudent)
+      await writeStudentToGroup({student: this.selectedStudent}, this.selectedGroupForStudent)
       await this.loadGroups();
       this.isLoaded = true;
     }

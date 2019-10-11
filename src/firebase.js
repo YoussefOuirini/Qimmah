@@ -56,6 +56,13 @@ export async function getGroups() {
   return groups;
 }
 
+export async function writeStudentToGroup(student, groupName) {
+  var studentDocumentRef = db.collection('registrations').doc(`${student.firstName}${student.lastName}${student.education}`);
+  student.studentDocumentRef = studentDocumentRef;
+  const updateRes = await updateGroup(student, groupName);
+  return updateRes;
+}
+
 export async function updateGroup(newUpdate, groupName) {
   const userIsModerator = await checkIfUserIsModerator();
   if (!userIsModerator) {
