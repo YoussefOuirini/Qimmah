@@ -12,7 +12,7 @@
       </span>
     </div>
     <div v-if="rows" class="overflow-auto">
-        <b-pagination
+      <b-pagination
         v-if="rows > perPage"
         :total-rows="rows"
         :per-page="perPage"

@@ -16,10 +16,15 @@
          </b-input-group-append>
         </b-input-group>
     </b-form-group>
-    <b-table v-if="isLoaded && groups.length" striped hover :items="groups" :fields="groupFields"></b-table>
+    <b-table 
+      v-if="isLoaded && groups.length"
+      striped hover
+      :items="groups"
+      :fields="groupFields"
+    ></b-table>
     <b-form v-if="groups.length" inline>
       <b-form-select
-        v-model="selectedGroup"
+        v-model="selectedGroupForTeacher"
         :options="groups"
         text-field="groupName"
         value-field="groupName"
@@ -40,24 +45,40 @@
       </b-form-select>
       <b-button @click="addTeacher" size="sm">Leraar Toevoegen aan klas</b-button>
     </b-form><br>
+    <b-table
+      id="students"
+      ref="studentsTable"
+      striped hover selectable
+      select-mode="single"
+      :items="registrations"
+      :fields="registrationFields"
+      @row-selected="onRowSelected"
+    >
+    </b-table>
+    <b-form v-if="selectedStudent" inline>
+      <b-form-select v-model="selectedGroupForStudent" :options="groups" text-field="groupName"></b-form-select>
+      <b-button @click="addStudent" size="sm">{{selectedStudent.firstName}} {{selectedStudent.lastName}} toevoegen aan klas</b-button>
+    </b-form><br>
   </b-container>
 </template>
 
 <script>
 import Vue from "vue";
-import { createGroup, getGroups, addTeacherToGroup } from "../../firebase.js"
+import { createGroup, getGroups, addTeacherToGroup, getAllRegistrations } from "../../firebase.js"
 
 export default Vue.extend ({
   name: "Groups",
   props: ['users'],
   mounted() {
     this.loadGroups();
+    this.loadRegistrations();
   },
   data() {
     return {
       isLoaded: true,
       groupName: "",
       groups: [],
+      registrations: [],
       groupFields: [{
         key: "groupName",
         label: "Klas",
@@ -65,8 +86,16 @@ export default Vue.extend ({
         key: "teacher",
         label: "Leraar"
       }],
-      selectedGroup: {},
-      selectedTeacher: {}
+      registrationFields: [
+        'firstName',
+        'lastName',
+        'education',
+        'group',
+      ],
+      selectedGroupForTeacher: {},
+      selectedGroupForStudent: {},
+      selectedTeacher: {},
+      selectedStudent: {}
     }
   },
   computed: {
@@ -113,11 +142,21 @@ export default Vue.extend ({
     async loadGroups() {
       this.groups = await getGroups();
     },
+    async loadRegistrations() {
+      this.registrations = await getAllRegistrations();
+    },
     async addTeacher() {
       this.isLoaded = false;
-      await addTeacherToGroup(this.selectedTeacher, this.selectedGroup);
+      await addTeacherToGroup(this.selectedTeacher, this.selectedGroupForTeacher);
       await this.loadGroups();
       this.isLoaded = true;
+    },
+    onRowSelected(student) {
+      this.selectedStudent = student[0]
+    },
+    addStudent(student, selectedGroupForStudent) {
+      console.log(this.selectedStudent);
+      console.log(selectedGroupForStudent)
     }
   }
 })

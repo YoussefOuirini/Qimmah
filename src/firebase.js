@@ -24,6 +24,15 @@ export async function getRegistrations() {
   return registrations;
 }
 
+export async function getAllRegistrations() {
+  const querySnapshot = await db.collection("registrations").get();
+  let registrations = [];
+  querySnapshot.forEach((doc) => {
+    registrations.push(doc.data())
+  });
+  return registrations;
+}
+
 export async function createGroup(group) {
   const userIsModerator = await checkIfUserIsModerator();
   if (!userIsModerator) {
