@@ -37,10 +37,6 @@ export default Vue.extend({
       madeHomework: true,
       studentHomework: ''
     }
-  },
-  methods: {
-    addLessons() {
-    }
   }
 })
 </script>

@@ -12,10 +12,11 @@
         </b-tr>
       </b-thead>
       <b-tbody>
-        <StudentLesson v-for="student in students" v-bind:key="student.id" v-bind:student="student" />
+        <StudentLesson ref="studentLessons" v-for="student in students" v-bind:key="student.id" v-bind:student="student" />
       </b-tbody>
       <b-tfoot></b-tfoot>
     </b-table-simple>
+    <b-button @click="addLessons" variant="primary">Les toevoegen</b-button>
   </b-container>
 </template>
 
@@ -30,17 +31,17 @@ export default Vue.extend({
     StudentLesson
   },
   props: ["students"],
-  data() {
-    return {
-      behaviour: 'good',
-      presence: 'present',
-      madeHomework: true,
-      studentHomework: ''
-    }
-  },
   methods: {
     addLessons() {
-      writeLessons()
+      const lessons = this.getLessons();
+      console.log(lessons)
+      // writeLessons(this.lessons);
+    },
+    getLessons() {
+      const lessons = this.$refs.studentLessons.map(studentLesson => {
+        return studentLesson.$data;
+      });
+      return lessons;
     }
   }
 })
