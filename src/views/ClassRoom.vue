@@ -45,6 +45,19 @@
           formatter: (value) => {
             return `${value.streetname} ${value.houseNumber}, ${value.zipCode}, ${value.city}`
           }
+        }, {
+          key: 'birthDate',
+          label: 'leeftijd',
+          formatter: (value) => {
+            var today = new Date();
+            var birthDate = new Date(value);
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+          }
         }]
       }
     },
