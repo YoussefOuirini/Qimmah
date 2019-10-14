@@ -86,7 +86,6 @@ export default Vue.extend ({
     },
     async loadRegistrations() {
       this.registrations = await getAllRegistrations();
-      console.log(this.registrations);
     },
     async addTeacher() {
       await updateGroupTeacher({teacher: this.selectedTeacher}, this.selectedGroupForTeacher.groupName);
