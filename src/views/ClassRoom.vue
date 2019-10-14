@@ -17,7 +17,7 @@
       :fields="studentFields"
     >
     </b-table>
-    <Lesson />
+    <Lesson v-if="students.length" v-bind:students="students"/>
   </b-container>
 </template>
 
