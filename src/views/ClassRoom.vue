@@ -49,14 +49,7 @@
           key: 'birthDate',
           label: 'leeftijd',
           formatter: (value) => {
-            var today = new Date();
-            var birthDate = new Date(value);
-            var age = today.getFullYear() - birthDate.getFullYear();
-            var m = today.getMonth() - birthDate.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-            return age;
+            return this.calculateAge(value)
           }
         }]
       }
@@ -71,6 +64,16 @@
     methods: {
       async getTeachersGroups() {
         this.teachersGroups = await getGroupsOf(firebase.auth().currentUser.email);
+      },
+      calculateAge(dateString) {
+        const today = new Date();
+        const birthDate = new Date(dateString);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        let m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
       }
     },
   })
