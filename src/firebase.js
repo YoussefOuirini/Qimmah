@@ -124,14 +124,14 @@ export async function getGroupsOf(teacherEmail) {
   let teachersGroups = [];
   querySnapshot.forEach(async (doc) => {
     const teachersGroup = doc.data()
-    const students = await getStudentsOf(teacherEmail, teachersGroup);
+    const students = await getStudentsOf(teachersGroup);
     const completeGroup = Object.assign(teachersGroup, {students});
     teachersGroups.push(completeGroup)
   });
   return teachersGroups;
 }
 
-async function getStudentsOf(teacherEmail, teachersGroup) {
+async function getStudentsOf(teachersGroup) {
   const querySnapshot = await db.collection("groups").doc(teachersGroup.groupName).collection('students').get();
   let students = [];
   querySnapshot.forEach((student) => {
