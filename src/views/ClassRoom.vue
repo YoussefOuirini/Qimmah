@@ -66,7 +66,8 @@
         }, {
           key: 'phoneNumber',
           label: 'Telefoonnummer'
-        }]
+        },
+        'email']
       }
     },
     computed: {
