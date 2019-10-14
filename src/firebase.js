@@ -6,7 +6,7 @@ firebase.initializeApp(config.firebase);
 var db = firebase.firestore();
 
 export async function writeRegistration(registration) {
-  return db.collection("registrations").doc(`${registration.firstName}${registration.lastName}${registration.education}`).set(registration)
+  return db.collection("registrations").doc(`${registration.name.first}${registration.name.last}${registration.education}`).set(registration)
     .then(()=> {
       return {success: true}
     })
@@ -48,7 +48,7 @@ export async function createGroup(group) {
 }
 
 export async function deleteStudent(student) {
-  const studentDocName = `${student.firstName}${student.lastName}${student.education}`;
+  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
   await db.collection('registrations').doc(studentDocName).delete();
   const allGroups = await getGroups();
   await removeStudentFromGroups(student, allGroups);
@@ -68,7 +68,7 @@ export async function removeStudentFromGroups(student, groups) {
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
-  const studentDocName = `${student.firstName}${student.lastName}${student.education}`;
+  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
   groups.forEach((group) => {
     db.collection('groups').doc(group.groupName).collection('students').doc(studentDocName).delete()
       .catch((error) => {
@@ -82,7 +82,7 @@ export async function writeStudentToGroup(student, groupName) {
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
-  const studentDocName = `${student.firstName}${student.lastName}${student.education}`;
+  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
   return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(student);
 }
 
@@ -101,7 +101,7 @@ export async function updateRegistration(registration, groupName) {
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
-  const registrationRef = db.collection("registrations").doc(`${registration.firstName}${registration.lastName}${registration.education}`);
+  const registrationRef = db.collection("registrations").doc(`${registration.name.first}${registration.name.last}${registration.education}`);
   return registrationRef.update({
     group: groupName
   }).then(() => {

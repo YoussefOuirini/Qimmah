@@ -29,12 +29,12 @@
       return {
         isLoaded: false,
         fields: [{
-          key: 'firstName',
-          label: 'Voornaam'
+          key: 'name',
+          label: 'Naam',
+          formatter: (value) => {
+            return `${value.first} ${value.last}`
+          }
         },{
-          key: 'lastName',
-          label: 'Achternaam'
-        }, {
           key: 'education',
           label: 'Ingeschreven voor studie'
         }, {
@@ -60,7 +60,7 @@
       async deleteRegistration() {
         await deleteStudent(this.selectedRegistration);
         this.loadRegistrations();
-      }
+      },
     }
   })
 </script>

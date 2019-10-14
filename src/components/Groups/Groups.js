@@ -22,11 +22,11 @@ export default Vue.extend ({
         label: "Leraar"
       }],
       registrationFields: [{
-        key: "firstName",
-        label: "Voornaam"
-      }, {
-        key: "lastName",
-        label: "Achternaam"
+        key: "name",
+        label: "Naam",
+        formatter: (value) => {
+          return `${value.first} ${value.last}`
+        }
       }, {
         key: "education",
         label: "Onderwijs"
@@ -86,6 +86,7 @@ export default Vue.extend ({
     },
     async loadRegistrations() {
       this.registrations = await getAllRegistrations();
+      console.log(this.registrations);
     },
     async addTeacher() {
       await updateGroupTeacher({teacher: this.selectedTeacher}, this.selectedGroupForTeacher.groupName);
@@ -103,6 +104,6 @@ export default Vue.extend ({
       await updateRegistration(this.selectedStudent, this.selectedGroupForStudent);
       await this.loadRegistrations();
       this.selectedStudent = "";
-    }
+    },
   }
 })

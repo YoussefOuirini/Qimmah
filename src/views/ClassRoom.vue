@@ -13,6 +13,7 @@
     <b-table
       v-if="selectedGroupName"
       :items="students"
+      :fields="studentFields"
     >
     </b-table>
   </b-container>
@@ -33,8 +34,17 @@
         teachersGroups: [],
         selectedGroupName: '',
         studentFields: [{
+          key: 'name',
+          label: 'Naam',
+          formatter: (value) => {
+            return `${value.first} ${value.last}`
+          }
+        },{
           key: 'address',
-          label: 'Adres'
+          label: 'Adres',
+          formatter: (value) => {
+            return `${value.streetname} ${value.houseNumber}, ${value.zipCode}, ${value.city}`
+          }
         }]
       }
     },
@@ -49,6 +59,6 @@
       async getTeachersGroups() {
         this.teachersGroups = await getGroupsOf(firebase.auth().currentUser.email);
       }
-    }
+    },
   })
 </script>

@@ -59,7 +59,7 @@
             <option :value="null" disabled>-- Selecteer een klas --</option>
           </template>
         </b-form-select>
-        <b-button @click="addStudentToGroup" size="sm">{{selectedStudent.firstName}} {{selectedStudent.lastName}} toevoegen aan klas</b-button>
+        <b-button @click="addStudentToGroup" size="sm">{{selectedStudent.name.first}} {{selectedStudent.name.last}} toevoegen aan klas</b-button>
       </b-form><br>
     </b-container>
   </b-container>

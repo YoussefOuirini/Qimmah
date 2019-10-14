@@ -9,8 +9,10 @@ export default Vue.extend({
   data() {
     return {
       form: {
-        firstName: '',
-        lastName: '',
+        name: {
+          first: '',
+          last: ''
+        },
         gender: '',
         birthDate: '',
         underage: false,
@@ -38,15 +40,15 @@ export default Vue.extend({
       }
     },
     completedBasicForm() {
-      const {firstName, lastName, gender, birthDate, phoneNumber, education} = this.form;
-      let completedBasicForm = firstName && lastName && gender && birthDate && phoneNumber && education && this.filledInAddress;
+      const {name, gender, birthDate, phoneNumber, education} = this.form;
+      let completedBasicForm = name.first && name.last && gender && birthDate && phoneNumber && education && this.filledInAddress;
       if (education === "Qoraan") {
         return completedBasicForm && this.form.arabic;
       }
       return completedBasicForm;
     },
     completedParentForm() {
-      return this.form.parent.firstName && this.form.parent.lastName
+      return this.form.parent.name.first && this.form.parent.name.last
     },
     filledInAddress() {
       const {streetname, houseNumber, zipCode, city} = this.form.address
