@@ -39,7 +39,13 @@ export default Vue.extend({
     },
     getLessons() {
       const lessons = this.$refs.studentLessons.map(studentLesson => {
-        return studentLesson.$data;
+        return {
+          student: studentLesson.student,
+          behaviour: studentLesson.behaviour,
+          presence: studentLesson.presence,
+          madeHomework: studentLesson.madeHomework,
+          studentHomework: studentLesson.studentHomework
+        };
       });
       return lessons;
     }
