@@ -1,6 +1,20 @@
 <template>
   <b-container v-if="teachersGroups.length">
-    {{teachersGroups}}
+    <b-form-select
+      v-model="selectedGroupName"
+      :options="teachersGroups"
+      text-field="groupName"
+      value-field="groupName"
+    >
+      <template v-slot:first>
+        <option :value="null" disabled>-- Selecteer een klas --</option>
+      </template>
+    </b-form-select>
+    <b-table
+      v-if="selectedGroupName"
+      :items="students"
+    >
+    </b-table>
   </b-container>
 </template>
 
@@ -16,8 +30,20 @@
     },
     data() {
       return {
-        teachersGroups: []
+        teachersGroups: [],
+        selectedGroupName: '',
+        studentFields: [{
+          key: 'address',
+          label: 'Adres'
+        }]
       }
+    },
+    computed: {
+      students() {
+        return this.teachersGroups.find((group) => {
+          return group.groupName === this.selectedGroupName;
+        }).students
+      },
     },
     methods: {
       async getTeachersGroups() {
