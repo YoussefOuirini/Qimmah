@@ -11,6 +11,7 @@
       </template>
     </b-form-select>
     <b-table
+      bordered
       v-if="selectedGroupName"
       :items="students"
       :fields="studentFields"
