@@ -52,6 +52,19 @@
           formatter: (value) => {
             return getAge(value)
           }
+        },{
+          key: 'gender',
+          label: "Geslacht",
+          formatter: (value) => {
+            if (value === 'male') {
+              return 'Man'
+            } else {
+              return 'Vrouw'
+            }
+          }
+        }, {
+          key: 'phoneNumber',
+          label: 'Telefoonnummer'
         }]
       }
     },
