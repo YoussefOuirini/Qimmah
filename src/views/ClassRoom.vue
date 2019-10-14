@@ -17,7 +17,7 @@
       :fields="studentFields"
     >
     </b-table>
-    <Lesson v-if="students.length" v-bind:students="students"/>
+    <Lesson v-if="teachersGroups.length && selectedGroupName" v-bind:students="students"/>
   </b-container>
 </template>
 
@@ -77,9 +77,10 @@
     },
     computed: {
       students() {
-        return this.teachersGroups.find((group) => {
+        const teachersGroup = this.teachersGroups.find((group) => {
           return group.groupName === this.selectedGroupName;
-        }).students
+        })
+        return teachersGroup.students;
       },
     },
     methods: {
