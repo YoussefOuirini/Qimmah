@@ -1,5 +1,6 @@
 import Vue from "vue";
 import { createGroup, getGroups, updateGroupTeacher, getAllRegistrations, writeStudentToGroup, updateRegistration, removeStudentFromGroups } from "../../firebase.js"
+import { getAge } from "../../common/getAge.js";
 
 export default Vue.extend ({
   name: "Groups",
@@ -33,6 +34,12 @@ export default Vue.extend ({
       }, {
         key: "group",
         label: "Klas"
+      }, {
+        key: "birthDate",
+        label: "Leeftijd",
+        formatter: (value) => {
+          return getAge(value)
+        }
       }],
       selectedGroupForTeacher: '',
       selectedGroupForStudent: '',
