@@ -17,7 +17,7 @@
       :fields="studentFields"
     >
     </b-table>
-    <Lesson v-if="teachersGroups.length && selectedGroupName" v-bind:students="students"/>
+    <Lesson v-if="teachersGroups.length && selectedGroupName" v-bind:students="students" v-bind:selectedGroupName="selectedGroupName"/>
   </b-container>
 </template>
 

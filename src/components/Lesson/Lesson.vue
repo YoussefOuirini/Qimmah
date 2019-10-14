@@ -30,7 +30,7 @@ export default Vue.extend({
   components: {
     StudentLesson
   },
-  props: ["students"],
+  props: ["students", "selectedGroupName"],
   methods: {
     addLessons() {
       const lessons = this.getLessons();
@@ -40,11 +40,14 @@ export default Vue.extend({
     getLessons() {
       const lessons = this.$refs.studentLessons.map(studentLesson => {
         return {
+          groupName: this.selectedGroupName,
           student: studentLesson.student,
-          behaviour: studentLesson.behaviour,
-          presence: studentLesson.presence,
-          madeHomework: studentLesson.madeHomework,
-          studentHomework: studentLesson.studentHomework
+          lesson: {
+            behaviour: studentLesson.behaviour,
+            presence: studentLesson.presence,
+            madeHomework: studentLesson.madeHomework,
+            studentHomework: studentLesson.studentHomework
+          }
         };
       });
       return lessons;
