@@ -17,17 +17,22 @@
       :fields="studentFields"
     >
     </b-table>
+    <Lesson />
   </b-container>
 </template>
 
 <script>
   import Vue from "vue";
   import firebase from "firebase";
+  import Lesson from "../components/Lesson/Lesson"
   import { getGroupsOf } from "../firebase.js";
   import { getAge } from "../common/getAge";
 
   export default Vue.extend({
     name: "ClassRoom",
+    components: {
+      Lesson
+    },
     mounted() {
       this.getTeachersGroups()
     },
