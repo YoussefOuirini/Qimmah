@@ -23,6 +23,7 @@
   import Vue from "vue";
   import firebase from "firebase";
   import { getGroupsOf } from "../firebase.js";
+  import { getAge } from "../common/getAge";
 
   export default Vue.extend({
     name: "ClassRoom",
@@ -49,7 +50,7 @@
           key: 'birthDate',
           label: 'leeftijd',
           formatter: (value) => {
-            return this.calculateAge(value)
+            return getAge(value)
           }
         }]
       }
@@ -65,16 +66,6 @@
       async getTeachersGroups() {
         this.teachersGroups = await getGroupsOf(firebase.auth().currentUser.email);
       },
-      calculateAge(dateString) {
-        const today = new Date();
-        const birthDate = new Date(dateString);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-        return age;
-      }
     },
   })
 </script>
