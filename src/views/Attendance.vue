@@ -5,9 +5,10 @@
       v-bind:key="studentLesson.id"
     >
       <b-row v-if="studentLesson.lessons.length">
-        {{studentLesson.student.name.first}} {{studentLesson.student.name.last}} klas {{studentLesson.student.group}}
+        <h5>{{studentLesson.student.name.first}} {{studentLesson.student.name.last}} klas {{studentLesson.student.group}}</h5>
         <b-table
           :items="studentLesson.lessons"
+          :fields="lessonsFields"
         >
         </b-table>
       </b-row>
@@ -26,12 +27,29 @@
     },
     data() {
       return {
-        studentLessons: []
-      }
-    },
-    computed: {
-      lessons() {
-        return this.studentLessons.map((student) => student);
+        studentLessons: [],
+        lessonsFields: [{
+          key: "date",
+          label: "Lesdatum"
+        }, {
+          key: "behaviour",
+          label: "Gedrag"
+        }, {
+          key: "groupHomework",
+          label: "Klassenhuiswerk"
+        }, {
+          key: "studentHomework",
+          label: "Individuele Huiswerk"
+        }, {
+          key: "presence",
+          label: "Aanwezigheid"
+        }, {
+          key: "madeHomework",
+          label: "Huiswerk gemaakt?"
+        }, {
+          key: "remarks",
+          label: "Opmerkingen"
+        }]
       }
     },
     methods: {
