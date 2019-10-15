@@ -7,6 +7,7 @@
       <b-row v-if="studentLesson.lessons.length">
         <h5>{{studentLesson.student.name.first}} {{studentLesson.student.name.last}} klas {{studentLesson.student.group}}</h5>
         <b-table
+          bordered
           :items="studentLesson.lessons"
           :fields="lessonsFields"
         >
