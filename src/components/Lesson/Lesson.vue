@@ -9,6 +9,7 @@
           <b-th>Aanwezigheid</b-th>
           <b-th>Huiswerk gemaakt?</b-th>
           <b-th>Huiswerk</b-th>
+          <b-th>Opmerkingen</b-th>
         </b-tr>
       </b-thead>
       <b-tbody>
