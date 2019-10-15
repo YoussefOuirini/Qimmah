@@ -7,9 +7,9 @@
         </div>
         <div class="site-branding">
             <div class="wrap">
-              <a href="https://www.alhimmah.nl/" class="custom-logo-link" rel="home"><img width="253" height="250" src="https://www.alhimmah.nl/wp-content/uploads/2018/06/cropped-logo-circle.png" class="custom-logo" alt="Stichting Al-Himmah" srcset="https://www.alhimmah.nl/wp-content/uploads/2018/06/cropped-logo-circle.png 253w, https://www.alhimmah.nl/wp-content/uploads/2018/06/cropped-logo-circle-100x100.png 100w" sizes="100vw" /></a>
+              <a href="/" class="custom-logo-link" rel="home"><img width="253" height="250" src="https://www.alhimmah.nl/wp-content/uploads/2018/06/cropped-logo-circle.png" class="custom-logo" alt="Stichting Al-Himmah" srcset="https://www.alhimmah.nl/wp-content/uploads/2018/06/cropped-logo-circle.png 253w, https://www.alhimmah.nl/wp-content/uploads/2018/06/cropped-logo-circle-100x100.png 100w" sizes="100vw" /></a>
               <div class="site-branding-text">
-                <p class="site-title"><a href="https://www.alhimmah.nl/" rel="home">Stichting Al-Himmah</a></p>
+                <p class="site-title"><a href="/" rel="home">Stichting Al-Himmah</a></p>
               </div><!-- .site-branding-text -->
             </div><!-- .wrap -->
         </div><!-- .site-branding -->
