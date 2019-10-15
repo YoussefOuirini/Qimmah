@@ -17,7 +17,7 @@
       <b-tfoot></b-tfoot>
     </b-table-simple>
     <b-form-textarea v-model='groupHomework' placeholder="Schrijf het huiswerk van de klas op."></b-form-textarea><br>
-    <b-button @click="addLessons" variant="primary">Les toevoegen</b-button><br>
+    <b-button @click="addLessons" :disabled="sendingLesson" variant="primary">Les toevoegen</b-button><br>
     {{batchResponse}}
   </b-container>
 </template>
@@ -38,11 +38,13 @@ export default Vue.extend({
   data() {
     return {
       groupHomework: '',
-      batchResponse: ''
+      batchResponse: '',
+      sendingLesson: false
     }
   },
   methods: {
     async addLessons() {
+      this.sendingLesson = true;
       const lessons = this.getLessons();
       const lessonsDate = getLessonDate();
       const batchResponse = await writeLessons(lessons, lessonsDate);
@@ -51,6 +53,7 @@ export default Vue.extend({
       } else {
         this.batchResponse = "Er is is iets misgegaan! Probeer het opnieuw!"
       }
+      this.sendingLesson = false;
     },
     getLessons() {
       const lessons = this.$refs.studentLessons.map(studentLesson => {
