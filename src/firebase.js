@@ -23,7 +23,9 @@ export async function getLessons() {
     const querySnapshot = await db.collection('groups').doc(registration.group).collection('students').doc(studentDocName).collection('lessons').get();
     let lessons = [];
     querySnapshot.forEach((doc) => {
-      lessons.push(doc.data())
+      const data = doc.data();
+      data.date = doc.id;
+      lessons.push(data);
     });
     studentLessons.push({
       student: registration,
