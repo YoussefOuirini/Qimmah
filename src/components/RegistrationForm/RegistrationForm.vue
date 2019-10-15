@@ -9,7 +9,7 @@
           <b-form-group id="input-group-1" label="Vul uw voornaam in" label-for="input-1">
             <b-form-input
               id="input-1"
-              v-model="form.firstName"
+              v-model="form.name.first"
               required
               placeholder="Voornaam"
             ></b-form-input>
@@ -18,7 +18,7 @@
           <b-form-group id="input-group-2" label="Vul uw achternaam in" label-for="input-2">
             <b-form-input
               id="input-2"
-              v-model="form.lastName"
+              v-model="form.name.last"
               required
               placeholder="Achternaam"
             ></b-form-input>
@@ -92,14 +92,14 @@
           <b-form-group v-if="form.underage" id="input-group-6" label="Vul de gegevens van de ouder/verzorger in" label-for="input-6">
             <b-form-input
               id="input-6"
-              v-model="form.parent.firstName"
+              v-model="form.parent.name.first"
               required
               placeholder="Voornaam"
             ></b-form-input>
             <br>
             <b-form-input
               id="input-7"
-              v-model="form.parent.lastName"
+              v-model="form.parent.name.last"
               required
               placeholder="Achternaam"
             ></b-form-input>

@@ -6,7 +6,7 @@ firebase.initializeApp(config.firebase);
 var db = firebase.firestore();
 
 export async function writeRegistration(registration) {
-  return db.collection("registrations").doc(`${registration.firstName}${registration.lastName}${registration.education}`).set(registration)
+  return db.collection("registrations").doc(`${registration.name.first}${registration.name.last}${registration.education}`).set(registration)
     .then(()=> {
       return {success: true}
     })
@@ -34,7 +34,7 @@ export async function getAllRegistrations() {
 }
 
 export async function createGroup(group) {
-  const userIsModerator = await checkIfUserIsModerator();
+  const userIsModerator = await checkUserClaim('moderator');
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
@@ -48,7 +48,7 @@ export async function createGroup(group) {
 }
 
 export async function deleteStudent(student) {
-  const studentDocName = `${student.firstName}${student.lastName}${student.education}`;
+  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
   await db.collection('registrations').doc(studentDocName).delete();
   const allGroups = await getGroups();
   await removeStudentFromGroups(student, allGroups);
@@ -64,11 +64,11 @@ export async function getGroups() {
 }
 
 export async function removeStudentFromGroups(student, groups) {
-  const userIsModerator = await checkIfUserIsModerator();
+  const userIsModerator = await checkUserClaim('moderator');
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
-  const studentDocName = `${student.firstName}${student.lastName}${student.education}`;
+  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
   groups.forEach((group) => {
     db.collection('groups').doc(group.groupName).collection('students').doc(studentDocName).delete()
       .catch((error) => {
@@ -78,16 +78,16 @@ export async function removeStudentFromGroups(student, groups) {
 }
 
 export async function writeStudentToGroup(student, groupName) {
-  const userIsModerator = await checkIfUserIsModerator();
+  const userIsModerator = await checkUserClaim('moderator');
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
-  const studentDocName = `${student.firstName}${student.lastName}${student.education}`;
+  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
   return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(student);
 }
 
 export async function updateGroupTeacher(teacher, groupName) {
-  const userIsModerator = await checkIfUserIsModerator();
+  const userIsModerator = await checkUserClaim('moderator');
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
@@ -97,11 +97,11 @@ export async function updateGroupTeacher(teacher, groupName) {
 }
 
 export async function updateRegistration(registration, groupName) {
-  const userIsModerator = await checkIfUserIsModerator();
+  const userIsModerator = await checkUserClaim('moderator');
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
-  const registrationRef = db.collection("registrations").doc(`${registration.firstName}${registration.lastName}${registration.education}`);
+  const registrationRef = db.collection("registrations").doc(`${registration.name.first}${registration.name.last}${registration.education}`);
   return registrationRef.update({
     group: groupName
   }).then(() => {
@@ -111,12 +111,53 @@ export async function updateRegistration(registration, groupName) {
   });
 }
 
-export async function checkIfUserIsModerator() {
+export async function checkUserClaim(customClaim) {
   const loggedInUser = firebase.auth().currentUser;
   if (loggedInUser) {
     const idTokenResult = await loggedInUser.getIdTokenResult();
-    return idTokenResult.claims.moderator;
+    return idTokenResult.claims[customClaim];
   }
+}
+
+export async function getGroupsOf(teacherEmail) {
+  const querySnapshot = await db.collection("groups").where("teacher", "==", teacherEmail).get();
+  let teachersGroups = [];
+  querySnapshot.forEach(async (doc) => {
+    const teachersGroup = doc.data()
+    const students = await getStudentsOf(teachersGroup);
+    const completeGroup = Object.assign(teachersGroup, {students});
+    teachersGroups.push(completeGroup)
+  });
+  return teachersGroups;
+}
+
+export async function writeLessons(lessons, lessonsDate) {
+  const userIsTeacher = await checkUserClaim('teacher');
+  if (!userIsTeacher) {
+    return new Error('User not authorized.')
+  }
+  const batch = db.batch();
+  lessons.forEach((studentGroupLesson) => {
+    const {student, groupName, lesson} = studentGroupLesson;
+    const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
+    const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate);
+    batch.set(lessonRef, lesson);
+  })
+  return batch.commit().then(()=> {
+    return {success: true}
+  })
+  .catch((error)=> {
+    throw new Error(error)
+  });
+}
+
+async function getStudentsOf(teachersGroup) {
+  const querySnapshot = await db.collection("groups").doc(teachersGroup.groupName).collection('students').get();
+  let students = [];
+  querySnapshot.forEach((student) => {
+    students.push(student.data())
+  });
+  return students;
 }
 
 async function getGroup(groupName) {

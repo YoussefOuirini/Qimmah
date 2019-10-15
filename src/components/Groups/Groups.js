@@ -1,5 +1,6 @@
 import Vue from "vue";
 import { createGroup, getGroups, updateGroupTeacher, getAllRegistrations, writeStudentToGroup, updateRegistration, removeStudentFromGroups } from "../../firebase.js"
+import { getAge } from "../../common/getAge.js";
 
 export default Vue.extend ({
   name: "Groups",
@@ -22,17 +23,23 @@ export default Vue.extend ({
         label: "Leraar"
       }],
       registrationFields: [{
-        key: "firstName",
-        label: "Voornaam"
-      }, {
-        key: "lastName",
-        label: "Achternaam"
+        key: "name",
+        label: "Naam",
+        formatter: (value) => {
+          return `${value.first} ${value.last}`
+        }
       }, {
         key: "education",
         label: "Onderwijs"
       }, {
         key: "group",
         label: "Klas"
+      }, {
+        key: "birthDate",
+        label: "Leeftijd",
+        formatter: (value) => {
+          return getAge(value)
+        }
       }],
       selectedGroupForTeacher: '',
       selectedGroupForStudent: '',
@@ -103,6 +110,6 @@ export default Vue.extend ({
       await updateRegistration(this.selectedStudent, this.selectedGroupForStudent);
       await this.loadRegistrations();
       this.selectedStudent = "";
-    }
+    },
   }
 })

@@ -110,11 +110,18 @@ export default Vue.extend({
       this.selectedUser = user[0]
     },
     async setUser(newRole) {
-      const role = Object.assign(this.selectedUser.customClaims, newRole);
+      const mergedRole = this.merge(this.selectedUser.customClaims, newRole);
       const addModerator = firebase.functions().httpsCallable('addModerator');
-      await addModerator({email: this.selectedUser.email, role });
+      await addModerator({email: this.selectedUser.email, role: mergedRole });
       EventBus.reloadUsers();
     },
+    merge(role, newRole) {
+      if (role) {
+        return Object.assign(role, newRole);
+      } else {
+        return newRole;
+      }
+    }
   }
 })
 </script>

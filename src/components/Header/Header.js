@@ -1,18 +1,25 @@
 import Vue from "vue";
-import { checkIfUserIsModerator } from "../../firebase.js";
+import { checkUserClaim } from "../../firebase.js";
 import { EventBus } from "../../EventBus"
 
 export default Vue.extend({
   name: "Header",
-  async mounted() {
-    this.userIsModerator = await checkIfUserIsModerator();
-    EventBus.$on('userLoginChange', async () => {
-      this.userIsModerator = await checkIfUserIsModerator();
+  mounted() {
+    this.checkUserClaims();
+    EventBus.$on('userLoginChange', () => {
+      this.checkUserClaims();
     })
   },
   data() {
     return {
-      userIsModerator: false
+      userIsModerator: false,
+      userIsTeacher: false
     }
   },
+  methods: {
+    async checkUserClaims() {
+      this.userIsModerator = await checkUserClaim('moderator');
+      this.userIsTeacher = await checkUserClaim('teacher');
+    }
+  }
 })
