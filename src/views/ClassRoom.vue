@@ -12,12 +12,12 @@
     </b-form-select>
     <b-table
       bordered
-      v-if="selectedGroupName"
+      v-if="selectedGroupName && students.length"
       :items="students"
       :fields="studentFields"
     >
     </b-table>
-    <Lesson v-if="teachersGroups.length && selectedGroupName" v-bind:students="students" v-bind:selectedGroupName="selectedGroupName"/>
+    <Lesson v-if="teachersGroups.length && selectedGroupName && students.length" v-bind:students="students" v-bind:selectedGroupName="selectedGroupName"/>
   </b-container>
 </template>
 
