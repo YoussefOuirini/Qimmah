@@ -143,7 +143,7 @@ export async function writeLessons(lessons, lessonsDate) {
     const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate);
     batch.set(lessonRef, lesson);
   })
-  batch.commit().then(()=> {
+  return batch.commit().then(()=> {
     return {success: true}
   })
   .catch((error)=> {
