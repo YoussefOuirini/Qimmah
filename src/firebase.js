@@ -15,6 +15,23 @@ export async function writeRegistration(registration) {
     });
 }
 
+export async function getLessons() {
+  const registrations = await getUsersRegistrations();
+  const studentLessons = await registrations.map(async (registration) => {
+    const studentDocName = `${registration.name.first}${registration.name.last}${registration.education}`;
+    const querySnapshot = await db.collection('groups').doc(registration.group).collection('students').doc(studentDocName).collection('lessons').get();
+    let lessons = [];
+    querySnapshot.forEach((doc) => {
+      lessons.push(doc.data())
+    });
+    return {
+      student: registration,
+      lessons
+    }
+  })
+  return studentLessons;
+}
+
 export async function getUsersRegistrations() {
   const querySnapshot = await db.collection("registrations").where("email", "==", firebase.auth().currentUser.email).get();
   let registrations = [];
