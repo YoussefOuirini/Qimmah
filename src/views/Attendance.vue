@@ -5,7 +5,7 @@
       v-bind:key="studentLesson.id"
     >
       <b-row v-if="studentLesson.lessons.length">
-        <h5>{{studentLesson.student.name.first}} {{studentLesson.student.name.last}} klas {{studentLesson.student.group}}</h5>
+        <h4>{{studentLesson.student.name.first}} {{studentLesson.student.name.last}} klas {{studentLesson.student.group}}</h4>
         <b-table
           bordered
           :items="studentLesson.lessons"
