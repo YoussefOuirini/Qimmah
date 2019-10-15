@@ -5,7 +5,7 @@
     <b-input type="password" v-model="password" placeholder="Wachtwoord"></b-input><br>
     <b-button @click="login">Inloggen</b-button>
     <p>Of login met Google <br>
-      <b-button @click="socialLogin" class= "social-button">
+      <b-button @click="socialLogin" class="social-button">
         <img src="../assets/google-logo.png" alt="Google Logo">
       </b-button>
     </p>
@@ -59,7 +59,6 @@ export default {
   }
   button {
     margin-top: 20px;
-    width: 20%;
     cursor: pointer
   }
   p {
