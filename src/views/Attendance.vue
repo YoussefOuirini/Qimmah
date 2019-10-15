@@ -30,7 +30,7 @@
         studentLessons: [],
         lessonsFields: [{
           key: "date",
-          label: "Lesdatum"
+          label: "Lesdatum",
         }, {
           key: "behaviour",
           label: "Gedrag"
