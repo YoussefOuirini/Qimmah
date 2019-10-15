@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-table-simple hover responsive caption-top>
+    <b-table-simple hover caption-top>
       <caption>Voeg een les toe!</caption>
       <b-thead>
         <b-tr>
@@ -9,6 +9,7 @@
           <b-th>Aanwezigheid</b-th>
           <b-th>Huiswerk gemaakt?</b-th>
           <b-th>Huiswerk</b-th>
+          <b-th>Opmerkingen</b-th>
         </b-tr>
       </b-thead>
       <b-tbody>
@@ -65,6 +66,7 @@ export default Vue.extend({
             presence: studentLesson.presence,
             madeHomework: studentLesson.madeHomework,
             studentHomework: studentLesson.studentHomework,
+            remarks: studentLesson.remarks,
             groupHomework: this.groupHomework
           }
         };

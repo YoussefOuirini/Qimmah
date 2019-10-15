@@ -5,31 +5,19 @@
     <b-collapse id="collapse-registration" class="mt-2">
       <RegistrationForm />
     </b-collapse>
-    <br><b-button @click="logout">Uitloggen</b-button>
   </b-container>
 </template>
 
 <script>
-  import firebase from 'firebase';
-
   import Vue from "vue";
   import RegistrationForm from "../components/RegistrationForm/RegistrationForm.vue";
   import Registrations from "../components/Registrations/Registrations.vue";
-  import { EventBus } from "../EventBus";
 
   export default Vue.extend({
     name: "Home",
     components: {
       RegistrationForm,
       Registrations
-    },
-    methods: {
-      logout() {
-        firebase.auth().signOut().then(() => {
-          EventBus.reloadLoggedinUser();
-          this.$router.replace('login')
-        })
-      }
     }
   })
 </script>

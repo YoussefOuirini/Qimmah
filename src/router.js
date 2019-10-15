@@ -7,6 +7,7 @@ import Login from './views/Login.vue';
 import SignUp from './views/SignUp.vue';
 import School from './views/School.vue';
 import ClassRoom from './views/ClassRoom.vue';
+import Attendance from './views/Attendance.vue';
 import { checkUserClaim } from './firebase';
 
 Vue.use(Router);
@@ -41,6 +42,14 @@ const router = new Router ({
       path: '/klas',
       name: 'ClassRoom',
       component: ClassRoom,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/aanwezigheid',
+      name: 'Attendance',
+      component: Attendance,
       meta: {
         requiresAuth: true
       }
