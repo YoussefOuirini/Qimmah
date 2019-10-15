@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-table-simple hover responsive>
+    <b-table-simple hover responsive caption-top>
       <caption>Voeg een les toe!</caption>
       <b-thead>
         <b-tr>
