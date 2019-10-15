@@ -1,6 +1,17 @@
 <template>
-  <b-container>
-
+  <b-container v-if="studentLessons">
+    <b-container
+      v-for="studentLesson in studentLessons"
+      v-bind:key="studentLesson.id"
+    >
+      <b-row v-if="studentLesson.lessons.length">
+        {{studentLesson.student.name.first}} {{studentLesson.student.name.last}} klas {{studentLesson.student.group}}
+        <b-table
+          :items="studentLesson.lessons"
+        >
+        </b-table>
+      </b-row>
+    </b-container>
   </b-container>
 </template>
 
@@ -11,16 +22,21 @@
   export default Vue.extend({
     name: "Attendance",
     async mounted() {
-      await this.loadStudents()
+      await this.loadStudents();
     },
     data() {
       return {
-        students: []
+        studentLessons: []
+      }
+    },
+    computed: {
+      lessons() {
+        return this.studentLessons.map((student) => student);
       }
     },
     methods: {
       async loadStudents() {
-        this.students = await getLessons();
+        this.studentLessons = await getLessons();
       }
     }
   })
