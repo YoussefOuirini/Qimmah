@@ -65,6 +65,7 @@ export default Vue.extend({
             presence: studentLesson.presence,
             madeHomework: studentLesson.madeHomework,
             studentHomework: studentLesson.studentHomework,
+            remarks: studentLesson.remarks,
             groupHomework: this.groupHomework
           }
         };
