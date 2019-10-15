@@ -23,7 +23,9 @@
 <script>
 import Vue from "vue";
 import { writeLessons } from "../../firebase";
+import { getLessonDate } from "../../common/getDate";
 import StudentLesson from "../StudentLesson/StudentLesson.vue"
+
 
 export default Vue.extend({
   name: "Lesson",
@@ -32,10 +34,10 @@ export default Vue.extend({
   },
   props: ["students", "selectedGroupName"],
   methods: {
-    addLessons() {
+    async addLessons() {
       const lessons = this.getLessons();
-      console.log(lessons)
-      // writeLessons(this.lessons);
+      const lessonsDate = getLessonDate();
+      await writeLessons(lessons, lessonsDate);
     },
     getLessons() {
       const lessons = this.$refs.studentLessons.map(studentLesson => {

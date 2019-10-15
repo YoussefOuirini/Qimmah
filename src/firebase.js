@@ -131,7 +131,7 @@ export async function getGroupsOf(teacherEmail) {
   return teachersGroups;
 }
 
-export async function writeLessons(lessons) {
+export async function writeLessons(lessons, lessonsDate) {
   const userIsTeacher = await checkUserClaim('teacher');
   if (!userIsTeacher) {
     return new Error('User not authorized.')
@@ -140,7 +140,7 @@ export async function writeLessons(lessons) {
   lessons.forEach((studentGroupLesson) => {
     const {student, groupName, lesson} = studentGroupLesson;
     const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
-    const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lesson.date);
+    const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate);
     batch.set(lessonRef, lesson);
   })
   batch.commit().then(()=> {
