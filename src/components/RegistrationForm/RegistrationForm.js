@@ -24,7 +24,12 @@ export default Vue.extend({
         },
         phoneNumber: '',
         arabic: false,
-        parent: {},
+        parent: {
+          name: {
+            first: '',
+            last: ''
+          }
+        },
         education: null
       },
       loading: false,
