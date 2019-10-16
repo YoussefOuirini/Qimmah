@@ -103,8 +103,9 @@ export async function writeStudentToGroup(student, groupName) {
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
+  const updatedStudent = Object.assign(student, {group: groupName});
   const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
-  return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(student);
+  return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(updatedStudent);
 }
 
 export async function updateGroupTeacher(teacher, groupName) {
