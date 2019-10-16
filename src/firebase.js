@@ -175,8 +175,8 @@ export async function writeLessons(lessons) {
 
 export async function storeAbsence(absence, registration) {
   const lessonsDate = getLessonDate();
-  const studentDocName = `${registration.name.first}${registration.name.last}${registration.education}`;
-  return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate).set(absence);
+  const studentDoc = `${registration.name.first}${registration.name.last}${registration.education}`;
+  return db.collection("groups").doc(registration.group).collection('students').doc(studentDoc).collection('lessons').doc(lessonsDate).set(absence, {merge: true});
 }
 
 async function getStudentsOf(teachersGroup) {
