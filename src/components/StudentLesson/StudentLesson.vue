@@ -35,7 +35,7 @@ export default Vue.extend({
   name: "Lesson",
   props: ["student"],
   mounted() {
-    this.loadAbsence;
+    this.loadAbsence();
   },
   data() {
     return {
