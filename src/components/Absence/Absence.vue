@@ -5,8 +5,8 @@
       class="mb-2 mr-sm-2 mb-sm-0"
       v-model="reasonOfAbsence"
     >
-      <option value="ziek">Ziek</option>
-      <option value="overig">Overig</option>
+      <option value="ziekte">Ziek</option>
+      <option value="overige">Overig</option>
     </b-form-select>
     <b-form-textarea v-model="reasonOfAbsenceRemarks" placeholder="Vul de reden van afwezigheid in."></b-form-textarea>
     <b-button @click="store" :disabled="!filledInReason" variant="primary">Afmelden</b-button>
@@ -30,7 +30,7 @@
     },
     computed: {
       filledInReason() {
-        if (this.reasonOfAbsence==="overig") {
+        if (this.reasonOfAbsence==="overige") {
           return this.reasonOfAbsenceRemarks;
         } else {
           return this.reasonOfAbsence;

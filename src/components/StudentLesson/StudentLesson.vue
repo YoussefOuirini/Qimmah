@@ -1,20 +1,23 @@
 <template>
   <b-tr>
-    <b-td>{{student.name.first}} {{student.name.last}} {{absence}}</b-td>
-    <b-td>
+    <b-td>{{student.name.first}} {{student.name.last}}</b-td>
+    <b-td colspan="3" v-if="absence" variant="warning">
+      <p style="font-style:italic">afgemeld met als reden {{absence.reasonOfAbsence}} met als opmerking: {{absence.reasonOfAbsenceRemarks}}</p>
+    </b-td>
+    <b-td v-if="!absence">
       <b-form-select v-model="behaviour">
         <option value="Goed">Goed</option>
         <option value="Slecht">Slecht</option>
       </b-form-select>
     </b-td>
-    <b-td>
+    <b-td v-if="!absence">
       <b-form-select v-model="presence">
         <option value="Aanwezig">Aanwezig</option>
         <option value="Laat">Laat</option>
         <option value="Afwezig">Afwezig</option>
       </b-form-select>
     </b-td>
-    <b-td>
+    <b-td v-if="!absence">
       <b-form-radio v-model="madeHomework" value="Ja">Ja</b-form-radio>
       <b-form-radio v-model="madeHomework" value="Nee">Nee</b-form-radio>
     </b-td>
