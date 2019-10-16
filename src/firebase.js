@@ -163,7 +163,7 @@ export async function writeLessons(lessons) {
     const {student, groupName, lesson} = studentGroupLesson;
     const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
     const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate);
-    batch.set(lessonRef, lesson);
+    batch.set(lessonRef, lesson, {merge: true});
   })
   return batch.commit().then(()=> {
     return {success: true}
