@@ -26,7 +26,6 @@
 <script>
 import Vue from "vue";
 import { writeLessons } from "../../firebase";
-import { getLessonDate } from "../../common/getDate";
 import StudentLesson from "../StudentLesson/StudentLesson.vue"
 
 
@@ -47,8 +46,7 @@ export default Vue.extend({
     async addLessons() {
       this.sendingLesson = true;
       const lessons = this.getLessons();
-      const lessonsDate = getLessonDate();
-      const batchResponse = await writeLessons(lessons, lessonsDate);
+      const batchResponse = await writeLessons(lessons);
       if (batchResponse.success) {
         this.batchResponse = "Les successvol opgeslagen!"
       } else {

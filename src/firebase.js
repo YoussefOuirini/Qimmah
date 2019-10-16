@@ -1,5 +1,6 @@
 import firebase from "firebase";
 import { config } from './config.js'
+import { getLessonDate } from "./common/getDate";
 
 firebase.initializeApp(config.firebase);
 
@@ -151,11 +152,12 @@ export async function getGroupsOf(teacherEmail) {
   return teachersGroups;
 }
 
-export async function writeLessons(lessons, lessonsDate) {
+export async function writeLessons(lessons) {
   const userIsTeacher = await checkUserClaim('teacher');
   if (!userIsTeacher) {
     return new Error('User not authorized.')
   }
+  const lessonsDate = getLessonDate();
   const batch = db.batch();
   lessons.forEach((studentGroupLesson) => {
     const {student, groupName, lesson} = studentGroupLesson;
@@ -171,8 +173,10 @@ export async function writeLessons(lessons, lessonsDate) {
   });
 }
 
-export async function storeAbsence(reasonOfAbsence, reasonOfAbsenceRemarks, selectedRegistration) {
-  return reasonOfAbsence + reasonOfAbsenceRemarks + selectedRegistration.name.first;
+export async function storeAbsence(reasonOfAbsence, reasonOfAbsenceRemarks, registration) {
+  const lessonsDate = getLessonDate();
+  const studentDocName = `${registration.name.first}${registration.name.last}${registration.education}`;
+  return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate).set();
 }
 
 async function getStudentsOf(teachersGroup) {
