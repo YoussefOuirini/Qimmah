@@ -1,5 +1,6 @@
 import firebase from "firebase";
 import { config } from './config.js'
+import { getLessonDate } from "./common/getDate";
 
 firebase.initializeApp(config.firebase);
 
@@ -102,8 +103,9 @@ export async function writeStudentToGroup(student, groupName) {
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
+  const updatedStudent = Object.assign(student, {group: groupName});
   const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
-  return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(student);
+  return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(updatedStudent);
 }
 
 export async function updateGroupTeacher(teacher, groupName) {
@@ -151,23 +153,43 @@ export async function getGroupsOf(teacherEmail) {
   return teachersGroups;
 }
 
-export async function writeLessons(lessons, lessonsDate) {
+export async function writeLessons(lessons) {
   const userIsTeacher = await checkUserClaim('teacher');
   if (!userIsTeacher) {
     return new Error('User not authorized.')
   }
+  const lessonsDate = getLessonDate();
   const batch = db.batch();
   lessons.forEach((studentGroupLesson) => {
     const {student, groupName, lesson} = studentGroupLesson;
     const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
     const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate);
-    batch.set(lessonRef, lesson);
+    batch.set(lessonRef, lesson, {merge: true});
   })
   return batch.commit().then(()=> {
     return {success: true}
   })
   .catch((error)=> {
     throw new Error(error)
+  });
+}
+
+export async function storeAbsence(absence, registration) {
+  const lessonsDate = getLessonDate();
+  const studentDoc = `${registration.name.first}${registration.name.last}${registration.education}`;
+  return db.collection("groups").doc(registration.group).collection('students').doc(studentDoc).collection('lessons').doc(lessonsDate).set(absence, {merge: true});
+}
+
+export async function getAbsence(student) {
+  const lessonsDate = getLessonDate();
+  const studentDoc = `${student.name.first}${student.name.last}${student.education}`;
+  const absenceRef = db.collection("groups").doc(student.group).collection('students').doc(studentDoc).collection('lessons').doc(lessonsDate);
+  return absenceRef.get().then((doc) => {
+    if (doc.exists) {
+      return doc.data();
+    }
+  }).catch((error) => {
+    return error;
   });
 }
 

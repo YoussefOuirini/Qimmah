@@ -2,8 +2,8 @@
   <footer>
     <br>
     <b-container>
+      <br><b-button v-if="loggedInUser" @click="logout">Uitloggen</b-button><br>
       &copy; 2019 Copyright: Youssef's creations
-      <br><b-button v-if="loggedInUser" @click="logout">Uitloggen</b-button>
     </b-container>
   </footer>
 </template>
