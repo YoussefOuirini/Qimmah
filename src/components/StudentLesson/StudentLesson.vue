@@ -44,13 +44,12 @@ export default Vue.extend({
       madeHomework: "Ja",
       studentHomework: '',
       remarks: "Geen opmerkingen.",
-      absence: "Pizza"
+      absence: ""
     }
   },
   methods: {
     async loadAbsence() {
       this.absence = await getAbsence(this.student);
-      console.log(this.absence);
     }
   }
 })

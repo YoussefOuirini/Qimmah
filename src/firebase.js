@@ -182,10 +182,14 @@ export async function storeAbsence(absence, registration) {
 export async function getAbsence(student) {
   const lessonsDate = getLessonDate();
   const studentDoc = `${student.name.first}${student.name.last}${student.education}`;
-  const lessonRef = db.collection("groups").doc(student.group).collection('students').doc(studentDoc).collection('lessons').doc(lessonsDate);
-  const absence = await lessonRef.get();
-  console.log(absence);
-  return absence.data();
+  const absenceRef = db.collection("groups").doc(student.group).collection('students').doc(studentDoc).collection('lessons').doc(lessonsDate);
+  return absenceRef.get().then((doc) => {
+    if (doc.exists) {
+      return doc.data();
+    }
+  }).catch((error) => {
+    return error;
+  });
 }
 
 async function getStudentsOf(teachersGroup) {
