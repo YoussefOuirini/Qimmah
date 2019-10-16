@@ -1,6 +1,6 @@
 <template>
   <b-form inline v-if="selectedRegistration">
-    <label class="mr-sm-2" for="inline-form-custom-select-pref">Meld uw kind af voor de les.</label>
+    <label class="mr-sm-2" for="inline-form-custom-select-pref">Meld af voor de les.</label>
     <b-form-select
       class="mb-2 mr-sm-2 mb-sm-0"
       v-model="reasonOfAbsence"
