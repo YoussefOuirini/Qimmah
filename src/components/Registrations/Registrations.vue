@@ -7,16 +7,21 @@
       :fields="fields"
       @row-selected="onRowSelectedRegistration"
     ></b-table>
-    <b-button v-if="selectedRegistration" @click="deleteRegistration" variant="danger">Verwijder registratie</b-button>
+    <Absence v-bind:selectedRegistration="selectedRegistration"/>
+    <br><b-button v-if="selectedRegistration" @click="deleteRegistration" variant="danger">Verwijder registratie</b-button>
   </b-container>
 </template>
 
 <script>
   import Vue from "vue";
+  import Absence from "../Absence/Absence.vue";
   import { deleteStudent} from "../../firebase.js";
 
   export default Vue.extend ({
     name: "Registrations",
+    components: {
+      Absence
+    },
     props: ["registrations"],
     data() {
       return {

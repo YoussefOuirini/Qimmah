@@ -1,7 +1,6 @@
 <template>
   <b-container>
     <Registrations v-bind:registrations="registrations"/>
-    <Absence v-bind:registrations="registrations"/>
     <br><b-button v-b-toggle.collapse-registration variant="primary"> Schrijf uzelf of uw kind in!</b-button><br>
     <b-collapse id="collapse-registration" class="mt-2">
       <RegistrationForm />
@@ -13,7 +12,6 @@
   import Vue from "vue";
   import RegistrationForm from "../components/RegistrationForm/RegistrationForm.vue";
   import Registrations from "../components/Registrations/Registrations.vue";
-  import Absence from "../components/Absence/Absence.vue";
   import { EventBus } from "../EventBus";
 
   import { getUsersRegistrations } from "@/firebase";
@@ -22,8 +20,7 @@
     name: "Home",
     components: {
       RegistrationForm,
-      Registrations,
-      Absence
+      Registrations
     },
     mounted() {
       this.loadRegistrations(),
