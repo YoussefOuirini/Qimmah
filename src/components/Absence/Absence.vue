@@ -9,12 +9,14 @@
       <option value="overig">Overig</option>
     </b-form-select>
     <b-form-textarea v-model="reasonOfAbsenceRemarks" v-if="reasonOfAbsence ==='overig'" placeholder="Vul de reden van afwezigheid in."></b-form-textarea>
-    <b-button :disabled="!filledInReason" variant="primary">Afmelden</b-button>
+    <b-button @click="store" :disabled="!filledInReason" variant="primary">Afmelden</b-button>
+    {{absenceRes}}
   </b-form>
 </template>
 
 <script>
   import Vue from "vue";
+  import { storeAbsence } from "../../firebase"
 
   export default Vue.extend({
     name: "Absence",
@@ -22,7 +24,8 @@
     data() {
       return {
         reasonOfAbsence: "",
-        reasonOfAbsenceRemarks: ""
+        reasonOfAbsenceRemarks: "",
+        absenceRes: ""
       }
     },
     computed: {
@@ -32,6 +35,12 @@
         } else {
           return this.reasonOfAbsence;
         }
+      }
+    },
+    methods: {
+      async store() {
+        const absenceRes = await storeAbsence(this.reasonOfAbsence, this.reasonOfAbsenceRemarks, this.selectedRegistration);
+        this.absenceRes = absenceRes;
       }
     }
   })

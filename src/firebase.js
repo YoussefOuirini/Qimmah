@@ -171,6 +171,10 @@ export async function writeLessons(lessons, lessonsDate) {
   });
 }
 
+export async function storeAbsence(reasonOfAbsence, reasonOfAbsenceRemarks, selectedRegistration) {
+  return reasonOfAbsence + reasonOfAbsenceRemarks + selectedRegistration.name.first;
+}
+
 async function getStudentsOf(teachersGroup) {
   const querySnapshot = await db.collection("groups").doc(teachersGroup.groupName).collection('students').get();
   let students = [];
