@@ -1,6 +1,6 @@
 <template>
   <b-tr>
-    <b-td>{{student.name.first}} {{student.name.last}}</b-td>
+    <b-td>{{student.name.first}} {{student.name.last}} {{absence}}</b-td>
     <b-td>
       <b-form-select v-model="behaviour">
         <option value="Goed">Goed</option>
@@ -29,17 +29,28 @@
 
 <script>
 import Vue from "vue";
+import { getAbsence } from "../../firebase"
 
 export default Vue.extend({
   name: "Lesson",
   props: ["student"],
+  mounted() {
+    this.loadAbsence;
+  },
   data() {
     return {
       behaviour: 'Goed',
       presence: 'Aanwezig',
       madeHomework: "Ja",
       studentHomework: '',
-      remarks: "Geen opmerkingen."
+      remarks: "Geen opmerkingen.",
+      absence: "Pizza"
+    }
+  },
+  methods: {
+    async loadAbsence() {
+      this.absence = await getAbsence(this.student);
+      console.log(this.absence);
     }
   }
 })

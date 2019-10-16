@@ -179,6 +179,15 @@ export async function storeAbsence(absence, registration) {
   return db.collection("groups").doc(registration.group).collection('students').doc(studentDoc).collection('lessons').doc(lessonsDate).set(absence, {merge: true});
 }
 
+export async function getAbsence(student) {
+  const lessonsDate = getLessonDate();
+  const studentDoc = `${student.name.first}${student.name.last}${student.education}`;
+  const lessonRef = db.collection("groups").doc(student.group).collection('students').doc(studentDoc).collection('lessons').doc(lessonsDate);
+  const absence = await lessonRef.get();
+  console.log(absence);
+  return absence.data();
+}
+
 async function getStudentsOf(teachersGroup) {
   const querySnapshot = await db.collection("groups").doc(teachersGroup.groupName).collection('students').get();
   let students = [];
