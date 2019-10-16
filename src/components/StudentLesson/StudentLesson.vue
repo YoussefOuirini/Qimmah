@@ -53,6 +53,11 @@ export default Vue.extend({
   methods: {
     async loadAbsence() {
       this.absence = await getAbsence(this.student);
+      if (this.absence) {
+        this.behaviour = "Afgemeld";
+        this.presence = "Afgemeld";
+        this.madeHomework = "Afgemeld";
+      }
     }
   }
 })
