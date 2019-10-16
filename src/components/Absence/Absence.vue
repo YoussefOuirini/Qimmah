@@ -39,7 +39,11 @@
     },
     methods: {
       async store() {
-        const absenceRes = await storeAbsence(this.reasonOfAbsence, this.reasonOfAbsenceRemarks, this.selectedRegistration);
+        const absence = {
+          reasonOfAbsence: this.reasonOfAbsence,
+          reasonOfAbsenceRemarks: this.reasonOfAbsenceRemarks
+        };
+        const absenceRes = await storeAbsence(absence, this.selectedRegistration);
         this.absenceRes = absenceRes;
       }
     }

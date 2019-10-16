@@ -173,10 +173,10 @@ export async function writeLessons(lessons) {
   });
 }
 
-export async function storeAbsence(reasonOfAbsence, reasonOfAbsenceRemarks, registration) {
+export async function storeAbsence(absence, registration) {
   const lessonsDate = getLessonDate();
   const studentDocName = `${registration.name.first}${registration.name.last}${registration.education}`;
-  return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate).set();
+  return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate).set(absence);
 }
 
 async function getStudentsOf(teachersGroup) {
