@@ -3,7 +3,9 @@
     <p>Maak een account aan</p>
     <b-input type="email" v-model="email" placeholder="Email"></b-input><br>
     <b-input type="password" v-model="password" placeholder="Wachtwoord"></b-input><br>
-    <b-button @click="signUp">Registreer</b-button>
+    <b-input type="password" v-model="repeatPassword" placeholder="Herhaal wachtwoord"></b-input><br>
+    <p v-if="incorrectPassword && this.repeatPassword" style="font-style:italic; color:red">Wachtwoorden niet hetzelfde.</p>
+    <b-button :disabled="!completedRegistration" @click="signUp">Registreer</b-button>
     <span>Of ga terug naar <router-link to="/login">login</router-link>.</span>
   </b-container>
 </template>
@@ -16,7 +18,16 @@
     data() {
       return {
         email: '',
-        password: ''
+        password: '',
+        repeatPassword: ''
+      }
+    },
+    computed: {
+      completedRegistration() {
+        return !this.incorrectPassword && this.email.length && this.password.length && this.repeatPassword.length;
+      },
+      incorrectPassword() {
+        return this.password !== this.repeatPassword;
       }
     },
     methods: {
