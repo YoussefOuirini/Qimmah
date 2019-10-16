@@ -2,7 +2,7 @@
   <b-container>
     <Registrations v-bind:registrations="registrations"/>
     <Absence v-bind:registrations="registrations"/>
-    <br><b-button v-b-toggle.collapse-registration variant="primary"> Schrijf u of uw kind in!</b-button><br>
+    <br><b-button v-b-toggle.collapse-registration variant="primary"> Schrijf uzelf of uw kind in!</b-button><br>
     <b-collapse id="collapse-registration" class="mt-2">
       <RegistrationForm />
     </b-collapse>
