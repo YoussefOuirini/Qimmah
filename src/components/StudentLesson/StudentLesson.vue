@@ -2,7 +2,7 @@
   <b-tr>
     <b-td>{{student.name.first}} {{student.name.last}}</b-td>
     <b-td colspan="3" v-if="absence" variant="warning">
-      <p style="font-style:italic">afgemeld met als reden {{absence.reasonOfAbsence}} met als opmerking: {{absence.reasonOfAbsenceRemarks}}</p>
+      <p style="font-style:italic">afgemeld met als reden {{absence.reasonOfAbsence}} en opmerking: {{absence.reasonOfAbsenceRemarks}}</p>
     </b-td>
     <b-td v-if="!absence">
       <b-form-select v-model="behaviour">
