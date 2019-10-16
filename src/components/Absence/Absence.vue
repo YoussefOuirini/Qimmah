@@ -39,18 +39,12 @@
     },
     methods: {
       async store() {
-        const absence = this.addRemarks({reasonOfAbsence: this.reasonOfAbsence,});
+        const absence = {
+          reasonOfAbsence: this.reasonOfAbsence,
+          reasonOfAbsenceRemarks: this.reasonOfAbsenceRemarks
+        };
         const absenceRes = await storeAbsence(absence, this.selectedRegistration);
         this.absenceRes = absenceRes;
-      },
-      addRemarks(absence) {
-        if (this.reasonOfAbsenceRemarks) {
-          const remarks = {
-            reasonOfAbsenceRemarks: this.reasonOfAbsenceRemarks
-          }
-          return Object.assign(absence, remarks);
-        }
-        return absence;
       }
     }
   })
