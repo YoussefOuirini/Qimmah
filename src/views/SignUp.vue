@@ -12,6 +12,7 @@
 
 <script>
   import firebase from 'firebase';
+  import { EventBus } from '../EventBus';
 
   export default {
     name: "SignUp",
@@ -33,6 +34,7 @@
     methods: {
       signUp() {
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(()=> {
+          EventBus.reloadLoggedinUser();
           this.$router.replace('home')
         }).catch((err)=> {
           alert(`Oops. ${err.message}`)
