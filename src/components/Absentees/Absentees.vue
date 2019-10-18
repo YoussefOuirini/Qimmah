@@ -1,6 +1,7 @@
 <template>
-  <b-container>
+  <b-container v-if="absentees.length">
     <h1>Bekijk de afwezigheidsmeldingen</h1>
+    {{absentees}}
   </b-container>
 </template>
 
@@ -19,8 +20,8 @@ export default Vue.extend({
     }
   },
   methods: {
-    loadAbsentees() {
-      this.absentees = getAllAbsentees();
+    async loadAbsentees() {
+      this.absentees = await getAllAbsentees();
     }
   }
 })

@@ -195,7 +195,8 @@ export async function getAbsence(student) {
 
 export async function getAllAbsentees() {
   const groupsIDs = await getGroupsIDs()
-  console.log(groupsIDs);
+  const students = await getAllStudents(groupsIDs);
+  return students;
 }
 
 async function getGroupsIDs() {
@@ -206,6 +207,14 @@ async function getGroupsIDs() {
     })
   })
   return groupsIDs;
+}
+
+async function getAllStudents(groupsIDs) {
+  return groupsIDs.map(async (groupID) => {
+    console.log(groupsIDs);
+    const students = await getStudentsOf({groupName: groupID});
+    return students;
+  })
 }
 
 async function getStudentsOf(teachersGroup) {
