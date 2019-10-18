@@ -201,7 +201,7 @@ export async function getAllAbsentees() {
 
 async function getGroupsIDs() {
   let groupsIDs = [];
-  db.collection("groups").get().then((querySnapshot) => {
+  await db.collection("groups").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
       groupsIDs.push(doc.id);
     })
@@ -210,11 +210,11 @@ async function getGroupsIDs() {
 }
 
 async function getAllStudents(groupsIDs) {
-  return groupsIDs.map(async (groupID) => {
-    console.log(groupsIDs);
+  const studentsGroups = await groupsIDs.map(async (groupID) => {
     const students = await getStudentsOf({groupName: groupID});
     return students;
-  })
+  });
+  return Promise.all(studentsGroups);
 }
 
 async function getStudentsOf(teachersGroup) {
