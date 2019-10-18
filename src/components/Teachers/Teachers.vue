@@ -1,5 +1,6 @@
 <template>
   <b-container>
+    <h1>Beheer gebruikers</h1>
     <div v-if="users.length" class="search-bar">
       <b-form-input
         @input="searchUsers()"

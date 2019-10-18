@@ -19,6 +19,7 @@
       </b-form-group>
     </b-container>
     <b-container>
+      <h1>Beheer de leraar van de klas</h1>
       <b-table
         id="groups"
         ref="groupsTable"
@@ -44,6 +45,7 @@
       </b-form><br>
     </b-container>
     <b-container v-if="registrations.length">
+      <h1>Voeg studenten toe aan klassen</h1>
       <b-table
         id="students"
         ref="studentsTable"
