@@ -193,6 +193,10 @@ export async function getAbsence(student) {
   });
 }
 
+export async function getAllAbsentees() {
+  
+}
+
 async function getStudentsOf(teachersGroup) {
   const querySnapshot = await db.collection("groups").doc(teachersGroup.groupName).collection('students').get();
   let students = [];

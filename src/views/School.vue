@@ -1,8 +1,8 @@
 <template>
   <b-container>
+    <Absentees />
     <Groups v-if="users.length" v-bind:users="users"/>
     <Teachers v-if="users.length" v-bind:users="users"/>
-    <Absentees />
   </b-container>
 </template>
 
