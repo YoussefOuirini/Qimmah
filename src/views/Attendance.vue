@@ -1,5 +1,5 @@
 <template>
-  <b-container v-if="studentLessons">
+  <b-container v-if="studentLessons.length">
     <b-container
       v-for="studentLesson in studentLessons"
       v-bind:key="studentLesson.id"
@@ -14,6 +14,9 @@
         </b-table>
       </b-row>
     </b-container>
+  </b-container>
+  <b-container v-else>
+    <h1>Nog geen administratie</h1>
   </b-container>
 </template>
 
