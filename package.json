@@ -1,6 +1,6 @@
 {
   "name": "himmah",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "description": "Himmah Administration App",
   "main": "index.js",
   "private": true,
