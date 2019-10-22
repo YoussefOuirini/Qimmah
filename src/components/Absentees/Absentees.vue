@@ -24,6 +24,9 @@ export default Vue.extend({
     return {
       absentees: [],
       absenteeFields: [{
+        key: 'date',
+        label: 'Datum'
+      }, {
         key: "name",
         label: "Naam",
         formatter: (value) => {
@@ -51,7 +54,7 @@ export default Vue.extend({
         key: 'absence',
         label: 'Afwezigheid',
         formatter: (absence) => {
-          let absenceText = `Op ${absence.date} afwezig vanwege ${absence.reasonOfAbsence}`
+          let absenceText = `Afwezig vanwege ${absence.reasonOfAbsence}`
           if (absence.reasonOfAbsenceRemarks) {
             absenceText += ` met als reden: ${absence.reasonOfAbsenceRemarks}`
           }

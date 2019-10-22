@@ -253,6 +253,8 @@ function getAbsences(absentees) {
     return absentee.absence.map((absence) => {
       const student = Object.assign({}, absentee);
       student.absence = absence;
+      student.date = absence.date;
+      delete student.absence.date;
       return student;
     })
   });
