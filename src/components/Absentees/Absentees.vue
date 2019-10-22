@@ -58,7 +58,7 @@ export default Vue.extend({
         formatter: (absences) => {
           let absencesText = [];
           absences.forEach((absence) => {
-            const absenceText = `${absence.date} ${absence.presence} ${absence.reasonOfAbsence} ${absence.reasonOfAbsenceRemarks}`
+            const absenceText = `Op ${absence.date} afwezig vanwege ${absence.reasonOfAbsence} ${absence.reasonOfAbsenceRemarks}`
             absencesText.push(absenceText);
           })
           return absencesText;
