@@ -197,7 +197,7 @@ export async function getAllAbsentees() {
   const groupsIDs = await getGroupsIDs()
   const groupsStudents = await getAllStudents(groupsIDs);
   const filteredGroupsStudents = groupsStudents.filter(groupStudent => groupStudent.length).flat();
-  const attendants = await getStudentAbsentLessons(filteredGroupsStudents);
+  const attendants = await getAbsentStudents(filteredGroupsStudents);
   const absentees = attendants.filter((attendant) => attendant.absences.length);
   return absentees;
 }
@@ -219,13 +219,20 @@ async function getAllStudents(groupsIDs) {
   return Promise.all(studentsGroups);
 }
 
-async function getStudentAbsentLessons(groupsStudents) {
+async function getAbsentStudents(groupStudents) {
+  const absentStudentLesson  = await getStudentLessons(groupStudents, "presence", "Afwezig");
+  const unkownReasonAbsentLesson  = await getStudentLessons(groupStudents, "reasonOfAbsence", "overige");
+  const sickStudentLessons = await getStudentLessons(groupStudents, "reasonOfAbsence", "ziekte");
+  return absentStudentLesson.concat(unkownReasonAbsentLesson).concat(sickStudentLessons);
+}
+
+async function getStudentLessons(groupsStudents, field, value) {
   const attendants = await groupsStudents.map(async (groupsStudent) => {
     const student = groupsStudent;
     const studentDocName = `${groupsStudent.name.first}${groupsStudent.name.last}${groupsStudent.education}`;
     let absences = [];
     await db.collection("groups").doc(groupsStudent.group).collection("students").doc(studentDocName).collection("lessons")
-      .where("presence", "==", "Afwezig")
+      .where(field, "==", value)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
