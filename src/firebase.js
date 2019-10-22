@@ -195,8 +195,11 @@ export async function getAbsence(student) {
 
 export async function getAllAbsentees() {
   const groupsIDs = await getGroupsIDs()
-  const students = await getAllStudents(groupsIDs);
-  return students;
+  const groupsStudents = await getAllStudents(groupsIDs);
+  const filteredGroupsStudents = groupsStudents.filter(groupStudent => groupStudent.length).flat();
+  const attendants = await getStudentAbsentLessons(filteredGroupsStudents);
+  const absentees = attendants.filter((attendant) => attendant.absences.length);
+  return absentees;
 }
 
 async function getGroupsIDs() {
@@ -211,10 +214,31 @@ async function getGroupsIDs() {
 
 async function getAllStudents(groupsIDs) {
   const studentsGroups = await groupsIDs.map(async (groupID) => {
-    const students = await getStudentsOf({groupName: groupID});
-    return students;
+    return await getStudentsOf({groupName: groupID});
   });
   return Promise.all(studentsGroups);
+}
+
+async function getStudentAbsentLessons(groupsStudents) {
+  const attendants = await groupsStudents.map(async (groupsStudent) => {
+    const student = groupsStudent;
+    const studentDocName = `${groupsStudent.name.first}${groupsStudent.name.last}${groupsStudent.education}`;
+    let absences = [];
+    await db.collection("groups").doc(groupsStudent.group).collection("students").doc(studentDocName).collection("lessons")
+      .where("presence", "==", "Afwezig")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          absences.push(doc.data());
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    student.absences = absences;
+    return student;
+  })
+  return Promise.all(attendants);
 }
 
 async function getStudentsOf(teachersGroup) {
