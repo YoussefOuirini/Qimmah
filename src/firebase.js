@@ -236,7 +236,9 @@ async function getStudentLessons(groupsStudents, field, value) {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          absences.push(doc.data());
+          const absence = doc.data();
+          absence.date = doc.id;
+          absences.push(absence);
         })
       })
       .catch((error) => {
