@@ -199,13 +199,8 @@ export async function getAllAbsentees() {
   const filteredGroupsStudents = groupsStudents.filter(groupStudent => groupStudent.length).flat();
   const attendants = await getAbsentStudents(filteredGroupsStudents);
   const absentees = attendants.filter((attendant) => attendant.absence.length);
-  return absentees.flatMap((absentee) => {
-    return absentee.absence.map((absence) => {
-      const student = Object.assign({}, absentee);
-      student.absence = absence;
-      return student;
-    })
-  });
+  const absences = getAbsences(absentees);
+  return removeDuplicate(absences);
 }
 
 async function getGroupsIDs() {
@@ -251,6 +246,24 @@ async function getStudentLessons(groupsStudents, field, value) {
     return student;
   })
   return Promise.all(attendants);
+}
+
+function getAbsences(absentees) {
+  return absentees.flatMap((absentee) => {
+    return absentee.absence.map((absence) => {
+      const student = Object.assign({}, absentee);
+      student.absence = absence;
+      return student;
+    })
+  });
+}
+
+function removeDuplicate(absences) {
+  return absences.filter((absence,index) => {
+    return index === absences.findIndex(obj => {
+      return JSON.stringify(obj) === JSON.stringify(absence);
+    });
+  });
 }
 
 async function getStudentsOf(teachersGroup) {
