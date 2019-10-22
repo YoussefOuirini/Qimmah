@@ -48,6 +48,17 @@ export default Vue.extend({
       }, {
         key: 'group',
         label: 'Klas'
+      }, {
+        key: 'absence',
+        label: 'Afwezigheid',
+        formatter: (absences) => {
+          let absencesText = "";
+          absences.forEach((absence) => {
+            const absenceText = `${absence.date} ${absence.presence} ${absence.reasonOfAbsence} ${absence.reasonOfAbsenceRemarks} \n`
+            absencesText += absenceText;
+          })
+          return absencesText;
+        }
       }],
     }
   },
