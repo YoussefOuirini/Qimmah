@@ -6,11 +6,6 @@
       :items="absentees"
       :fields="absenteeFields"
     >
-      <template v-slot:cell(absence)="data">
-        <b-row v-for="absenceText in data.value" v-bind:key=absenceText.id>
-          <p>{{absenceText}}</p>
-        </b-row>
-      </template>
     </b-table>
   </b-container>
 </template>
@@ -55,16 +50,12 @@ export default Vue.extend({
       }, {
         key: 'absence',
         label: 'Afwezigheid',
-        formatter: (absences) => {
-          let absencesText = [];
-          absences.forEach((absence) => {
-            let absenceText = `Op ${absence.date} afwezig vanwege ${absence.reasonOfAbsence}`
-            if (absence.reasonOfAbsenceRemarks) {
-              absenceText += ` met als reden: ${absence.reasonOfAbsenceRemarks}`
-            }
-            absencesText.push(absenceText);
-          })
-          return absencesText;
+        formatter: (absence) => {
+          let absenceText = `Op ${absence.date} afwezig vanwege ${absence.reasonOfAbsence}`
+          if (absence.reasonOfAbsenceRemarks) {
+            absenceText += ` met als reden: ${absence.reasonOfAbsenceRemarks}`
+          }
+          return absenceText;
         }
       }],
     }
@@ -72,7 +63,7 @@ export default Vue.extend({
   methods: {
     async loadAbsentees() {
       this.absentees = await getAllAbsentees();
-      // console.log(this.absentees);
+      console.log(this.absentees);
     }
   }
 })

@@ -198,8 +198,14 @@ export async function getAllAbsentees() {
   const groupsStudents = await getAllStudents(groupsIDs);
   const filteredGroupsStudents = groupsStudents.filter(groupStudent => groupStudent.length).flat();
   const attendants = await getAbsentStudents(filteredGroupsStudents);
-  const absentees = attendants.filter((attendant) => attendant.absences.length);
-  return absentees;
+  const absentees = attendants.filter((attendant) => attendant.absence.length);
+  return absentees.flatMap((absentee) => {
+    return absentee.absence.map((absence) => {
+      const student = Object.assign({}, absentee);
+      student.absence = absence;
+      return student;
+    })
+  });
 }
 
 async function getGroupsIDs() {
@@ -220,15 +226,15 @@ async function getAllStudents(groupsIDs) {
 }
 
 async function getAbsentStudents(groupStudents) {
-  const absentStudentLesson  = await getStudentLessons(groupStudents, "presence", "Afwezig");
-  const unkownReasonAbsentLesson  = await getStudentLessons(groupStudents, "reasonOfAbsence", "overige");
+  const absentStudentLessons  = await getStudentLessons(groupStudents, "presence", "Afwezig");
+  const unkownReasonAbsentLessons  = await getStudentLessons(groupStudents, "reasonOfAbsence", "overige");
   const sickStudentLessons = await getStudentLessons(groupStudents, "reasonOfAbsence", "ziekte");
-  return absentStudentLesson.concat(unkownReasonAbsentLesson).concat(sickStudentLessons);
+  return absentStudentLessons.concat(unkownReasonAbsentLessons).concat(sickStudentLessons);
 }
 
 async function getStudentLessons(groupsStudents, field, value) {
   const attendants = await groupsStudents.map(async (groupsStudent) => {
-    const student = groupsStudent;
+    const student = Object.assign({}, groupsStudent);
     const studentDocName = `${groupsStudent.name.first}${groupsStudent.name.last}${groupsStudent.education}`;
     let absences = [];
     await db.collection("groups").doc(groupsStudent.group).collection("students").doc(studentDocName).collection("lessons")
@@ -241,10 +247,7 @@ async function getStudentLessons(groupsStudents, field, value) {
           absences.push(absence);
         })
       })
-      .catch((error) => {
-        console.log(error);
-      });
-    student.absences = absences;
+    student.absence = absences;
     return student;
   })
   return Promise.all(attendants);
