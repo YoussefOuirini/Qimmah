@@ -63,7 +63,6 @@ export default Vue.extend({
   methods: {
     async loadAbsentees() {
       this.absentees = await getAllAbsentees();
-      console.log(this.absentees);
     }
   }
 })
