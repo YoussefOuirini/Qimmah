@@ -1,5 +1,6 @@
 <template>
   <b-container>
+    <Absentees />
     <Groups v-if="users.length" v-bind:users="users"/>
     <Teachers v-if="users.length" v-bind:users="users"/>
   </b-container>
@@ -8,15 +9,17 @@
 <script>
 import Vue from 'vue';
 import firebase from 'firebase';
-import Teachers from '../components/Teachers/Teachers.vue'
-import Groups from '../components/Groups/Groups.vue'
-import { EventBus } from "../EventBus"
+import Teachers from '../components/Teachers/Teachers.vue';
+import Groups from '../components/Groups/Groups.vue';
+import Absentees from '../components/Absentees/Absentees.vue';
+import { EventBus } from "../EventBus";
 
 export default Vue.extend({
   name: "School",
   components: {
     Teachers,
-    Groups
+    Groups,
+    Absentees
   },
   mounted() {
     this.getUsers();
