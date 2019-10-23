@@ -3,11 +3,10 @@
     <header id="masthead" class="site-header" role="banner">
       <div class="custom-header">
         <div class="custom-header-media">
-          <div id="wp-custom-header" class="wp-custom-header"><img src="../../assets/qimmah.jpg" width="2000" height="1198" alt="Qimmah" sizes="100vw" /></div>
+          <div id="wp-custom-header" class="wp-custom-header"><img src="../../assets/qimmah-background.jpg" width="2000" height="1198" alt="Qimmah" sizes="100vw" /></div>
         </div>
         <div class="site-branding">
             <div class="wrap">
-              <a href="/" class="custom-logo-link" rel="home"><img width="253" height="250" src="../../assets/qimmah-background.jpg" class="custom-logo" alt="Qimmah" sizes="100vw" /></a>
               <div class="site-branding-text">
                 <p class="site-title"><a href="/" rel="home">Qimmah</a></p>
               </div><!-- .site-branding-text -->
