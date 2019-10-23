@@ -15,7 +15,7 @@
 <script>
   import Vue from "vue";
   import Absence from "../Absence/Absence.vue";
-  import EventBus from "../../EventBus";
+  import { EventBus } from "../../EventBus";
   import { deleteStudent} from "../../firebase.js";
 
   export default Vue.extend ({
