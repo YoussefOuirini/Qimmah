@@ -9,6 +9,7 @@
             <div class="wrap">
               <div class="site-branding-text">
                 <p class="site-title"><a href="/" rel="home">Qimmah</a></p>
+                <br>
               </div><!-- .site-branding-text -->
             </div><!-- .wrap -->
         </div><!-- .site-branding -->
