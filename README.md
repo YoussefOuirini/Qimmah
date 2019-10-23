@@ -1,4 +1,4 @@
-# himmah
+# Qimmah
 
 ## Project setup
 ```

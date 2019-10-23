@@ -21,6 +21,7 @@ export async function getLessons() {
   let studentLessons = [];
   await registrations.forEach(async (registration) => {
     const studentDocName = `${registration.name.first}${registration.name.last}${registration.education}`;
+    if (!registration.group) return;
     const querySnapshot = await db.collection('groups').doc(registration.group).collection('students').doc(studentDocName).collection('lessons').get();
     let lessons = [];
     querySnapshot.forEach((doc) => {

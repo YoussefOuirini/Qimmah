@@ -1,7 +1,7 @@
 <template>
   <b-container v-if="loading == false">
     <br>
-    <b-row><h1 style="font-style:italic">Inschrijfformulier Onderwijs Al-Himmah</h1></b-row>
+    <b-row><h1 style="font-style:italic">Inschrijfformulier Onderwijs</h1></b-row>
     <b-row><h2> Gegevens deelnemer </h2></b-row>
     <b-form>
       <b-row>
