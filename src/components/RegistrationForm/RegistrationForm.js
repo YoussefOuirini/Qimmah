@@ -68,7 +68,12 @@ export default Vue.extend({
         this.form.underage = true;
       } else {
         this.form.underage = false;
-        this.form.parent = {};
+        this.form.parent = {
+          name: {
+            first: '',
+            last: ''
+          }
+        };
       }
     },
     getAgeLimitTimeStamp() {
