@@ -25,9 +25,9 @@
 
 <script>
 import Vue from "vue";
+import firebase from 'firebase';
 import { writeLessons } from "../../firebase";
 import StudentLesson from "../StudentLesson/StudentLesson.vue"
-
 
 export default Vue.extend({
   name: "Lesson",
@@ -49,6 +49,13 @@ export default Vue.extend({
       const batchResponse = await writeLessons(lessons);
       if (batchResponse.success) {
         this.batchResponse = "Les successvol opgeslagen!"
+        const email = firebase.functions().httpsCallable('sendEmail');
+        await email({
+          toEmail: "youssefouirini@gmail.com",
+          subject: "test",
+          text: "test",
+          html: '<strong>Pizza is tha best</strong>',
+        })
       } else {
         this.batchResponse = "Er is is iets misgegaan! Probeer het opnieuw!"
       }

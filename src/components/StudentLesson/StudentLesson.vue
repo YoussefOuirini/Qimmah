@@ -35,7 +35,7 @@ import Vue from "vue";
 import { getAbsence } from "../../firebase"
 
 export default Vue.extend({
-  name: "Lesson",
+  name: "StudentLesson",
   props: ["student"],
   watch: {
     student: async function () {
