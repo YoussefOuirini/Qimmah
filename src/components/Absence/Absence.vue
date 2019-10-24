@@ -1,5 +1,5 @@
 <template>
-  <b-form inline v-if="selectedRegistration">
+  <b-form inline v-if="registration">
     <label class="mr-sm-2" for="inline-form-custom-select-pref">Meld af voor de les.</label>
     <b-form-select
       class="mb-2 mr-sm-2 mb-sm-0"
@@ -20,7 +20,7 @@
 
   export default Vue.extend({
     name: "Absence",
-    props: ["selectedRegistration"],
+    props: ["registration"],
     data() {
       return {
         reasonOfAbsence: "",
@@ -43,7 +43,7 @@
           reasonOfAbsence: this.reasonOfAbsence,
           reasonOfAbsenceRemarks: this.reasonOfAbsenceRemarks
         };
-        const absenceRes = await storeAbsence(absence, this.selectedRegistration);
+        const absenceRes = await storeAbsence(absence, this.registration);
         this.absenceRes = absenceRes;
       }
     }
