@@ -1,7 +1,7 @@
 <template>
   <b-tr>
     <b-td>{{student.name.first}} {{student.name.last}}</b-td>
-    <b-td colspan="3" v-if="absence" variant="warning">
+    <b-td colspan="3" v-if="absence.reasonOfAbsence" variant="warning">
       <p style="font-style:italic">afgemeld met als reden {{absence.reasonOfAbsence}} en opmerking: {{absence.reasonOfAbsenceRemarks}}</p>
     </b-td>
     <b-td v-if="!absence">
