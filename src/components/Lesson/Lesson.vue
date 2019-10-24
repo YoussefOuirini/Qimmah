@@ -15,7 +15,6 @@
       <b-tbody>
         <StudentLesson ref="studentLessons" v-for="student in students" v-bind:key="student.id" v-bind:student="student" />
       </b-tbody>
-      <b-tfoot></b-tfoot>
     </b-table-simple>
     <b-form-textarea v-model='groupHomework' placeholder="Schrijf het huiswerk van de klas op."></b-form-textarea><br>
     <b-button @click="addLessons" :disabled="sendingLesson" variant="primary">Les toevoegen</b-button><br>
