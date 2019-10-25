@@ -58,7 +58,7 @@ export default Vue.extend({
   },
   computed: {
     variant() {
-      if (this.absence.reasonOfAbsence) {
+      if (this.absence && this.absence.reasonOfAbsence) {
         return "warning";
       }
       return "default";
