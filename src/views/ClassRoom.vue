@@ -23,7 +23,8 @@
 
 <script>
   import Vue from "vue";
-  import firebase from "firebase";
+  import firebase from "firebase/app";
+  import 'firebase/auth';
   import Lesson from "../components/Lesson/Lesson"
   import { getGroupsOf } from "../firebase.js";
   import { getAge } from "../common/getAge";

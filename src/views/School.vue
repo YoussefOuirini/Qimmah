@@ -8,7 +8,8 @@
 
 <script>
 import Vue from 'vue';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/functions';
 import Teachers from '../components/Teachers/Teachers.vue';
 import Groups from '../components/Groups/Groups.vue';
 import Absentees from '../components/Absentees/Absentees.vue';

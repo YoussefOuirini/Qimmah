@@ -1,16 +1,15 @@
 <template>
-  <b-form inline v-if="selectedRegistration">
-    <label class="mr-sm-2" for="inline-form-custom-select-pref">Meld af voor de les.</label>
+  <b-form v-if="registration">
+    <label class="mr-sm-2" for="inline-form-custom-select-pref">Meld {{registration.name.first}} af voor de les.</label>
     <b-form-select
       class="mb-2 mr-sm-2 mb-sm-0"
       v-model="reasonOfAbsence"
-    >
+    ><option :value="null">Selecteer de reden van absentie</option>
       <option value="ziekte">Ziek</option>
       <option value="overige">Overig</option>
     </b-form-select>
     <b-form-textarea v-model="reasonOfAbsenceRemarks" placeholder="Vul de reden van afwezigheid in."></b-form-textarea>
     <b-button @click="store" :disabled="!filledInReason" variant="primary">Afmelden</b-button>
-    {{absenceRes}}
   </b-form>
 </template>
 
@@ -20,12 +19,11 @@
 
   export default Vue.extend({
     name: "Absence",
-    props: ["selectedRegistration"],
+    props: ["registration"],
     data() {
       return {
-        reasonOfAbsence: "",
-        reasonOfAbsenceRemarks: "",
-        absenceRes: ""
+        reasonOfAbsence: null,
+        reasonOfAbsenceRemarks: ""
       }
     },
     computed: {
@@ -43,8 +41,11 @@
           reasonOfAbsence: this.reasonOfAbsence,
           reasonOfAbsenceRemarks: this.reasonOfAbsenceRemarks
         };
-        const absenceRes = await storeAbsence(absence, this.selectedRegistration);
-        this.absenceRes = absenceRes;
+        await storeAbsence(absence, this.registration);
+        this.hideModal();
+      },
+      hideModal() {
+        this.$emit('hide', true);
       }
     }
   })

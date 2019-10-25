@@ -1,59 +1,29 @@
 <template>
   <b-container v-if="registrations.length">
-    <b-table 
-      striped hover selectable
-      select-mode="single"
-      :items="registrations"
-      :fields="fields"
-      @row-selected="onRowSelectedRegistration"
-    ></b-table>
-    <Absence v-bind:selectedRegistration="selectedRegistration"/>
-    <br><b-button v-if="selectedRegistration" @click="deleteRegistration" variant="danger">Verwijder registratie</b-button>
+    <b-table-simple striped>
+      <b-thead>
+        <b-tr>
+          <b-th>Naam</b-th>
+          <b-th>Studie</b-th>
+          <b-th>Klas</b-th>
+        </b-tr>
+      </b-thead>
+      <b-tbody>
+        <Registration ref="registration" v-for="registration in registrations" v-bind:key="registration.id" v-bind:registration="registration"/>
+      </b-tbody>
+    </b-table-simple>
   </b-container>
 </template>
 
 <script>
   import Vue from "vue";
-  import Absence from "../Absence/Absence.vue";
-  import { EventBus } from "../../EventBus";
-  import { deleteStudent} from "../../firebase.js";
+  import Registration from "../Registration/Registration.vue";
 
   export default Vue.extend ({
     name: "Registrations",
     components: {
-      Absence
+      Registration
     },
-    props: ["registrations"],
-    data() {
-      return {
-        fields: [{
-          key: 'name',
-          label: 'Naam',
-          formatter: (value) => {
-            return `${value.first} ${value.last}`
-          }
-        },{
-          key: 'education',
-          label: 'Ingeschreven voor studie'
-        }, {
-          key: 'phoneNumber',
-          label: 'Telefoonnummer'
-        }, {
-          key: 'group',
-          label: 'Klas'
-        }
-        ],
-        selectedRegistration: ''
-      }
-    },
-    methods: {
-      onRowSelectedRegistration(registration) {
-        this.selectedRegistration = registration[0]
-      },
-      async deleteRegistration() {
-        await deleteStudent(this.selectedRegistration);
-        EventBus.reloadRegistration()
-      },
-    }
+    props: ["registrations"]
   })
 </script>

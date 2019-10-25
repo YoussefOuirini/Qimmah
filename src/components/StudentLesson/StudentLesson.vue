@@ -1,23 +1,24 @@
 <template>
-  <b-tr>
+  <b-tr :variant="variant">
     <b-td>{{student.name.first}} {{student.name.last}}</b-td>
-    <b-td colspan="3" v-if="absence" variant="warning">
-      <p style="font-style:italic">afgemeld met als reden {{absence.reasonOfAbsence}} en opmerking: {{absence.reasonOfAbsenceRemarks}}</p>
+    <b-td colspan="3" v-if="absence && absence.reasonOfAbsence">
+      <p style="font-style:italic">Afgemeld met als reden {{absence.reasonOfAbsence}}</p>
+      <p v-if="absence.reasonOfAbsenceRemarks" style="font-style:italic">en opmerking: {{absence.reasonOfAbsenceRemarks}}</p>
     </b-td>
-    <b-td v-if="!absence">
+    <b-td v-if="!absence || !absence.reasonOfAbsence">
       <b-form-select v-model="behaviour">
         <option value="Goed">Goed</option>
         <option value="Slecht">Slecht</option>
       </b-form-select>
     </b-td>
-    <b-td v-if="!absence">
+    <b-td v-if="!absence || !absence.reasonOfAbsence">
       <b-form-select v-model="presence">
         <option value="Aanwezig">Aanwezig</option>
         <option value="Laat">Laat</option>
         <option value="Afwezig">Afwezig</option>
       </b-form-select>
     </b-td>
-    <b-td v-if="!absence">
+    <b-td v-if="!absence || !absence.reasonOfAbsence">
       <b-form-radio v-model="madeHomework" value="Ja">Ja</b-form-radio>
       <b-form-radio v-model="madeHomework" value="Nee">Nee</b-form-radio>
     </b-td>
@@ -55,10 +56,18 @@ export default Vue.extend({
       absence: ""
     }
   },
+  computed: {
+    variant() {
+      if (this.absence && this.absence.reasonOfAbsence) {
+        return "warning";
+      }
+      return "default";
+    }
+  },
   methods: {
     async loadAbsence() {
       this.absence = await getAbsence(this.student);
-      if (this.absence) {
+      if (this.absence && this.absence.reasonOfAbsence) {
         this.behaviour = "Afgemeld";
         this.presence = "Afgemeld";
         this.madeHomework = "Afgemeld";
