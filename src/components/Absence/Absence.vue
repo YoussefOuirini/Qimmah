@@ -4,7 +4,7 @@
     <b-form-select
       class="mb-2 mr-sm-2 mb-sm-0"
       v-model="reasonOfAbsence"
-    >
+    ><option :value="null">Selecteer de reden van absentie</option>
       <option value="ziekte">Ziek</option>
       <option value="overige">Overig</option>
     </b-form-select>
@@ -23,7 +23,7 @@
     props: ["registration"],
     data() {
       return {
-        reasonOfAbsence: "",
+        reasonOfAbsence: null,
         reasonOfAbsenceRemarks: "",
         absenceRes: ""
       }
