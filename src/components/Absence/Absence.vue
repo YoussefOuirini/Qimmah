@@ -42,6 +42,10 @@
           reasonOfAbsenceRemarks: this.reasonOfAbsenceRemarks
         };
         await storeAbsence(absence, this.registration);
+        this.hideModal();
+      },
+      hideModal() {
+        this.$emit('hide', true);
       }
     }
   })

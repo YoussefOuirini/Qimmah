@@ -4,10 +4,10 @@
     <b-td>{{registration.education}}</b-td>
     <b-td>{{registration.group}}</b-td>
     <b-td>
-      <b-button v-b-modal="unattend">Afmelden van de les</b-button>
+      <b-button v-b-modal="modalName">Afmelden van de les</b-button>
       <b-button @click="deleteRegistration" variant="danger">Verwijder registratie</b-button>
-      <b-modal size="lg" :id="unattend" title="Afmelden van de les">
-        <Absence v-bind:registration="registration"/>
+      <b-modal size="lg" :id="modalName" :ref="modalName" title="Afmelden van de les">
+        <Absence v-bind:registration="registration" @hide="closeModal"/>
       </b-modal>
     </b-td>
   </b-tr>
@@ -26,7 +26,7 @@
     },
     props: ["registration"],
     computed: {
-      unattend() {
+      modalName() {
         const {name, education, group} = this.registration;
         return `${name.first}${name.last}${education}${group}`;
       }
@@ -36,6 +36,9 @@
         await deleteStudent(this.registration);
         EventBus.reloadRegistration()
       },
+      closeModal() {
+        this.$refs[this.modalName].hide()
+      }
     }
   })
 </script>
