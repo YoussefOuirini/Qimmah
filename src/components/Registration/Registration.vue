@@ -6,7 +6,13 @@
     <b-td>
       <b-button v-b-modal="modalName">Afmelden van de les</b-button>
       <b-button @click="deleteRegistration" variant="danger">Verwijder registratie</b-button>
-      <b-modal size="lg" :id="modalName" :ref="modalName" title="Afmelden van de les">
+      <b-modal
+        size="lg"
+        :id="modalName"
+        :ref="modalName"
+        title="Afmelden van de les"
+        ok-only ok-title="Niet afmelden"
+      >
         <Absence v-bind:registration="registration" @hide="closeModal"/>
       </b-modal>
     </b-td>
