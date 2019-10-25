@@ -10,7 +10,6 @@
     </b-form-select>
     <b-form-textarea v-model="reasonOfAbsenceRemarks" placeholder="Vul de reden van afwezigheid in."></b-form-textarea>
     <b-button @click="store" :disabled="!filledInReason" variant="primary">Afmelden</b-button>
-    {{absenceRes}}
   </b-form>
 </template>
 
@@ -24,8 +23,7 @@
     data() {
       return {
         reasonOfAbsence: null,
-        reasonOfAbsenceRemarks: "",
-        absenceRes: ""
+        reasonOfAbsenceRemarks: ""
       }
     },
     computed: {
@@ -43,8 +41,7 @@
           reasonOfAbsence: this.reasonOfAbsence,
           reasonOfAbsenceRemarks: this.reasonOfAbsenceRemarks
         };
-        const absenceRes = await storeAbsence(absence, this.registration);
-        this.absenceRes = absenceRes;
+        await storeAbsence(absence, this.registration);
       }
     }
   })
