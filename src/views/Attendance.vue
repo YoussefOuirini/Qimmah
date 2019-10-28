@@ -58,8 +58,25 @@
     },
     methods: {
       async loadStudents() {
-        this.studentLessons = await getLessons();
+        const studentLessons = await getLessons();
+        const filteredStudentLessons = this.filterLessons(studentLessons);
+        this.studentLessons = filteredStudentLessons;
+      },
+      filterLessons(studentLessons) {
+        return studentLessons.map((studentLesson) => {
+          const {student, lessons } = studentLesson;
+          const filteredLessons = lessons.filter((lesson) => {
+            if (lesson.reasonOfAbsence && !lesson.presence) {
+              return;
+            }
+            return lesson
+          });
+          return {
+            student,
+            lessons: filteredLessons
+          }
+        });
       }
-    }
+    },
   })
 </script>
