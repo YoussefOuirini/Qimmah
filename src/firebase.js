@@ -20,8 +20,7 @@ export async function writeRegistration(registration) {
 
 export async function getLessons() {
   const registrations = await getUsersRegistrations();
-  let studentLessons = [];
-  await registrations.forEach(async (registration) => {
+  const studentLessons = await registrations.map(async (registration) => {
     const studentDocName = `${registration.name.first}${registration.name.last}${registration.education}`;
     if (!registration.group) return;
     const querySnapshot = await db.collection('groups').doc(registration.group).collection('students').doc(studentDocName).collection('lessons').get();
@@ -31,12 +30,12 @@ export async function getLessons() {
       data.date = doc.id;
       lessons.push(data);
     });
-    studentLessons.push({
+    return {
       student: registration,
       lessons
-    })
+    }
   })
-  return studentLessons;
+  return Promise.all(studentLessons);
 }
 
 export async function getUsersRegistrations() {
