@@ -9,7 +9,7 @@ firebase.initializeApp(config.firebase);
 const db = firebase.firestore();
 
 export async function createSchool(school) {
-  return db.collection("schools").doc(school).set({name: school, creator: firebase.auth().currentUser})
+  return db.collection("schools").doc(school).set({name: school, creator: firebase.auth().currentUser.email})
   .then(()=> {
     return {success: true}
   })
