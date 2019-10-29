@@ -4,7 +4,7 @@
     <b-table
       id="groups"
       ref="groupsTable"
-      v-if="groups.length"
+      v-if="groups.length && users.length"
       striped hover selectable
       select-mode="single"
       :items="groups"
@@ -42,8 +42,20 @@ export default Vue.extend({
         key: "groupName",
         label: "Klas",
       }, {
-        key: "teacher",
-        label: "Leraar"
+        key: "teachers",
+        label: "Leraren",
+        formatter: (value) => {
+          if (value) {
+            let teachersText = '';
+            value.forEach((teacher, index) => {
+              teachersText += ` ${teacher.email}`;
+              if (index !== value.length-1) {
+              teachersText += ` &`;
+              }
+            });
+            return teachersText;
+          }
+        }
       }],
     }
   },
@@ -61,7 +73,7 @@ export default Vue.extend({
       this.selectedGroupForTeacher = group[0]
     },
     async addTeacher() {
-      await updateGroupTeacher({teacher: this.selectedTeacher}, this.selectedGroupForTeacher.groupName);
+      await updateGroupTeacher({email: this.selectedTeacher}, this.selectedGroupForTeacher.groupName);
       this.reloadGroups();
     },
     reloadGroups() {

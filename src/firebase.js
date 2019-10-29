@@ -110,14 +110,16 @@ export async function writeStudentToGroup(student, groupName) {
   return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(updatedStudent);
 }
 
-export async function updateGroupTeacher(teacher, groupName) {
+export async function updateGroupTeacher(teacherEmail, groupName) {
   const userIsModerator = await checkUserClaim('moderator');
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
   const group = await getGroup(groupName);
   const groupRef = await db.collection("groups").doc(group);
-  return groupRef.update(teacher);
+  return groupRef.update({
+    teachers: firebase.firestore.FieldValue.arrayUnion(teacherEmail)
+  });
 }
 
 export async function updateRegistration(registration, groupName) {
