@@ -18,32 +18,7 @@
         </b-input-group>
       </b-form-group>
     </b-container>
-    <b-container>
-      <h1>Beheer de leraar van de klas</h1>
-      <b-table
-        id="groups"
-        ref="groupsTable"
-        v-if="groups.length"
-        striped hover selectable
-        select-mode="single"
-        :items="groups"
-        :fields="groupFields"
-        @row-selected="onRowSelectedGroup"
-      ></b-table>
-      <b-form v-if="selectedGroupForTeacher" inline>
-        <b-form-select
-          v-model="selectedTeacher"
-          :options="teachers"
-          text-field="email"
-          value-field="email"
-        >
-          <template v-slot:first>
-            <option :value="null" disabled>-- Selecteer een leraar --</option>
-          </template>
-        </b-form-select>
-        <b-button @click="addTeacher" size="sm">Leraar Toevoegen aan klas</b-button>
-      </b-form><br>
-    </b-container>
+    <Teachers v-if="groups.length && users.length" v-bind:groups="groups" v-bind:users="users" @reloadGroups="loadGroups"/>
     <b-container v-if="registrations.length">
       <h1>Voeg studenten toe aan klassen</h1>
       <b-table
