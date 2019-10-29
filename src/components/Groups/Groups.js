@@ -1,9 +1,13 @@
 import Vue from "vue";
-import { createGroup, getGroups, updateGroupTeacher, getAllRegistrations, writeStudentToGroup, updateRegistration, removeStudentFromGroups } from "../../firebase.js"
+import Teachers from "../Teachers/Teachers.vue";
+import { createGroup, getGroups, getAllRegistrations, writeStudentToGroup, updateRegistration, removeStudentFromGroups } from "../../firebase.js";
 import { getAge } from "../../common/getAge.js";
 
 export default Vue.extend ({
   name: "Groups",
+  components: {
+    Teachers
+  },
   props: ['users'],
   mounted() {
     this.loadGroups();
@@ -15,13 +19,6 @@ export default Vue.extend ({
       groupName: "",
       groups: [],
       registrations: [],
-      groupFields: [{
-        key: "groupName",
-        label: "Klas",
-      }, {
-        key: "teacher",
-        label: "Leraar"
-      }],
       registrationFields: [{
         key: "name",
         label: "Naam",
@@ -41,9 +38,7 @@ export default Vue.extend ({
           return getAge(value)
         }
       }],
-      selectedGroupForTeacher: '',
       selectedGroupForStudent: '',
-      selectedTeacher: '',
       selectedStudent: ''
     }
   },
@@ -70,13 +65,6 @@ export default Vue.extend ({
         return group.groupName === this.groupName
       })
     },
-    teachers() {
-      return this.users.filter((user) => {
-        if (user.customClaims && user.customClaims.teacher) {
-          return user
-        }
-      })
-    }
   },
   methods: {
     async addGroup() {
@@ -94,15 +82,8 @@ export default Vue.extend ({
     async loadRegistrations() {
       this.registrations = await getAllRegistrations();
     },
-    async addTeacher() {
-      await updateGroupTeacher({teacher: this.selectedTeacher}, this.selectedGroupForTeacher.groupName);
-      await this.loadGroups();
-    },
     onRowSelectedStudent(student) {
       this.selectedStudent = student[0]
-    },
-    onRowSelectedGroup(group) {
-      this.selectedGroupForTeacher = group[0]
     },
     async addStudentToGroup() {
       await removeStudentFromGroups(this.selectedStudent, this.groups);
