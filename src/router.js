@@ -9,7 +9,7 @@ import SignUp from './views/SignUp.vue';
 import School from './views/School.vue';
 import ClassRoom from './views/ClassRoom.vue';
 import Attendance from './views/Attendance.vue';
-import { checkUserClaim } from './firebase';
+import { checkUserClaim } from './firebase/firebase';
 
 Vue.use(Router);
 

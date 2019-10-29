@@ -23,7 +23,7 @@
   import Vue from "vue";
   import Absence from "../Absence/Absence.vue";
   import { EventBus } from "../../EventBus";
-  import { deleteStudent} from "../../firebase.js";
+  import { deleteStudent} from "@/firebase/firebase";
 
   export default Vue.extend({
     name: "Registration",

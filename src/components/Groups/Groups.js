@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Teachers from "../Teachers/Teachers.vue";
-import { createGroup, getGroups, getAllRegistrations, writeStudentToGroup, updateRegistration, removeStudentFromGroups } from "../../firebase.js";
+import { createGroup, getGroups, getAllRegistrations, writeStudentToGroup, updateRegistration, removeStudentFromGroups } from "@/firebase/firebase";
 import { getAge } from "../../common/getAge.js";
 
 export default Vue.extend ({

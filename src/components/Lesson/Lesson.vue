@@ -24,7 +24,7 @@
 
 <script>
 import Vue from "vue";
-import { writeLessons } from "../../firebase";
+import { writeLessons } from "@/firebase/firebase";
 import StudentLesson from "../StudentLesson/StudentLesson.vue"
 
 

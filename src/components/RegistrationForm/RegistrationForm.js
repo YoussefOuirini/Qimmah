@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { config } from "../../config";
-import { writeRegistration } from "../../firebase";
+import { writeRegistration } from "@/firebase/firebase";
 import firebase from "firebase/app";
 import 'firebase/auth';
 import { EventBus } from "../../EventBus.js";

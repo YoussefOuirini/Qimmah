@@ -1,12 +1,22 @@
 import firebase from "firebase/app";
 import 'firebase/firestore';
 import 'firebase/auth';
-import { config } from './config.js'
-import { getLessonDate } from "./common/getDate";
+import { config } from '../config.js'
+import { getLessonDate } from "../common/getDate";
 
 firebase.initializeApp(config.firebase);
 
-var db = firebase.firestore();
+const db = firebase.firestore();
+
+export async function createSchool(school) {
+  return db.collection("schools").doc(school).set({name: school, creator: firebase.auth().currentUser})
+  .then(()=> {
+    return {success: true}
+  })
+  .catch((error)=> {
+    throw new Error(error)
+  });
+}
 
 export async function writeRegistration(registration) {
   return db.collection("registrations").doc(`${registration.name.first}${registration.name.last}${registration.education}`).set(registration)

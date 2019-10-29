@@ -12,7 +12,7 @@
 
 <script>
 import Vue from 'vue';
-import {getAllAbsentees} from "../../firebase";
+import {getAllAbsentees} from "@/firebase/firebase";
 import { getAge } from "../../common/getAge.js";
 
 export default Vue.extend({

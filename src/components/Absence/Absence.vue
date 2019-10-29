@@ -15,7 +15,7 @@
 
 <script>
   import Vue from "vue";
-  import { storeAbsence } from "../../firebase"
+  import { storeAbsence } from "@/firebase/firebase"
 
   export default Vue.extend({
     name: "Absence",

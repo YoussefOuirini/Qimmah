@@ -22,7 +22,7 @@
 
 <script>
   import Vue from "vue";
-  import { getLessons } from "../firebase.js"
+  import { getLessons } from "@/firebase/firebase"
 
   export default Vue.extend({
     name: "Attendance",

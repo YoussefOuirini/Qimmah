@@ -14,7 +14,7 @@
   import Registrations from "../components/Registrations/Registrations.vue";
   import { EventBus } from "../EventBus";
 
-  import { getUsersRegistrations } from "@/firebase";
+  import { getUsersRegistrations } from "@/firebase/firebase";
 
   export default Vue.extend({
     name: "Home",

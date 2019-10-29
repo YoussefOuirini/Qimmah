@@ -30,7 +30,7 @@
 
 <script>
 import Vue from "vue";
-import { updateGroupTeacher, removeGroupTeacher } from "../../firebase.js"
+import { updateGroupTeacher, removeGroupTeacher } from "@/firebase/firebase"
 
 export default Vue.extend({
   name: "Teachers",

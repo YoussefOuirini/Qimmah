@@ -33,7 +33,7 @@
 
 <script>
 import Vue from "vue";
-import { getAbsence } from "../../firebase"
+import { getAbsence } from "@/firebase/firebase"
 
 export default Vue.extend({
   name: "Lesson",
