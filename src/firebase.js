@@ -122,6 +122,18 @@ export async function updateGroupTeacher(teacherEmail, groupName) {
   });
 }
 
+export async function removeGroupTeacher(teacherEmail, groupName) {
+  const userIsModerator = await checkUserClaim('moderator');
+  if (!userIsModerator) {
+    return new Error('User not authorized.')
+  }
+  const group = await getGroup(groupName);
+  const groupRef = await db.collection("groups").doc(group);
+  return groupRef.update({
+    teachers: firebase.firestore.FieldValue.arrayRemove(teacherEmail)
+  });
+}
+
 export async function updateRegistration(registration, groupName) {
   const userIsModerator = await checkUserClaim('moderator');
   if (!userIsModerator) {

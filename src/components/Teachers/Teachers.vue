@@ -23,13 +23,14 @@
         </template>
       </b-form-select>
       <b-button @click="addTeacher" size="sm">Leraar Toevoegen aan klas</b-button>
+      <b-button @click="removeTeacher" variant="danger" size="sm">Leraar Verwijderen</b-button>
     </b-form><br>
   </b-container>
 </template>
 
 <script>
 import Vue from "vue";
-import { updateGroupTeacher } from "../../firebase.js"
+import { updateGroupTeacher, removeGroupTeacher } from "../../firebase.js"
 
 export default Vue.extend({
   name: "Teachers",
@@ -74,6 +75,10 @@ export default Vue.extend({
     },
     async addTeacher() {
       await updateGroupTeacher({email: this.selectedTeacher}, this.selectedGroupForTeacher.groupName);
+      this.reloadGroups();
+    },
+    async removeTeacher() {
+      await removeGroupTeacher({email: this.selectedTeacher}, this.selectedGroupForTeacher.groupName);
       this.reloadGroups();
     },
     reloadGroups() {
