@@ -24,7 +24,7 @@
         ref="usersTable"
         striped hover selectable
         select-mode="single"
-        :items="foundUsers" 
+        :items="foundUsers"
         :fields="fields"
         @row-selected="onRowSelected"
       >
@@ -54,7 +54,7 @@ import firebase from 'firebase/app';
 import { EventBus } from "../../EventBus"
 
 export default Vue.extend({
-  name: "Teachers",
+  name: "Users",
   props: ['users'],
   data() {
     return {
