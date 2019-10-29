@@ -48,8 +48,8 @@ export default Vue.extend({
         formatter: (value) => {
           if (value) {
             let teachersText = '';
-            value.forEach((teacher, index) => {
-              teachersText += ` ${teacher.email}`;
+            value.forEach((teacherEmail, index) => {
+              teachersText += ` ${teacherEmail}`;
               if (index !== value.length-1) {
               teachersText += ` &`;
               }
@@ -74,11 +74,11 @@ export default Vue.extend({
       this.selectedGroupForTeacher = group[0]
     },
     async addTeacher() {
-      await updateGroupTeacher({email: this.selectedTeacher}, this.selectedGroupForTeacher.groupName);
+      await updateGroupTeacher(this.selectedTeacher, this.selectedGroupForTeacher.groupName);
       this.reloadGroups();
     },
     async removeTeacher() {
-      await removeGroupTeacher({email: this.selectedTeacher}, this.selectedGroupForTeacher.groupName);
+      await removeGroupTeacher(this.selectedTeacher, this.selectedGroupForTeacher.groupName);
       this.reloadGroups();
     },
     reloadGroups() {

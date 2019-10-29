@@ -158,7 +158,7 @@ export async function checkUserClaim(customClaim) {
 }
 
 export async function getGroupsOf(teacherEmail) {
-  const querySnapshot = await db.collection("groups").where("teacher", "==", teacherEmail).get();
+  const querySnapshot = await db.collection("groups").where("teachers", "array-contains", teacherEmail).get();
   let teachersGroups = [];
   querySnapshot.forEach(async (doc) => {
     const teachersGroup = doc.data()
