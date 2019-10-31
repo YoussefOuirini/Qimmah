@@ -18,6 +18,10 @@ export async function createSchool(school) {
   });
 }
 
+export async function getSchools() {
+  const schools = db.collection("schools");
+}
+
 export async function writeRegistration(registration) {
   return db.collection("schools").doc(registration.school).collection("registrations").doc(`${registration.name.first}${registration.name.last}${registration.education}`).set(registration)
     .then(()=> {
