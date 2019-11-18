@@ -21,7 +21,7 @@ export async function writeRegistration(registration) {
 export async function getLessons() {
   const registrations = await getUsersRegistrations();
   const studentLessons = await registrations.map(async (registration) => {
-    const studentDocName = `${registration.name.first}${registration.name.last}${registration.education}`;
+    const studentDocName = getStudentDocName(registration);
     if (!registration.group) return;
     const querySnapshot = await db.collection('groups').doc(registration.group).collection('students').doc(studentDocName).collection('lessons').get();
     let lessons = [];
@@ -71,7 +71,7 @@ export async function createGroup(group) {
 }
 
 export async function deleteStudent(student) {
-  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
+  const studentDocName = getStudentDocName(student);
   await db.collection('registrations').doc(studentDocName).delete();
   const allGroups = await getGroups();
   await removeStudentFromGroups(student, allGroups);
@@ -91,7 +91,7 @@ export async function removeStudentFromGroups(student, groups) {
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
-  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
+  const studentDocName = getStudentDocName(student);
   groups.forEach((group) => {
     db.collection('groups').doc(group.groupName).collection('students').doc(studentDocName).delete()
       .catch((error) => {
@@ -106,7 +106,7 @@ export async function writeStudentToGroup(student, groupName) {
     return new Error('User not authorized.')
   }
   const updatedStudent = Object.assign(student, {group: groupName});
-  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
+  const studentDocName = getStudentDocName(student);
   return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(updatedStudent);
 }
 
@@ -178,7 +178,7 @@ export async function writeLessons(lessons) {
   const batch = db.batch();
   lessons.forEach((studentGroupLesson) => {
     const {student, groupName, lesson} = studentGroupLesson;
-    const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
+    const studentDocName = getStudentDocName(student);
     const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate);
     batch.set(lessonRef, lesson, {merge: true});
   })
@@ -246,7 +246,7 @@ async function getAbsentStudents(groupStudents) {
 async function getStudentLessons(groupsStudents, field, value) {
   const attendants = await groupsStudents.map(async (groupsStudent) => {
     const student = Object.assign({}, groupsStudent);
-    const studentDocName = `${groupsStudent.name.first}${groupsStudent.name.last}${groupsStudent.education}`;
+    const studentDocName = getStudentDocName(groupsStudent);
     let absences = [];
     await db.collection("groups").doc(groupsStudent.group).collection("students").doc(studentDocName).collection("lessons")
       .where(field, "==", value)
@@ -300,4 +300,10 @@ async function getGroup(groupName) {
     groups.push(doc.id)
   });
   return groups[0];
+}
+
+function getStudentDocName(student) {
+  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
+  const filteredStudentDocName = studentDocName;
+  return filteredStudentDocName;
 }
