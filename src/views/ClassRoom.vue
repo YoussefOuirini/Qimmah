@@ -51,7 +51,11 @@
           key: 'address',
           label: 'Adres',
           formatter: (value) => {
-            return `${value.streetname} ${value.houseNumber}, ${value.zipCode}, ${value.city}`
+            if (value) {
+              return `${value.streetname} ${value.houseNumber}, ${value.zipCode}, ${value.city}`;
+            } else {
+              return '';
+            }
           }
         }, {
           key: 'birthDate',
@@ -64,9 +68,11 @@
           label: "Geslacht",
           formatter: (value) => {
             if (value === 'male') {
-              return 'Man'
+              return 'Man';
+            } else if (value === 'female') {
+              return 'Vrouw';
             } else {
-              return 'Vrouw'
+              return '';
             }
           }
         }, {
