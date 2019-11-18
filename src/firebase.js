@@ -9,7 +9,8 @@ firebase.initializeApp(config.firebase);
 var db = firebase.firestore();
 
 export async function writeRegistration(registration) {
-  return db.collection("registrations").doc(`${registration.name.first}${registration.name.last}${registration.education}`).set(registration)
+  const studentDocName = getStudentDocName(registration);
+  return db.collection("registrations").doc(studentDocName).set(registration)
     .then(()=> {
       return {success: true}
     })
@@ -139,7 +140,8 @@ export async function updateRegistration(registration, groupName) {
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
-  const registrationRef = db.collection("registrations").doc(`${registration.name.first}${registration.name.last}${registration.education}`);
+  const studentDocName = getStudentDocName(registration);
+  const registrationRef = db.collection("registrations").doc(studentDocName);
   return registrationRef.update({
     group: groupName
   }).then(() => {
@@ -192,14 +194,14 @@ export async function writeLessons(lessons) {
 
 export async function storeAbsence(absence, registration) {
   const lessonsDate = getLessonDate();
-  const studentDoc = `${registration.name.first}${registration.name.last}${registration.education}`;
-  return db.collection("groups").doc(registration.group).collection('students').doc(studentDoc).collection('lessons').doc(lessonsDate).set(absence, {merge: true});
+  const studentDocName = getStudentDocName(registration);
+  return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate).set(absence, {merge: true});
 }
 
 export async function getAbsence(student) {
   const lessonsDate = getLessonDate();
-  const studentDoc = `${student.name.first}${student.name.last}${student.education}`;
-  const absenceRef = db.collection("groups").doc(student.group).collection('students').doc(studentDoc).collection('lessons').doc(lessonsDate);
+  const studentDocName = getStudentDocName(student);
+  const absenceRef = db.collection("groups").doc(student.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate);
   return absenceRef.get().then((doc) => {
     if (doc.exists) {
       return doc.data();
