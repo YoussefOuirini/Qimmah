@@ -304,6 +304,6 @@ async function getGroup(groupName) {
 
 function getStudentDocName(student) {
   const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
-  const filteredStudentDocName = studentDocName;
+  const filteredStudentDocName = studentDocName.replace(/\s+/g, '');
   return filteredStudentDocName;
 }
