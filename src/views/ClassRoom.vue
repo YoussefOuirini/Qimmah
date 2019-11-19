@@ -59,7 +59,7 @@
           }
         }, {
           key: 'birthDate',
-          label: 'leeftijd',
+          label: 'Leeftijd',
           formatter: (value) => {
             if (value) {
               return getAge(value)
