@@ -155,7 +155,7 @@ export async function updateRegistration(registration, groupName) {
     return new Error('User not authorized.')
   }
   const studentDocName = getStudentDocName(registration);
-  const registrationRef = db.collection("schools").doc(registration.school).collection("registrations")).doc(studentDocName);
+  const registrationRef = db.collection("schools").doc(registration.school).collection("registrations").doc(studentDocName);
   return registrationRef.update({
     group: groupName
   }).then(() => {
