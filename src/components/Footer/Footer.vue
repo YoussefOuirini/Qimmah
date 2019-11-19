@@ -3,7 +3,7 @@
     <br>
     <b-container>
       <br><b-button v-if="loggedInUser" @click="logout">Uitloggen</b-button><br>
-      &copy; 2019 Copyright: Qimmah {{version}}
+      &copy; 2019 Copyright Qimmah v{{version}}
     </b-container>
   </footer>
 </template>
