@@ -23,7 +23,8 @@ export async function getSchools() {
 }
 
 export async function writeRegistration(registration) {
-  return db.collection("schools").doc(registration.school).collection("registrations").doc(`${registration.name.first}${registration.name.last}${registration.education}`).set(registration)
+  const studentDocName = getStudentDocName(registration);
+  return db.collection("schools").doc(registration.school).collection("registrations").doc(studentDocName).set(registration)
     .then(()=> {
       return {success: true}
     })
@@ -35,7 +36,7 @@ export async function writeRegistration(registration) {
 export async function getLessons() {
   const registrations = await getUsersRegistrations();
   const studentLessons = await registrations.map(async (registration) => {
-    const studentDocName = `${registration.name.first}${registration.name.last}${registration.education}`;
+    const studentDocName = getStudentDocName(registration);
     if (!registration.group) return;
     const querySnapshot = await db.collection("schools").doc(registration.school).collection('groups').doc(registration.group).collection('students').doc(studentDocName).collection('lessons').get();
     let lessons = [];
@@ -85,7 +86,7 @@ export async function createGroup(group) {
 }
 
 export async function deleteStudent(student) {
-  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
+  const studentDocName = getStudentDocName(student);
   await db.collection("schools").doc(student.school).collection('registrations').doc(studentDocName).delete();
   const allGroups = await getGroups();
   await removeStudentFromGroups(student, allGroups);
@@ -105,7 +106,7 @@ export async function removeStudentFromGroups(student, groups) {
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
-  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
+  const studentDocName = getStudentDocName(student);
   groups.forEach((group) => {
     db.collection("schools").doc(student.school).collection('groups').doc(group.groupName).collection('students').doc(studentDocName).delete()
       .catch((error) => {
@@ -120,7 +121,7 @@ export async function writeStudentToGroup(student, groupName) {
     return new Error('User not authorized.')
   }
   const updatedStudent = Object.assign(student, {group: groupName});
-  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
+  const studentDocName = getStudentDocName(student);
   return db.collection("schools").doc(student.school).collection('groups').doc(groupName).collection('students').doc(studentDocName).set(updatedStudent);
 }
 
@@ -153,7 +154,8 @@ export async function updateRegistration(registration, groupName) {
   if (!userIsModerator) {
     return new Error('User not authorized.')
   }
-  const registrationRef = db.collection("schools").doc(registration.school).collection("registrations").doc(`${registration.name.first}${registration.name.last}${registration.education}`);
+  const studentDocName = getStudentDocName(registration);
+  const registrationRef = db.collection("schools").doc(registration.school).collection("registrations")).doc(studentDocName);
   return registrationRef.update({
     group: groupName
   }).then(() => {
@@ -192,7 +194,7 @@ export async function writeLessons(lessons) {
   const batch = db.batch();
   lessons.forEach((studentGroupLesson) => {
     const {student, groupName, lesson} = studentGroupLesson;
-    const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
+    const studentDocName = getStudentDocName(student);
     const lessonRef = db.collection("schools").doc(student.school).collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate);
     batch.set(lessonRef, lesson, {merge: true});
   })
@@ -206,14 +208,14 @@ export async function writeLessons(lessons) {
 
 export async function storeAbsence(absence, registration) {
   const lessonsDate = getLessonDate();
-  const studentDoc = `${registration.name.first}${registration.name.last}${registration.education}`;
-  return db.collection("schools").doc(registration.school).collection("groups").doc(registration.group).collection('students').doc(studentDoc).collection('lessons').doc(lessonsDate).set(absence, {merge: true});
+  const studentDocName = getStudentDocName(registration);
+  return db.collection("schools").doc(registration.school).collection("groups").doc(registration.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate).set(absence, {merge: true});
 }
 
 export async function getAbsence(student) {
   const lessonsDate = getLessonDate();
-  const studentDoc = `${student.name.first}${student.name.last}${student.education}`;
-  const absenceRef = db.collection("schools").doc(student.school).collection("groups").doc(student.group).collection('students').doc(studentDoc).collection('lessons').doc(lessonsDate);
+  const studentDocName = getStudentDocName(student);
+  const absenceRef = db.collection("schools").doc(student.school).collection("groups").doc(student.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate);
   return absenceRef.get().then((doc) => {
     if (doc.exists) {
       return doc.data();
@@ -260,7 +262,7 @@ async function getAbsentStudents(groupStudents) {
 async function getStudentLessons(groupsStudents, field, value) {
   const attendants = await groupsStudents.map(async (groupsStudent) => {
     const student = Object.assign({}, groupsStudent);
-    const studentDocName = `${groupsStudent.name.first}${groupsStudent.name.last}${groupsStudent.education}`;
+    const studentDocName = getStudentDocName(groupsStudent);
     let absences = [];
     await db.collection("schools").doc(student.school).collection("groups").doc(groupsStudent.group).collection("students").doc(studentDocName).collection("lessons")
       .where(field, "==", value)
@@ -314,4 +316,10 @@ async function getGroup(school, groupName) {
     groups.push(doc.id)
   });
   return groups[0];
+}
+
+function getStudentDocName(student) {
+  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
+  const filteredStudentDocName = studentDocName.replace(/\s+/g, '');
+  return filteredStudentDocName;
 }
