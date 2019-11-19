@@ -3,7 +3,7 @@
     <br>
     <b-container>
       <br><b-button v-if="loggedInUser" @click="logout">Uitloggen</b-button><br>
-      &copy; 2019 Copyright: Youssef's creations
+      &copy; 2019 Copyright: Qimmah {{version}}
     </b-container>
   </footer>
 </template>
@@ -13,6 +13,7 @@
   import firebase from 'firebase/app';
   import 'firebase/auth';
   import { EventBus } from "../../EventBus";
+  import {version} from '../../../package.json';
 
   export default Vue.extend({
     name: "Footer",
@@ -24,7 +25,8 @@
     },
     data() {
       return {
-        loggedInUser: false
+        loggedInUser: false,
+        version: version
       }
     },
     methods: {
