@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <b-container id="footer-content">
+    <b-container class="footer">
       <br><b-button v-if="loggedInUser" @click="logout">Uitloggen</b-button><br>
       &copy; 2019 Copyright | Qimmah {{version}} | <a href="mailto:info@qimmah.nl"> info@qimmah.nl</a>
     </b-container>
@@ -41,7 +41,7 @@
 </script>
 
 <style scoped>
-  #footer-content {
+  .footer {
     position: fixed;
     left: 0;
     bottom: 0;
