@@ -2,7 +2,7 @@
   <footer>
     <b-container class="footer">
       <br><b-button v-if="loggedInUser" @click="logout">Uitloggen</b-button><br>
-      &copy; 2019 Copyright | Qimmah {{version}} | <a href="mailto:info@qimmah.nl"> info@qimmah.nl</a>
+      &copy; 2019 Copyright | Qimmah {{version}} | <a href="mailto:info@qimmah.nl"> Stuur ons feedback!</a>
     </b-container>
   </footer>
 </template>
