@@ -1,9 +1,8 @@
 <template>
   <footer>
-    <br>
-    <b-container>
+    <b-container class="footer">
       <br><b-button v-if="loggedInUser" @click="logout">Uitloggen</b-button><br>
-      &copy; 2019 Copyright: Qimmah {{version}}
+      &copy; 2019 Copyright | Qimmah {{version}} | <a href="mailto:info@qimmah.nl"> Stuur ons feedback!</a>
     </b-container>
   </footer>
 </template>
@@ -40,3 +39,12 @@
     }
   })
 </script>
+
+<style scoped>
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    text-align: center;
+  }
+</style>
