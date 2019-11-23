@@ -42,6 +42,9 @@
 
 <style scoped>
   #footer-content {
-    background: red;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    text-align: center;
   }
 </style>
