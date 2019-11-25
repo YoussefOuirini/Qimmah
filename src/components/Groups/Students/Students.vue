@@ -11,11 +11,11 @@
       @row-selected="onRowSelectedStudent"
       ></b-table>
       <b-form v-if="selectedStudent && groups.length" inline>
-      <b-form-select v-model="selectedGroupForStudent" :options="groups" text-field="groupName">
-        <template v-slot:first>
-        <option :value="null" disabled>-- Selecteer een klas --</option>
-        </template>
-      </b-form-select>
+        <b-form-select v-model="selectedGroupForStudent" :options="groups" text-field="groupName">
+          <template v-slot:first>
+          <option :value="null" disabled>-- Selecteer een klas --</option>
+          </template>
+        </b-form-select>
       <b-button @click="addStudentToGroup" size="sm">{{selectedStudent.name.first}} {{selectedStudent.name.last}} toevoegen aan klas</b-button>
       </b-form><br>
   </b-container>
@@ -23,7 +23,7 @@
 
 <script>
 import Vue from 'vue';
-import { createGroup, getGroups, getAllRegistrations, writeStudentToGroup, updateRegistration, removeStudentFromGroups } from "../../../firebase.js";
+import { writeStudentToGroup, updateRegistration, removeStudentFromGroups } from "../../../firebase.js";
 import { getAge } from "@/common/getAge.js";
 
 export default Vue.extend({
