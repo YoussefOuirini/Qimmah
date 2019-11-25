@@ -19,7 +19,7 @@
             <b-td> {{registration.name.first}} {{registration.name.last}}</b-td>
             <b-td>{{registration.education}}</b-td>
             <b-td>{{registration.group}}</b-td>
-            <b-td>{{registration.birthDate}}</b-td>
+            <b-td>{{calculatedAge(registration.birthDate)}}</b-td>
           </b-tr>
         </b-tbody>
       </b-table-simple>
@@ -48,11 +48,6 @@ export default Vue.extend({
       selectedStudent: ''
     }
   },
-  computed: {
-    age() {
-      return getAge()
-    }
-  },
   methods: {
     async addStudentToGroup() {
       await removeStudentFromGroups(this.selectedStudent, this.groups);
@@ -62,6 +57,11 @@ export default Vue.extend({
     },
     reloadRegistrations() {
       this.$emit('reloadRegistrations', true);
+    },
+    calculatedAge(date) {
+      if (date) {
+        return getAge(date)
+      }
     }
   }
 })
