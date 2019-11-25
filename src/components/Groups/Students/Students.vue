@@ -1,22 +1,35 @@
 <template>
   <b-container v-if="registrations.length">
     <h1>Voeg studenten toe aan klassen</h1>
-      <b-table
-      id="students"
-      ref="studentsTable"
-      striped hover selectable
-      select-mode="single"
-      :items="registrations"
-      :fields="registrationFields"
-      @row-selected="onRowSelectedStudent"
-      ></b-table>
+      <b-table-simple
+        id="students"
+        ref="studentsTable"
+        striped hover
+      >
+        <b-thead>
+          <b-tr>
+            <b-th>Naam</b-th>
+            <b-th>Onderwijs</b-th>
+            <b-th>Klas</b-th>
+            <b-th>Leeftijd</b-th>
+          </b-tr>
+        </b-thead>
+        <b-tbody>
+          <b-tr v-for="registration in registrations" v-bind:key="registration.id">
+            <b-td> {{registration.name.first}} {{registration.name.last}}</b-td>
+            <b-td>{{registration.education}}</b-td>
+            <b-td>{{registration.group}}</b-td>
+            <b-td>{{registration.birthDate}}</b-td>
+          </b-tr>
+        </b-tbody>
+      </b-table-simple>
       <b-form v-if="selectedStudent && groups.length" inline>
         <b-form-select v-model="selectedGroupForStudent" :options="groups" text-field="groupName">
           <template v-slot:first>
           <option :value="null" disabled>-- Selecteer een klas --</option>
           </template>
         </b-form-select>
-      <b-button @click="addStudentToGroup" size="sm">{{selectedStudent.name.first}} {{selectedStudent.name.last}} toevoegen aan klas</b-button>
+        <b-button @click="addStudentToGroup" size="sm">{{selectedStudent.name.first}} {{selectedStudent.name.last}} toevoegen aan klas</b-button>
       </b-form><br>
   </b-container>
 </template>
@@ -32,38 +45,24 @@ export default Vue.extend({
   data() {
     return {
       selectedGroupForStudent: '',
-      selectedStudent: '',
-      registrationFields: [{
-        key: "name",
-        label: "Naam",
-        formatter: (value) => {
-          return `${value.first} ${value.last}`
-        }
-      }, {
-        key: "education",
-        label: "Onderwijs"
-      }, {
-        key: "group",
-        label: "Klas"
-      }, {
-        key: "birthDate",
-        label: "Leeftijd",
-        formatter: (value) => {
-          return getAge(value)
-        }
-      }]
+      selectedStudent: ''
+    }
+  },
+  computed: {
+    age() {
+      return getAge()
     }
   },
   methods: {
-    onRowSelectedStudent(student) {
-      this.selectedStudent = student[0];
-    },
     async addStudentToGroup() {
       await removeStudentFromGroups(this.selectedStudent, this.groups);
       await writeStudentToGroup(this.selectedStudent, this.selectedGroupForStudent);
       await updateRegistration(this.selectedStudent, this.selectedGroupForStudent);
-      await this.loadRegistrations();
+      await this.reloadRegistrations();
     },
+    reloadRegistrations() {
+      this.$emit('reloadRegistrations', true);
+    }
   }
 })
 </script>

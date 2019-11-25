@@ -19,7 +19,7 @@
       </b-form-group>
     </b-container>
     <Teachers v-if="groups.length && users.length" v-bind:groups="groups" v-bind:users="users" @reloadGroups="loadGroups"/>
-    <Students v-if="registrations.length" v-bind:registrations="registrations" v-bind:groups="groups"/>
+    <Students v-if="registrations.length" v-bind:registrations="registrations" v-bind:groups="groups" @reloadRegistrations="loadRegistrations"/>
   </b-container>
 </template>
 
