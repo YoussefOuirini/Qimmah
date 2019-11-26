@@ -29,10 +29,10 @@ export default Vue.extend({
       await removeStudentFromGroups(registration, this.groups);
       await writeStudentToGroup(registration, this.selectedGroupForStudent);
       await updateRegistration(registration, this.selectedGroupForStudent);
-      await this.reloadRegistrations();
+      await this.reloadRegistration();
     },
-    reloadRegistrations() {
-      this.$emit('reloadRegistrations', true);
+    reloadRegistration() {
+      this.$emit('reloadRegistration', true);
     }
   }
 })

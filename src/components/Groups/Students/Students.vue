@@ -19,7 +19,7 @@
             <b-td> {{registration.name.first}} {{registration.name.last}}</b-td>
             <b-td >{{registration.education}}</b-td>
             <b-td>{{calculatedAge(registration.birthDate)}}</b-td>
-            <StudentGroup :registration="registration" :groups="groups"/>
+            <StudentGroup :registration="registration" :groups="groups" @reloadRegistration="reloadRegistrations"/>
           </b-tr>
         </b-tbody>
       </b-table-simple>
@@ -42,6 +42,9 @@ export default Vue.extend({
       if (date) {
         return getAge(date)
       }
+    },
+    reloadRegistrations() {
+      this.$emit('reloadRegistrations', true);
     }
   }
 })
