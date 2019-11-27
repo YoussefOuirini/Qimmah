@@ -12,7 +12,7 @@
         </template>
       </b-form-select>
     </b-row>
-    <b-row class="p-2">
+    <b-row v-if="selectedGroupName" class="p-2">
       <b-col>
         <b-button
           block
