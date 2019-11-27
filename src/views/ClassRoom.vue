@@ -1,19 +1,21 @@
 <template>
   <b-container v-if="teachersGroups.length" class="p-1">
-    <b-row align-v="center" class="p-2">
-      <b-col align-self="center">
+    <b-row class="p-2">
+      <b-col>
         <b-button
           block
-          size="lg"
           squared
+          size="lg"
+          class="p-5"
         >
           Studenten
         </b-button>
       </b-col>
-      <b-col align-self="center">
+      <b-col>
         <b-button
           block
           size="lg"
+          class="p-5"
           squared
         >
           Les toevoegen
