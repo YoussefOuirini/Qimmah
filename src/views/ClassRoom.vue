@@ -1,5 +1,25 @@
 <template>
   <b-container v-if="teachersGroups.length">
+    <b-row>
+      <b-col>
+        <b-button 
+          block
+          size="lg"
+          squared
+        >
+          Studenten
+        </b-button>
+      </b-col>
+      <b-col>
+        <b-button
+          block
+          size="lg"
+          squared
+        >
+          Les toevoegen
+        </b-button>
+      </b-col>
+    </b-row>
     <b-form-select
       v-model="selectedGroupName"
       :options="teachersGroups"
