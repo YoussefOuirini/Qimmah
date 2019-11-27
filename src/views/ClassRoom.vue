@@ -6,7 +6,7 @@
           block
           squared
           size="lg"
-          class="p-5"
+          class="p-5 w-75 m-5"
         >
           Studenten
         </b-button>
@@ -15,7 +15,7 @@
         <b-button
           block
           size="lg"
-          class="p-5"
+          class="p-5 w-75 m-5"
           squared
         >
           Les toevoegen
