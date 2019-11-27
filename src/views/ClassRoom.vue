@@ -1,6 +1,18 @@
 <template>
   <b-container v-if="teachersGroups.length" class="p-1">
     <b-row class="p-2">
+      <b-form-select
+        v-model="selectedGroupName"
+        :options="teachersGroups"
+        text-field="groupName"
+        value-field="groupName"
+      >
+        <template v-slot:first>
+          <option :value="null" disabled>-- Selecteer een klas --</option>
+        </template>
+      </b-form-select>
+    </b-row>
+    <b-row class="p-2">
       <b-col>
         <b-button
           block
@@ -22,16 +34,6 @@
         </b-button>
       </b-col>
     </b-row>
-    <b-form-select
-      v-model="selectedGroupName"
-      :options="teachersGroups"
-      text-field="groupName"
-      value-field="groupName"
-    >
-      <template v-slot:first>
-        <option :value="null" disabled>-- Selecteer een klas --</option>
-      </template>
-    </b-form-select>
     <b-table
       bordered
       v-if="selectedGroupName && students.length"
