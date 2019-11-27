@@ -1,6 +1,19 @@
 <template>
   <b-container>
-    <b-table-simple hover caption-top>
+    <b-row>
+      <b-form-group
+        id="lesson-date"
+        label="Selecteer een lesdatum om een les toe te voegen"
+        label-for="lesson-date"
+      ><b-form-input
+          id="lesson-date"
+          type= "date"
+          v-model="lessonDate"
+          required
+        ></b-form-input>
+      </b-form-group>
+    </b-row>
+    <b-table-simple v-if="lessonDate" hover caption-top>
       <caption>Voeg een les toe!</caption>
       <b-thead>
         <b-tr>
@@ -36,6 +49,7 @@ export default Vue.extend({
   props: ["students", "selectedGroupName"],
   data() {
     return {
+      lessonDate: '',
       groupHomework: '',
       batchResponse: '',
       sendingLesson: false
@@ -64,7 +78,8 @@ export default Vue.extend({
             madeHomework: studentLesson.madeHomework,
             studentHomework: studentLesson.studentHomework,
             remarks: studentLesson.remarks,
-            groupHomework: this.groupHomework
+            groupHomework: this.groupHomework,
+            date: this.lessonDate
           }
         };
       });
