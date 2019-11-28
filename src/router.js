@@ -41,7 +41,7 @@ const router = new Router ({
       }
     },
     {
-      path: '/klas',
+      path: '/group',
       name: 'ClassRoom',
       component: ClassRoom,
       meta: {
@@ -82,7 +82,7 @@ router.beforeEach(async (to, from, next)=> {
       next('false');
     }
   }
-  else if (requiresAuth && to.path === '/klas') {
+  else if (requiresAuth && to.path === '/group') {
     const isTeacher = await checkUserClaim('teacher');
     if (isTeacher) {
       next();

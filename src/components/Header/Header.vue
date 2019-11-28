@@ -23,7 +23,7 @@
                 <b-nav-item><router-link to="/home">Home</router-link></b-nav-item>
                 <b-nav-item v-if="loggedInUser"><router-link to="/aanwezigheid">Aanwezigheid</router-link></b-nav-item>
                 <b-nav-item v-if="userIsModerator"><router-link to="/school">School</router-link></b-nav-item>
-                <b-nav-item v-if="userIsTeacher"><router-link to="/klas">Klas</router-link></b-nav-item>
+                <b-nav-item v-if="userIsTeacher"><router-link to="/group">Klas</router-link></b-nav-item>
               </b-navbar-nav>
             </b-collapse>
           </b-navbar>
