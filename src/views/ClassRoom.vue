@@ -34,13 +34,7 @@
         </b-button>
       </b-col>
     </b-row>
-    <b-table
-      bordered
-      v-if="selectedGroupName && students.length"
-      :items="students"
-      :fields="studentFields"
-    >
-    </b-table>
+    <GroupStudents v-if="selectedGroupName && students.length" v-bind:students="students" />
     <Lesson v-if="selectedGroupName && students.length" v-bind:students="students" v-bind:selectedGroupName="selectedGroupName"/>
   </b-container>
 </template>
@@ -49,14 +43,15 @@
   import Vue from "vue";
   import firebase from "firebase/app";
   import 'firebase/auth';
-  import Lesson from "../components/Lesson/Lesson"
+  import Lesson from "../components/Lesson/Lesson";
+  import GroupStudents from "../components/GroupStudents/GroupStudents";
   import { getGroupsOf } from "../firebase.js";
-  import { getAge } from "../common/getAge";
 
   export default Vue.extend({
     name: "ClassRoom",
     components: {
-      Lesson
+      Lesson,
+      GroupStudents
     },
     mounted() {
       this.getTeachersGroups()
@@ -65,47 +60,6 @@
       return {
         teachersGroups: [],
         selectedGroupName: '',
-        studentFields: [{
-          key: 'name',
-          label: 'Naam',
-          formatter: (value) => {
-            return `${value.first} ${value.last}`
-          }
-        },{
-          key: 'address',
-          label: 'Adres',
-          formatter: (value) => {
-            if (value) {
-              return `${value.streetname} ${value.houseNumber}, ${value.zipCode}, ${value.city}`;
-            } else {
-              return '';
-            }
-          }
-        }, {
-          key: 'birthDate',
-          label: 'Leeftijd',
-          formatter: (value) => {
-            if (value) {
-              return getAge(value)
-            }
-          }
-        },{
-          key: 'gender',
-          label: "Geslacht",
-          formatter: (value) => {
-            if (value === 'male') {
-              return 'Man';
-            } else if (value === 'female') {
-              return 'Vrouw';
-            } else {
-              return '';
-            }
-          }
-        }, {
-          key: 'phoneNumber',
-          label: 'Telefoonnummer'
-        },
-        'email']
       }
     },
     computed: {
