@@ -25,11 +25,8 @@ export default Vue.extend({
     return {
       absentees: [],
       absenteeFields: [{
-        key: 'timestamp',
-        label: 'Datum',
-        formatter: (value) => {
-          return getLessonDate(value);
-        }
+        key: 'date',
+        label: 'Datum'
       }, {
         key: "name",
         label: "Naam",
