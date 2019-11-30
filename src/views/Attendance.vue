@@ -23,6 +23,7 @@
 <script>
   import Vue from "vue";
   import { getLessons } from "../firebase.js"
+  import { getLessonDate } from "../common/getDate";
 
   export default Vue.extend({
     name: "Attendance",
@@ -33,8 +34,11 @@
       return {
         studentLessons: [],
         lessonsFields: [{
-          key: "date",
+          key: "timestamp",
           label: "Lesdatum",
+          formatter: (value) => {
+            return getLessonDate(value);
+          }
         }, {
           key: "behaviour",
           label: "Gedrag"
