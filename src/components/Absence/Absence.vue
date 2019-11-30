@@ -38,6 +38,7 @@
     methods: {
       async store() {
         const absence = {
+          timestamp: Date.now(),
           reasonOfAbsence: this.reasonOfAbsence,
           reasonOfAbsenceRemarks: this.reasonOfAbsenceRemarks
         };

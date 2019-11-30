@@ -192,7 +192,7 @@ export async function writeLessons(lessons) {
 }
 
 export async function storeAbsence(absence, registration) {
-  const lessonsDate = getLessonDate();
+  const lessonsDate = getLessonDate(absence.timestamp);
   const studentDocName = getStudentDocName(registration);
   return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate).set(absence, {merge: true});
 }

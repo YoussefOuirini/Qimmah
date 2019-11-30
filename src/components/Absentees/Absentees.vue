@@ -14,6 +14,7 @@
 import Vue from 'vue';
 import {getAllAbsentees} from "../../firebase";
 import { getAge } from "../../common/getAge.js";
+import { getLessonDate } from '../../common/getDate';
 
 export default Vue.extend({
   name: "Absentees",
@@ -24,8 +25,11 @@ export default Vue.extend({
     return {
       absentees: [],
       absenteeFields: [{
-        key: 'date',
-        label: 'Datum'
+        key: 'timestamp',
+        label: 'Datum',
+        formatter: (value) => {
+          return getLessonDate(value);
+        }
       }, {
         key: "name",
         label: "Naam",
