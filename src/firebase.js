@@ -213,7 +213,7 @@ export async function getAbsence(student) {
 }
 
 export async function getAllAbsentees() {
-  const groupsIDs = await getGroupsIDs()
+  const groupsIDs = await getGroupsIDs();
   const groupsStudents = await getAllStudents(groupsIDs);
   const filteredGroupsStudents = groupsStudents.filter(groupStudent => groupStudent.length).flat();
   const attendants = await getAbsentStudents(filteredGroupsStudents);
@@ -240,7 +240,7 @@ async function getAllStudents(groupsIDs) {
 }
 
 async function getAbsentStudents(groupStudents) {
-  const absentStudentLessons  = await getStudentLessons(groupStudents, "presence", "Afwezig");
+  const absentStudentLessons  = await getStudentLessons(groupStudents, "presence", "afwezig");
   const unkownReasonAbsentLessons  = await getStudentLessons(groupStudents, "reasonOfAbsence", "overige");
   const sickStudentLessons = await getStudentLessons(groupStudents, "reasonOfAbsence", "ziekte");
   return absentStudentLessons.concat(unkownReasonAbsentLessons).concat(sickStudentLessons);
