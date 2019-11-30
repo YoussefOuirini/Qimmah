@@ -7,26 +7,27 @@
     </b-td>
     <b-td v-if="!absence || !absence.reasonOfAbsence">
       <b-form-select v-model="behaviour">
-        <option value="Goed">Goed</option>
-        <option value="Slecht">Slecht</option>
+        <option value="goed">Goed</option>
+        <option value="matig">Matig</option>
+        <option value="onvoldoende">Onvoldoende</option>
       </b-form-select>
     </b-td>
     <b-td v-if="!absence || !absence.reasonOfAbsence">
       <b-form-select v-model="presence">
-        <option value="Aanwezig">Aanwezig</option>
-        <option value="Laat">Laat</option>
-        <option value="Afwezig">Afwezig</option>
+        <option value="aanwezig">Aanwezig</option>
+        <option value="laat">Laat</option>
+        <option value="afwezig">Afwezig</option>
       </b-form-select>
     </b-td>
     <b-td v-if="!absence || !absence.reasonOfAbsence">
-      <b-form-radio v-model="madeHomework" value="Ja">Ja</b-form-radio>
-      <b-form-radio v-model="madeHomework" value="Nee">Nee</b-form-radio>
+      <b-form-radio v-model="madeHomework" value="ja">Ja</b-form-radio>
+      <b-form-radio v-model="madeHomework" value="nee">Nee</b-form-radio>
     </b-td>
     <b-td>
-      <b-form-textarea v-model='studentHomework' placeholder="Schrijf het huiswerk van deze student op"></b-form-textarea>
+      <b-form-textarea v-model='studentHomework' placeholder="Schrijf het huiswerk van de student op."></b-form-textarea>
     </b-td>
     <b-td>
-      <b-form-textarea v-model='remarks' placeholder="Opmerkingen"></b-form-textarea>
+      <b-form-textarea v-model='remarks' placeholder="Schrijf een opmerking."></b-form-textarea>
     </b-td>
   </b-tr>
 </template>
@@ -48,11 +49,11 @@ export default Vue.extend({
   },
   data() {
     return {
-      behaviour: 'Goed',
-      presence: 'Aanwezig',
-      madeHomework: "Ja",
+      behaviour: 'goed',
+      presence: 'aanwezig',
+      madeHomework: "ja",
       studentHomework: '',
-      remarks: "Geen opmerkingen.",
+      remarks: "",
       absence: ""
     }
   },
