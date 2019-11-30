@@ -14,6 +14,7 @@
 import Vue from 'vue';
 import {getAllAbsentees} from "../../firebase";
 import { getAge } from "../../common/getAge.js";
+import { getLessonDate } from '../../common/getDate';
 
 export default Vue.extend({
   name: "Absentees",
@@ -54,10 +55,13 @@ export default Vue.extend({
         key: 'absence',
         label: 'Afwezigheid',
         formatter: (absence) => {
-          let absenceText = `Afwezig vanwege ${absence.reasonOfAbsence}`
+          let absenceText = `Afwezig`;
+          if (absence.reasonOfAbsence) {
+            absenceText += ` vanwege ${absence.reasonOfAbsence}`;
+          };
           if (absence.reasonOfAbsenceRemarks) {
-            absenceText += ` met als reden: ${absence.reasonOfAbsenceRemarks}`
-          }
+            absenceText += ` met als reden: ${absence.reasonOfAbsenceRemarks}`;
+          };
           return absenceText;
         }
       }],
