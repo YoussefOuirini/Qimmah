@@ -6,3 +6,8 @@ export function getLessonDate(date) {
   const lessonDate = new Date();
   return lessonDate.toLocaleDateString("nl-NL");
 }
+
+export function getTimeStamp(dateString) {
+  const parsedDate = Date.parse(dateString);
+  return parsedDate;
+}

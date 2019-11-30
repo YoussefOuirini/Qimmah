@@ -1,8 +1,8 @@
 import firebase from "firebase/app";
 import 'firebase/firestore';
 import 'firebase/auth';
-import { config } from './config.js'
-import { getLessonDate } from "./common/getDate";
+import { config } from './config.js';
+import { getLessonDate, getTimeStamp } from "./common/getDate";
 
 firebase.initializeApp(config.firebase);
 
@@ -180,7 +180,9 @@ export async function writeLessons(lessons) {
   lessons.forEach((studentGroupLesson) => {
     const {student, groupName, lesson} = studentGroupLesson;
     const studentDocName = getStudentDocName(student);
-    const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lesson.date);
+    const lessonTimeStamp = getTimeStamp(lesson.date);
+    const lessonDate = getLessonDate(lessonTimeStamp);
+    const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lessonDate);
     batch.set(lessonRef, lesson, {merge: true});
   });
   return batch.commit().then(()=> {
