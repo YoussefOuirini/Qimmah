@@ -178,9 +178,9 @@ export async function writeLessons(lessons) {
   }
   const batch = db.batch();
   lessons.forEach((studentGroupLesson) => {
-    const {student, groupName, lesson, date} = studentGroupLesson;
+    const {student, groupName, lesson} = studentGroupLesson;
     const studentDocName = getStudentDocName(student);
-    const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(date);
+    const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lesson.date);
     batch.set(lessonRef, lesson, {merge: true});
   });
   return batch.commit().then(()=> {
