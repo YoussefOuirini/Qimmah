@@ -13,9 +13,11 @@ export default Vue.extend({
       this.checkUserClaims();
       this.loggedInUser = firebase.auth().currentUser;
     });
+    this.loadUserEmail();
   },
   data() {
     return {
+      userEmail: "Gebruiker",
       userIsModerator: false,
       userIsTeacher: false,
       loggedInUser: false
@@ -32,6 +34,11 @@ export default Vue.extend({
         this.loggedInUser = firebase.auth().currentUser;
         this.$router.replace('login');
       });
+    },
+    loadUserEmail() {
+      if (firebase.auth().currentUser) {
+        this.userEmail = firebase.auth().currentUser.email;
+      }
     }
   }
 });
