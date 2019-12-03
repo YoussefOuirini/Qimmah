@@ -1,35 +1,32 @@
 <template>
-  <b-container v-if="studentLessons.length">
+  <b-container v-if="studentsLessons.length">
     <b-container
-      v-for="studentLesson in studentLessons"
-      v-bind:key="studentLesson.id"
+      v-for="studentLessons in studentsLessons"
+      v-bind:key="studentLessons.id"
     >
-      <b-row v-if="studentLesson.lessons.length">
-        <h4>{{studentLesson.student.name.first}} {{studentLesson.student.name.last}} klas {{studentLesson.student.group}}</h4>
-        <b-table
-          bordered
-          :items="studentLesson.lessons"
-          :fields="lessonsFields"
-        >
-        </b-table>
-      </b-row>
+      <StudentLessons
+        v-if="studentsLessons.length"
+        :lessons="studentLessons.lessons"
+        :student="studentLessons.student"
+      />
     </b-container>
   </b-container>
 </template>
 
 <script>
   import Vue from "vue";
+  import StudentLessons from "../components/Attendance/StudentLessons.vue"
   import { getLessons } from "../firebase.js"
-  import { getLessonDate, getTimeStamp } from "../common/getDate";
 
   export default Vue.extend({
     name: "Attendance",
+    components: { StudentLessons },
     async mounted() {
       await this.loadStudents();
     },
     data() {
       return {
-        studentLessons: [],
+        studentsLessons: [],
         lessonsFields: [{
           key: "date",
           label: "Lesdatum"
@@ -56,13 +53,13 @@
     },
     methods: {
       async loadStudents() {
-        const studentLessons = await getLessons();
-        const filteredStudentLessons = this.filterLessons(studentLessons);
-        this.studentLessons = filteredStudentLessons;
+        const studentsLessons = await getLessons();
+        const filteredStudentLessons = this.filterLessons(studentsLessons);
+        this.studentsLessons = filteredStudentLessons;
       },
-      filterLessons(studentLessons) {
-        return studentLessons.map((studentLesson) => {
-          const {student, lessons } = studentLesson;
+      filterLessons(studentsLessons) {
+        return studentsLessons.map((studentLessons) => {
+          const {student, lessons } = studentLessons;
           const filteredLessons = lessons.filter((lesson) => {
             if (lesson.reasonOfAbsence && !lesson.presence) {
               return;
