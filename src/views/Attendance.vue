@@ -55,7 +55,8 @@
       async loadStudents() {
         const studentsLessons = await getLessons();
         const filteredStudentLessons = this.filterLessons(studentsLessons);
-        this.studentsLessons = filteredStudentLessons;
+        const sortedStudentLessons = this.sort(filteredStudentLessons);
+        this.studentsLessons = sortedStudentLessons;
       },
       filterLessons(studentsLessons) {
         return studentsLessons.map((studentLessons) => {
@@ -69,6 +70,24 @@
           return {
             student,
             lessons: filteredLessons
+          }
+        });
+      },
+      sort(studentLessons) {
+        return studentLessons.map((studentLessons) => {
+          const {student, lessons} = studentLessons;
+          const sortedLessons = lessons.sort((lessonA, lessonB) => {
+            let comparison = 0;
+            if (lessonA.timestamp > lessonB.timestamp) {
+              comparison = 1;
+            } else if(lessonA.timestamp < lessonB.timestamp) {
+              comparison = -1;
+            }
+            return comparison;
+          });
+          return {
+            student,
+            lessons: sortedLessons
           }
         });
       }
