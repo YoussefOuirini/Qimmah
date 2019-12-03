@@ -1,23 +1,24 @@
 <template>
   <b-row>
     <h4>{{student.name.first}} {{student.name.last}} klas {{student.group}}</h4>
-    <b-table
-      id="studentLessons"
-      bordered
-      :items="lessons"
-      :fields="lessonsFields"
-      :per-page="perPage"
-      :current-page="currentPage"
-      @row-selected="onRowSelected"
-    >
-    </b-table>
-    <b-pagination
-      v-model="currentPage"
-      v-if="rows > perPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="studentLessons"
-    ></b-pagination>
+    <div v-if="rows" class="overflow-auto">
+      <b-table
+        id="studentLessons"
+        bordered
+        :items="lessons"
+        :fields="lessonsFields"
+        :per-page="perPage"
+        :current-page="currentPage"
+      >
+      </b-table>
+      <b-pagination
+        v-model="currentPage"
+        v-if="rows > perPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="studentLessons"
+      ></b-pagination>
+    </div>
   </b-row>
 </template>
 
