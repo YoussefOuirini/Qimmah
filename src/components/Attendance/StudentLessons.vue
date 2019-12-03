@@ -1,5 +1,5 @@
 <template>
-  <b-row v-if="lessons.length && student.length">
+  <b-row>
     <h4>{{student.name.first}} {{student.name.last}} klas {{student.group}}</h4>
     <b-table
       id="studentLessons"
@@ -26,7 +26,7 @@
 
   export default Vue.extend({
     name: "Attendance",
-    props: ['lessons, student'],
+    props: ['lessons', 'student'],
     data() {
       return {
         currentPage: 1,
