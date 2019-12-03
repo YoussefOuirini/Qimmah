@@ -32,11 +32,7 @@
         studentLessons: [],
         lessonsFields: [{
           key: "date",
-          label: "Lesdatum",
-          formatter: (value) => {
-            const lessonTimeStamp = getTimeStamp(value);
-            return getLessonDate(lessonTimeStamp);
-          }
+          label: "Lesdatum"
         }, {
           key: "behaviour",
           label: "Gedrag"

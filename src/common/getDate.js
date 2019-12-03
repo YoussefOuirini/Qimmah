@@ -1,6 +1,6 @@
-export function getLessonDate(date) {
-  if (date) {
-    const lessonDate = new Date(date);
+export function getLessonDate(timeStamp) {
+  if (timeStamp) {
+    const lessonDate = new Date(timeStamp);
     return lessonDate.toLocaleDateString("nl-NL");
   }
   const lessonDate = new Date();
