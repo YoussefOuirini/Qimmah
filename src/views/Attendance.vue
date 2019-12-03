@@ -5,7 +5,7 @@
       v-bind:key="studentLessons.id"
     >
       <StudentLessons
-        v-if="studentsLessons.length"
+        v-if="studentLessons.lessons.length && studentLessons.student"
         :lessons="studentLessons.lessons"
         :student="studentLessons.student"
       />
