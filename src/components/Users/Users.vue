@@ -14,6 +14,7 @@
     </div>
     <div v-if="rows" class="overflow-auto">
       <b-pagination
+        v-model="currentPage"
         v-if="rows > perPage"
         :total-rows="rows"
         :per-page="perPage"
@@ -26,6 +27,8 @@
         select-mode="single"
         :items="foundUsers"
         :fields="fields"
+        :per-page="perPage"
+        :current-page="currentPage"
         @row-selected="onRowSelected"
       >
         <template v-slot:cell(leraar)="data">
@@ -61,7 +64,8 @@ export default Vue.extend({
       foundUsers: [],
       selectedUser: '',
       search: { text: ""},
-      perPage: 10,
+      currentPage: 1,
+      perPage: 5,
       fields: [{
           key: 'email',
           label: 'Email'
