@@ -34,6 +34,12 @@
           key: "date",
           label: "Lesdatum"
         }, {
+          key: "presence",
+          label: "Aanwezigheid"
+        }, {
+          key: "madeHomework",
+          label: "Huiswerk gemaakt?"
+        }, {
           key: "behaviour",
           label: "Gedrag"
         }, {
@@ -42,12 +48,6 @@
         }, {
           key: "studentHomework",
           label: "Individuele Huiswerk"
-        }, {
-          key: "presence",
-          label: "Aanwezigheid"
-        }, {
-          key: "madeHomework",
-          label: "Huiswerk gemaakt?"
         }, {
           key: "remarks",
           label: "Opmerkingen"
