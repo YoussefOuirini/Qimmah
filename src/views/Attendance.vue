@@ -15,9 +15,6 @@
       </b-row>
     </b-container>
   </b-container>
-  <b-container v-else>
-    <h1>Nog geen administratie</h1>
-  </b-container>
 </template>
 
 <script>
