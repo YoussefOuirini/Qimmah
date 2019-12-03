@@ -15,8 +15,8 @@
 
 <script>
   import Vue from "vue";
-  import StudentLessons from "../components/Attendance/StudentLessons.vue"
-  import { getLessons } from "../firebase.js"
+  import StudentLessons from "./StudentLessons.vue"
+  import { getLessons } from "../../firebase.js"
 
   export default Vue.extend({
     name: "Attendance",

@@ -11,7 +11,7 @@
 
 <script>
   import Vue from "vue";
-  import Attendance from "./Attendance.vue";
+  import Attendance from "../components/Attendance/Attendance.vue";
   import RegistrationForm from "../components/RegistrationForm/RegistrationForm.vue";
   import Registrations from "../components/Registrations/Registrations.vue";
   import { EventBus } from "../EventBus";
