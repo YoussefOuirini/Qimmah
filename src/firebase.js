@@ -1,8 +1,8 @@
 import firebase from "firebase/app";
 import 'firebase/firestore';
 import 'firebase/auth';
-import { config } from './config.js'
-import { getLessonDate } from "./common/getDate";
+import { config } from './config.js';
+import { getLessonDate, getTimeStamp } from "./common/getDate";
 
 firebase.initializeApp(config.firebase);
 
@@ -178,9 +178,11 @@ export async function writeLessons(lessons) {
   }
   const batch = db.batch();
   lessons.forEach((studentGroupLesson) => {
-    const {student, groupName, lesson, date} = studentGroupLesson;
+    const {student, groupName, lesson} = studentGroupLesson;
     const studentDocName = getStudentDocName(student);
-    const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(date);
+    const lessonTimeStamp = getTimeStamp(lesson.date);
+    const lessonDate = getLessonDate(lessonTimeStamp);
+    const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lessonDate);
     batch.set(lessonRef, lesson, {merge: true});
   });
   return batch.commit().then(()=> {
@@ -192,7 +194,7 @@ export async function writeLessons(lessons) {
 }
 
 export async function storeAbsence(absence, registration) {
-  const lessonsDate = getLessonDate();
+  const lessonsDate = getLessonDate(absence.timestamp);
   const studentDocName = getStudentDocName(registration);
   return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate).set(absence, {merge: true});
 }
@@ -211,7 +213,7 @@ export async function getAbsence(student) {
 }
 
 export async function getAllAbsentees() {
-  const groupsIDs = await getGroupsIDs()
+  const groupsIDs = await getGroupsIDs();
   const groupsStudents = await getAllStudents(groupsIDs);
   const filteredGroupsStudents = groupsStudents.filter(groupStudent => groupStudent.length).flat();
   const attendants = await getAbsentStudents(filteredGroupsStudents);
@@ -238,7 +240,7 @@ async function getAllStudents(groupsIDs) {
 }
 
 async function getAbsentStudents(groupStudents) {
-  const absentStudentLessons  = await getStudentLessons(groupStudents, "presence", "Afwezig");
+  const absentStudentLessons  = await getStudentLessons(groupStudents, "presence", "afwezig");
   const unkownReasonAbsentLessons  = await getStudentLessons(groupStudents, "reasonOfAbsence", "overige");
   const sickStudentLessons = await getStudentLessons(groupStudents, "reasonOfAbsence", "ziekte");
   return absentStudentLessons.concat(unkownReasonAbsentLessons).concat(sickStudentLessons);

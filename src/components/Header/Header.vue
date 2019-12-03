@@ -21,9 +21,13 @@
             <b-collapse id="nav-collapse" is-nav>
               <b-navbar-nav>
                 <b-nav-item><router-link to="/home">Home</router-link></b-nav-item>
-                <b-nav-item v-if="loggedInUser"><router-link to="/aanwezigheid">Aanwezigheid</router-link></b-nav-item>
                 <b-nav-item v-if="userIsModerator"><router-link to="/school">School</router-link></b-nav-item>
                 <b-nav-item v-if="userIsTeacher"><router-link to="/group">Klas</router-link></b-nav-item>
+              </b-navbar-nav>
+              <b-navbar-nav v-if="loggedInUser" class="ml-auto">
+                <b-nav-item-dropdown :text="userEmail" right>
+                  <b-dropdown-item @click="logout">Uitloggen</b-dropdown-item>
+                </b-nav-item-dropdown>
               </b-navbar-nav>
             </b-collapse>
           </b-navbar>

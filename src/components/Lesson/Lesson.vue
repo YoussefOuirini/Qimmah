@@ -79,7 +79,8 @@ export default Vue.extend({
             studentHomework: studentLesson.studentHomework,
             remarks: studentLesson.remarks,
             groupHomework: this.groupHomework,
-            date: this.lessonDate
+            date: this.lessonDate,
+            timestamp: Date.now()
           }
         };
       });
