@@ -8,7 +8,6 @@ import Login from './views/Login.vue';
 import SignUp from './views/SignUp.vue';
 import School from './views/School.vue';
 import ClassRoom from './views/ClassRoom.vue';
-import Attendance from './views/Attendance.vue';
 import { checkUserClaim } from './firebase';
 
 Vue.use(Router);
@@ -49,14 +48,6 @@ const router = new Router ({
       }
     },
     {
-      path: '/aanwezigheid',
-      name: 'Attendance',
-      component: Attendance,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
       path: '/login',
       name: 'Login',
       component: Login
@@ -67,11 +58,11 @@ const router = new Router ({
       component: SignUp
     }
   ]
-})
+});
 
 router.beforeEach(async (to, from, next)=> {
   const currentUser = firebase.auth().currentUser;
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if (requiresAuth && !currentUser) next('login');
   else if (requiresAuth && to.name === 'school') {
@@ -92,6 +83,6 @@ router.beforeEach(async (to, from, next)=> {
   }
   else if (!requiresAuth && currentUser) next('home');
   else next();
-})
+});
 
 export { router };
