@@ -24,6 +24,11 @@
                 <b-nav-item v-if="userIsModerator"><router-link to="/school">School</router-link></b-nav-item>
                 <b-nav-item v-if="userIsTeacher"><router-link to="/klas">Klas</router-link></b-nav-item>
               </b-navbar-nav>
+              <b-navbar-nav v-if="loggedInUser" class="ml-auto">
+                <b-nav-item-dropdown text="Gebruiker" right>
+                  <b-dropdown-item @click="logout">Uitloggen</b-dropdown-item>
+                </b-nav-item-dropdown>
+              </b-navbar-nav>
             </b-collapse>
           </b-navbar>
         </div><!-- .wrap -->
