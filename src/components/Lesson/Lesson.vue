@@ -14,7 +14,7 @@
       </b-form-group>
     </b-row>
     <b-row v-if="lessonDate" >
-      <b-table-simple hover caption-top>
+      <b-table-simple hover caption-top v-if="lessons.length">
         <caption>Voeg een les toe!</caption>
         <b-thead>
           <b-tr>
@@ -27,7 +27,11 @@
           </b-tr>
         </b-thead>
         <b-tbody>
-          <StudentLesson ref="studentLessons" v-for="student in students" v-bind:key="student.id" v-bind:student="student" />
+          <StudentLesson
+            ref="studentLessons"
+            v-for="lesson in lessons"
+            :key="lesson.id" :lesson="lesson"
+          />
         </b-tbody>
       </b-table-simple>
       <b-form-textarea v-model='groupHomework' placeholder="Schrijf het huiswerk van de klas op."></b-form-textarea><br>
@@ -58,6 +62,7 @@ export default Vue.extend({
       lessonDate: '',
       groupHomework: '',
       batchResponse: '',
+      lessons: [],
       sendingLesson: false
     }
   },
@@ -65,7 +70,7 @@ export default Vue.extend({
     async loadLessons() {
       const date = this.lessonDate;
       const lessons = await getDateLessons(date, this.students);
-      console.log(lessons);
+      this.lessons = lessons;
     },
     async addLessons() {
       this.sendingLesson = true;

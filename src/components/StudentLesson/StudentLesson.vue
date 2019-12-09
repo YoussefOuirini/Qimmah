@@ -1,6 +1,6 @@
 <template>
   <b-tr :variant="variant">
-    <b-td>{{student.name.first}} {{student.name.last}}</b-td>
+    <b-td>{{lesson.student.name.first}} {{lesson.student.name.last}}</b-td>
     <b-td colspan="3" v-if="absence && absence.reasonOfAbsence">
       <p style="font-style:italic">Afgemeld met als reden {{absence.reasonOfAbsence}}</p>
       <p v-if="absence.reasonOfAbsenceRemarks" style="font-style:italic">en opmerking: {{absence.reasonOfAbsenceRemarks}}</p>
@@ -38,23 +38,22 @@ import { getAbsence } from "@/firebase/firebase"
 
 export default Vue.extend({
   name: "Lesson",
-  props: ["student"],
-  watch: {
-    student: async function () {
-      await this.loadAbsence();
-    }
-  },
-  mounted() {
-    this.loadAbsence();
-  },
+  props: ["lesson"],
+  // watch: {
+  //   student: async function () {
+  //     await this.loadAbsence();
+  //   }
+  // },
+  // mounted() {
+  //   this.loadAbsence();
+  // },
   data() {
     return {
       behaviour: 'goed',
       presence: 'aanwezig',
       madeHomework: "ja",
       studentHomework: '',
-      remarks: "",
-      absence: ""
+      remarks: ""
     }
   },
   computed: {
@@ -63,17 +62,23 @@ export default Vue.extend({
         return "warning";
       }
       return "default";
-    }
+    },
+    student() {
+      return this.lesson.student;
+    },
+    absence() {
+      return this.student.absence;
+    },
   },
   methods: {
-    async loadAbsence() {
-      this.absence = await getAbsence(this.student);
-      if (this.absence && this.absence.reasonOfAbsence) {
-        this.behaviour = "Afgemeld";
-        this.presence = "Afgemeld";
-        this.madeHomework = "Afgemeld";
-      }
-    }
+    // async loadAbsence() {
+    //   this.absence = await getAbsence(this.student);
+    //   if (this.absence && this.absence.reasonOfAbsence) {
+    //     this.behaviour = "Afgemeld";
+    //     this.presence = "Afgemeld";
+    //     this.madeHomework = "Afgemeld";
+    //   }
+    // }
   }
 })
 </script>
