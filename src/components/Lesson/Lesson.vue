@@ -9,7 +9,7 @@
           id="lesson-date"
           type="date"
           v-model="lessonDate"
-          required
+          @input="loadLessons"
         ></b-form-input>
       </b-form-group>
     </b-row>
@@ -64,7 +64,8 @@ export default Vue.extend({
   methods: {
     async loadLessons() {
       const date = this.lessonDate;
-      const lessons = getDateLessons(date);
+      const lessons = await getDateLessons(date, this.students);
+      console.log(lessons);
     },
     async addLessons() {
       this.sendingLesson = true;
