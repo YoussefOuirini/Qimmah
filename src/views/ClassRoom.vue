@@ -2,6 +2,7 @@
   <b-container v-if="teachersGroups.length">
     <b-row>
       <b-form-select
+        class="my-2"
         v-model="selectedGroupName"
         :options="teachersGroups"
         text-field="groupName"
@@ -13,11 +14,11 @@
       </b-form-select>
     </b-row>
     <Lesson v-if="selectedGroupName && students.length" v-bind:students="students" v-bind:selectedGroupName="selectedGroupName"/>
-    <b-row>
+    <b-row v-if="selectedGroupName && students.length">
+      <h3>Studentengegevens</h3>
       <b-table
         class="py-1"
         bordered
-        v-if="selectedGroupName && students.length"
         :items="students"
         :fields="studentFields"
       >
