@@ -21,13 +21,13 @@ export async function getLessons() {
 }
 
 export async function getDateLessons(date, students) {
-  const studentsDateLessons = students.map((student) => {
-    return getStudentDateLesson(date, student);
+  const studentsDateLessons = students.map(async(student) => {
+    return await getStudentDateLesson(date, student);
   });
-  return await studentsDateLessons;
+  return Promise.all(studentsDateLessons);
 }
 
-function getStudentDateLesson(date, student) {
+async function getStudentDateLesson(date, student) {
   const studentDocName = getStudentDocName(student);
   let lesson = [];
   db.collection('groups').doc(student.group).collection('students').doc(studentDocName).collection('lessons').where("date", "==", date)

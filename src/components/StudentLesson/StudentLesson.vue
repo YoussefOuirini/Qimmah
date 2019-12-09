@@ -1,7 +1,7 @@
 <template>
   <b-tr :variant="variant">
     <b-td>{{lesson.student.name.first}} {{lesson.student.name.last}}</b-td>
-    <b-td colspan="3" v-if="absence && absence.reasonOfAbsence">
+    <b-td colspan="3" v-if="absence">
       <p style="font-style:italic">Afgemeld met als reden {{absence.reasonOfAbsence}}</p>
       <p v-if="absence.reasonOfAbsenceRemarks" style="font-style:italic">en opmerking: {{absence.reasonOfAbsenceRemarks}}</p>
     </b-td>
@@ -39,11 +39,11 @@ import { getAbsence } from "@/firebase/firebase"
 export default Vue.extend({
   name: "Lesson",
   props: ["lesson"],
-  // watch: {
-  //   student: async function () {
-  //     await this.loadAbsence();
-  //   }
-  // },
+  watch: {
+    lesson: function () {
+      this.loadLesson();
+    }
+  },
   mounted() {
     // this.loadAbsence();
     // console.log(this.lesson);
@@ -63,6 +63,9 @@ export default Vue.extend({
       if (this.absence && this.absence.reasonOfAbsence) {
         return "warning";
       }
+      if (this.presence === 'afwezig') {
+        return "danger";
+      }
       return "default";
     },
     student() {
@@ -70,32 +73,35 @@ export default Vue.extend({
     },
     absence() {
       return this.student.absence;
-    },
-    dateLesson() {
-      return this.lesson.lesson[0];
     }
   },
   methods: {
-    // async loadAbsence() {
-    //   this.absence = await getAbsence(this.student);
-    //   if (this.absence && this.absence.reasonOfAbsence) {
-    //     this.behaviour = "Afgemeld";
-    //     this.presence = "Afgemeld";
-    //     this.madeHomework = "Afgemeld";
-    //   }
-    // }
+    loadAbsence() {
+      // this.absence = await getAbsence(this.student);
+      if (this.absence && this.absence.reasonOfAbsence) {
+        this.behaviour = "afgemeld";
+        this.presence = "afgemeld";
+        this.madeHomework = "afgemeld";
+      }
+    },
     loadLesson() {
-      if (this.dateLesson.behaviour) {
-        this.behaviour = this.dateLesson.behaviour;
+      const parsedLesson = JSON.parse(JSON.stringify(this.lesson.lesson))
+      const dateLesson = parsedLesson[0];
+      console.log(this.lesson.lesson);
+      // console.log(parsedLesson);
+      // this.loadAbsence();
+      if (!dateLesson) {return};
+      if (dateLesson.behaviour) {
+        this.behaviour = dateLesson.behaviour;
       }
-      if (this.dateLesson.presence) {
-        this.presence = this.dateLesson.presence;
+      if (dateLesson.presence) {
+        this.presence = dateLesson.presence;
       }
-      if (this.dateLesson.madeHomework) {
-        this.madeHomework = this.dateLesson.madeHomework;
+      if (dateLesson.madeHomework) {
+        this.madeHomework = dateLesson.madeHomework;
       }
-      if (this.dateLesson.studentHomework) {
-        this.studentHomework = this.dateLesson.studentHomework;
+      if (dateLesson.studentHomework) {
+        this.studentHomework = dateLesson.studentHomework;
       }
     }
   }
