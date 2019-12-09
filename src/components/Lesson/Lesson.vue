@@ -1,13 +1,13 @@
 <template>
-  <b-row>
-    <b-row>
+  <b-row align-h="center">
+    <b-row align-h="center">
       <b-form-group
         id="lesson-date"
         label="Selecteer een lesdatum om een les toe te voegen"
         label-for="lesson-date"
       ><b-form-input
           id="lesson-date"
-          type= "date"
+          type="date"
           v-model="lessonDate"
           required
         ></b-form-input>
