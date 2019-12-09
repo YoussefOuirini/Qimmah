@@ -1,23 +1,28 @@
 <template>
   <b-container v-if="teachersGroups.length">
-    <b-form-select
-      v-model="selectedGroupName"
-      :options="teachersGroups"
-      text-field="groupName"
-      value-field="groupName"
-    >
-      <template v-slot:first>
-        <option :value="null" disabled>-- Selecteer een klas --</option>
-      </template>
-    </b-form-select>
-    <b-table
-      bordered
-      v-if="selectedGroupName && students.length"
-      :items="students"
-      :fields="studentFields"
-    >
-    </b-table>
+    <b-row>
+      <b-form-select
+        v-model="selectedGroupName"
+        :options="teachersGroups"
+        text-field="groupName"
+        value-field="groupName"
+      >
+        <template v-slot:first>
+          <option :value="null" disabled>-- Selecteer een klas --</option>
+        </template>
+      </b-form-select>
+    </b-row>
     <Lesson v-if="selectedGroupName && students.length" v-bind:students="students" v-bind:selectedGroupName="selectedGroupName"/>
+    <b-row>
+      <b-table
+        class="py-1"
+        bordered
+        v-if="selectedGroupName && students.length"
+        :items="students"
+        :fields="studentFields"
+      >
+      </b-table>
+    </b-row>
   </b-container>
 </template>
 
