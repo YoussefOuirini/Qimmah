@@ -204,6 +204,12 @@ export async function getAllAbsentees() {
   return removeDuplicate(absences);
 }
 
+export function getStudentDocName(student) {
+  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
+  const filteredStudentDocName = studentDocName.replace(/\s+/g, '');
+  return filteredStudentDocName;
+}
+
 async function getGroupsIDs() {
   let groupsIDs = [];
   await db.collection("groups").get().then((querySnapshot) => {
@@ -285,10 +291,4 @@ async function getGroup(groupName) {
     groups.push(doc.id)
   });
   return groups[0];
-}
-
-export function getStudentDocName(student) {
-  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
-  const filteredStudentDocName = studentDocName.replace(/\s+/g, '');
-  return filteredStudentDocName;
 }
