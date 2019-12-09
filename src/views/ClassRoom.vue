@@ -32,7 +32,7 @@
   import firebase from "firebase/app";
   import 'firebase/auth';
   import Lesson from "../components/Lesson/Lesson"
-  import { getGroupsOf } from "../firebase.js";
+  import { getGroupsOf } from "@/firebase/firebase.js";
   import { getAge } from "../common/getAge";
 
   export default Vue.extend({

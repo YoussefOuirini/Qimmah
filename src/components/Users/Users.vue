@@ -51,10 +51,10 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import firebase from 'firebase/app';
+  import Vue from 'vue';
+  import firebase from 'firebase/app';
   import 'firebase/functions';
-import { EventBus } from "../../EventBus"
+  import { EventBus } from "../../EventBus"
 
 export default Vue.extend({
   name: "Users",

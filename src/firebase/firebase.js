@@ -1,8 +1,8 @@
 import firebase from "firebase/app";
 import 'firebase/firestore';
 import 'firebase/auth';
-import { config } from './config.js';
-import { getLessonDate, getTimeStamp } from "./common/getDate";
+import { config } from '../config.js';
+import { getLessonDate, getTimeStamp } from "../common/getDate";
 
 firebase.initializeApp(config.firebase);
 
