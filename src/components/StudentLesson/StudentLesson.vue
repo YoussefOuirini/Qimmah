@@ -44,9 +44,11 @@ export default Vue.extend({
   //     await this.loadAbsence();
   //   }
   // },
-  // mounted() {
-  //   this.loadAbsence();
-  // },
+  mounted() {
+    // this.loadAbsence();
+    // console.log(this.lesson);
+    this.loadLesson();
+  },
   data() {
     return {
       behaviour: 'goed',
@@ -69,6 +71,9 @@ export default Vue.extend({
     absence() {
       return this.student.absence;
     },
+    dateLesson() {
+      return this.lesson.lesson[0];
+    }
   },
   methods: {
     // async loadAbsence() {
@@ -79,6 +84,20 @@ export default Vue.extend({
     //     this.madeHomework = "Afgemeld";
     //   }
     // }
+    loadLesson() {
+      if (this.dateLesson.behaviour) {
+        this.behaviour = this.dateLesson.behaviour;
+      }
+      if (this.dateLesson.presence) {
+        this.presence = this.dateLesson.presence;
+      }
+      if (this.dateLesson.madeHomework) {
+        this.madeHomework = this.dateLesson.madeHomework;
+      }
+      if (this.dateLesson.studentHomework) {
+        this.studentHomework = this.dateLesson.studentHomework;
+      }
+    }
   }
 })
 </script>
