@@ -43,10 +43,9 @@
 </template>
 
 <script>
-import Vue from "vue";
-import { writeLessons } from "@/firebase/firebase";
-import StudentLesson from "../StudentLesson/StudentLesson.vue"
-
+  import Vue from "vue";
+  import { writeLessons, getDateLessons } from "@/firebase/firebase";
+  import StudentLesson from "../StudentLesson/StudentLesson.vue";
 
 export default Vue.extend({
   name: "Lesson",
@@ -65,7 +64,7 @@ export default Vue.extend({
   methods: {
     async loadLessons() {
       const date = this.lessonDate;
-      const lessons = getDateLessons();
+      const lessons = getDateLessons(date);
     },
     async addLessons() {
       this.sendingLesson = true;

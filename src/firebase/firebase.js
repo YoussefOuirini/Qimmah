@@ -6,7 +6,9 @@ import { getLessonDate, getTimeStamp } from "../common/getDate";
 
 firebase.initializeApp(config.firebase);
 
-var db = firebase.firestore();
+export const db = firebase.firestore();
+
+export { getLessons, getDateLessons } from "./lessons";
 
 export async function writeRegistration(registration) {
   const studentDocName = getStudentDocName(registration);
@@ -17,26 +19,6 @@ export async function writeRegistration(registration) {
     .catch((error)=> {
       throw new Error(error)
     });
-}
-
-export async function getLessons() {
-  const registrations = await getUsersRegistrations();
-  const studentLessons = await registrations.map(async (registration) => {
-    const studentDocName = getStudentDocName(registration);
-    if (!registration.group) return;
-    const querySnapshot = await db.collection('groups').doc(registration.group).collection('students').doc(studentDocName).collection('lessons').get();
-    let lessons = [];
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      data.date = doc.id;
-      lessons.push(data);
-    });
-    return {
-      student: registration,
-      lessons
-    }
-  })
-  return Promise.all(studentLessons);
 }
 
 export async function getUsersRegistrations() {
@@ -305,7 +287,7 @@ async function getGroup(groupName) {
   return groups[0];
 }
 
-function getStudentDocName(student) {
+export function getStudentDocName(student) {
   const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
   const filteredStudentDocName = studentDocName.replace(/\s+/g, '');
   return filteredStudentDocName;
