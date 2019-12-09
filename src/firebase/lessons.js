@@ -20,6 +20,21 @@ export async function getLessons() {
   return Promise.all(studentLessons);
 }
 
-export function getDateLessons(date) {
-  
+export async function getDateLessons(date, students) {
+  const studentsDateLessons = students.map((student) => {
+    return getStudentDateLesson(date, student);
+  });
+  return await studentsDateLessons;
+}
+
+function getStudentDateLesson(date, student) {
+  const studentDocName = getStudentDocName(student);
+  let lesson = [];
+  db.collection('groups').doc(student.group).collection('students').doc(studentDocName).collection('lessons').where("date", "==", date)
+    .onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        lessons.push(doc.data());
+      });
+    });
+  return {student, lesson};
 }
