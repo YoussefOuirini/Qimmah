@@ -55,7 +55,7 @@ export default Vue.extend({
       presence: 'aanwezig',
       madeHomework: "ja",
       studentHomework: '',
-      remarks: ""
+      remarks: ''
     }
   },
   computed: {
@@ -88,20 +88,19 @@ export default Vue.extend({
       }
     },
     loadLesson() {
-      console.log(this.dateLesson);
+      console.log(this.lesson.lesson[0]);
       // this.loadAbsence();
-      if (!this.dateLesson) {return};
-      if (this.dateLesson.behaviour) {
+      if (this.dateLesson) {
         this.behaviour = this.dateLesson.behaviour;
-      }
-      if (this.dateLesson.presence) {
         this.presence = this.dateLesson.presence;
-      }
-      if (this.dateLesson.madeHomework) {
         this.madeHomework = this.dateLesson.madeHomework;
-      }
-      if (this.dateLesson.studentHomework) {
         this.studentHomework = this.dateLesson.studentHomework;
+      } else {
+        this.behaviour = 'goed';
+        this.presence = 'aanwezig';
+        this.madeHomework = 'ja';
+        this.studentHomework = '';
+        this.remarks = '';
       }
     }
   }
