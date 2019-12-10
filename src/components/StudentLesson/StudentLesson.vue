@@ -79,7 +79,7 @@ export default Vue.extend({
   },
   methods: {
     loadLesson() {
-      if (this.dateLesson) {
+      if (this.dateLesson.presence) {
         this.behaviour = this.dateLesson.behaviour;
         this.presence = this.dateLesson.presence;
         this.madeHomework = this.dateLesson.madeHomework;
