@@ -34,7 +34,6 @@
 
 <script>
 import Vue from "vue";
-import { getAbsence } from "@/firebase/firebase"
 
 export default Vue.extend({
   name: "Lesson",
@@ -45,7 +44,6 @@ export default Vue.extend({
     }
   },
   mounted() {
-    // this.loadAbsence();
     this.loadLesson();
   },
   data() {
@@ -80,14 +78,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    // loadAbsence() {
-    //   // this.absence = await getAbsence(this.student);
-    //   if (this.absence && this.absence.reason) {
-    //     this.behaviour = "afgemeld";
-    //     this.presence = "afgemeld";
-    //     this.madeHomework = "afgemeld";
-    //   }
-    // },
     loadLesson() {
       if (this.dateLesson) {
         this.behaviour = this.dateLesson.behaviour;
