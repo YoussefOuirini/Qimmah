@@ -175,10 +175,11 @@ export async function writeLessons(lessons) {
   });
 }
 
-export async function storeAbsence(absence, registration) {
-  const lessonsDate = getLessonDate(absence.timestamp);
+export async function storeAbsence(absenCall, registration) {
+  const lessonsDate = getLessonDate(absenCall.timestamp);
   const studentDocName = getStudentDocName(registration);
-  return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate).set(absence, {merge: true});
+  return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName)
+    .collection('lessons').doc(lessonsDate).set(absenCall, {merge: true});
 }
 
 export async function getAbsence(student) {
@@ -199,7 +200,7 @@ export async function getAllAbsentees() {
   const groupsStudents = await getAllStudents(groupsIDs);
   const filteredGroupsStudents = groupsStudents.filter(groupStudent => groupStudent.length).flat();
   const attendants = await getAbsentStudents(filteredGroupsStudents);
-  const absentees = attendants.filter((attendant) => attendant.absence.length);
+  const absentees = attendants.filter((attendant) => attendant.absences.length);
   const absences = getAbsences(absentees);
   return removeDuplicate(absences);
 }
@@ -229,8 +230,8 @@ async function getAllStudents(groupsIDs) {
 
 async function getAbsentStudents(groupStudents) {
   const absentStudentLessons  = await getStudentLessons(groupStudents, "presence", "afwezig");
-  const unkownReasonAbsentLessons  = await getStudentLessons(groupStudents, "reasonOfAbsence", "overige");
-  const sickStudentLessons = await getStudentLessons(groupStudents, "reasonOfAbsence", "ziekte");
+  const unkownReasonAbsentLessons  = await getStudentLessons(groupStudents, "absence.reason", "overige");
+  const sickStudentLessons = await getStudentLessons(groupStudents, "absence.reason", "ziekte");
   return absentStudentLessons.concat(unkownReasonAbsentLessons).concat(sickStudentLessons);
 }
 
@@ -249,7 +250,7 @@ async function getStudentLessons(groupsStudents, field, value) {
           absences.push(absence);
         })
       })
-    student.absence = absences;
+    student.absences = absences;
     return student;
   })
   return Promise.all(attendants);
@@ -257,7 +258,7 @@ async function getStudentLessons(groupsStudents, field, value) {
 
 function getAbsences(absentees) {
   return absentees.flatMap((absentee) => {
-    return absentee.absence.map((absence) => {
+    return absentee.absences.map((absence) => {
       const student = Object.assign({}, absentee);
       student.absence = absence;
       student.date = absence.date;

@@ -62,7 +62,7 @@
         return studentsLessons.map((studentLessons) => {
           const {student, lessons } = studentLessons;
           const filteredLessons = lessons.filter((lesson) => {
-            if (lesson.reasonOfAbsence && !lesson.presence) {
+            if (lesson.reason && !lesson.presence) {
               return;
             }
             return lesson
