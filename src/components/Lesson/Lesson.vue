@@ -72,6 +72,7 @@ export default Vue.extend({
       const date = this.lessonDate;
       const lessons = await getDateLessons(date, this.students);
       this.lessons = lessons;
+      this.groupHomework = lessons[0].lesson.groupHomework;
     },
     async addLessons() {
       this.sendingLesson = true;
