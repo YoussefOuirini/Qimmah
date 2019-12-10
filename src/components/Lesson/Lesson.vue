@@ -41,7 +41,8 @@
         :disabled="sendingLesson"
         variant="primary">Les toevoegen
       </b-button>
-      {{batchResponse}}
+      <br>
+      <h5>{{batchResponse}}</h5>
     </b-row>
   </b-row>
 </template>
