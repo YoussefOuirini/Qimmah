@@ -1,4 +1,5 @@
 import { getUsersRegistrations, getStudentDocName, db } from "./firebase";
+import { getLessonDate } from "../common/getDate";
 
 export async function getLessons() {
   const registrations = await getUsersRegistrations();
@@ -29,11 +30,12 @@ export async function getDateLessons(date, students) {
 
 async function getStudentDateLesson(date, student) {
   const studentDocName = getStudentDocName(student);
-  let lesson = [];
-  const querySnapshot = await db.collection('groups').doc(student.group).collection('students').doc(studentDocName)
-    .collection('lessons').where("date", "==", date).get();
-  querySnapshot.forEach((doc) => {
-    lesson.push(doc.data());
-  });
-  return {student, lesson};
+  const lessonDate = getLessonDate(date);
+  const lessonDoc = await db.collection('groups').doc(student.group).collection('students').doc(studentDocName)
+    .collection('lessons').doc(lessonDate).get();
+  if (lessonDoc.exists) {
+    return {student, lesson: lessonDoc.data()};
+  } else {
+    return {student, lesson: {}};
+  }
 }

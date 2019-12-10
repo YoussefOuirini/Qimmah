@@ -2,24 +2,24 @@
   <b-tr :variant="variant">
     <b-td>{{lesson.student.name.first}} {{lesson.student.name.last}}</b-td>
     <b-td colspan="3" v-if="absence">
-      <p style="font-style:italic">Afgemeld met als reden {{absence.reasonOfAbsence}}</p>
-      <p v-if="absence.reasonOfAbsenceRemarks" style="font-style:italic">en opmerking: {{absence.reasonOfAbsenceRemarks}}</p>
+      <p style="font-style:italic">Afgemeld met als reden {{absence.reason}}</p>
+      <p v-if="absence.remarks" style="font-style:italic">en opmerking: {{absence.remarks}}</p>
     </b-td>
-    <b-td v-if="!absence || !absence.reasonOfAbsence">
+    <b-td v-if="!absence || !absence.reason">
       <b-form-select v-model="behaviour">
         <option value="goed">Goed</option>
         <option value="matig">Matig</option>
         <option value="onvoldoende">Onvoldoende</option>
       </b-form-select>
     </b-td>
-    <b-td v-if="!absence || !absence.reasonOfAbsence">
+    <b-td v-if="!absence || !absence.reason">
       <b-form-select v-model="presence">
         <option value="aanwezig">Aanwezig</option>
         <option value="laat">Laat</option>
         <option value="afwezig">Afwezig</option>
       </b-form-select>
     </b-td>
-    <b-td v-if="!absence || !absence.reasonOfAbsence">
+    <b-td v-if="!absence || !absence.reason">
       <b-form-radio v-model="madeHomework" value="ja">Ja</b-form-radio>
       <b-form-radio v-model="madeHomework" value="nee">Nee</b-form-radio>
     </b-td>
@@ -46,7 +46,6 @@ export default Vue.extend({
   },
   mounted() {
     // this.loadAbsence();
-    // console.log(this.lesson);
     this.loadLesson();
   },
   data() {
@@ -60,7 +59,7 @@ export default Vue.extend({
   },
   computed: {
     variant() {
-      if (this.absence && this.absence.reasonOfAbsence) {
+      if (this.absence && this.absence.reason) {
         return "warning";
       }
       if (this.presence === 'afwezig') {
@@ -72,24 +71,24 @@ export default Vue.extend({
       return this.lesson.student;
     },
     absence() {
-      return this.student.absence;
+      if (this.dateLesson) {
+        return this.dateLesson.absence;
+      }
     },
     dateLesson() {
-      return this.lesson.lesson[0];
+      return this.lesson.lesson;
     }
   },
   methods: {
-    loadAbsence() {
-      // this.absence = await getAbsence(this.student);
-      if (this.absence && this.absence.reasonOfAbsence) {
-        this.behaviour = "afgemeld";
-        this.presence = "afgemeld";
-        this.madeHomework = "afgemeld";
-      }
-    },
+    // loadAbsence() {
+    //   // this.absence = await getAbsence(this.student);
+    //   if (this.absence && this.absence.reason) {
+    //     this.behaviour = "afgemeld";
+    //     this.presence = "afgemeld";
+    //     this.madeHomework = "afgemeld";
+    //   }
+    // },
     loadLesson() {
-      console.log(this.lesson.lesson[0]);
-      // this.loadAbsence();
       if (this.dateLesson) {
         this.behaviour = this.dateLesson.behaviour;
         this.presence = this.dateLesson.presence;
