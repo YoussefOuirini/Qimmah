@@ -30,11 +30,10 @@ export async function getDateLessons(date, students) {
 async function getStudentDateLesson(date, student) {
   const studentDocName = getStudentDocName(student);
   let lesson = [];
-  db.collection('groups').doc(student.group).collection('students').doc(studentDocName).collection('lessons').where("date", "==", date)
-    .onSnapshot((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        lesson.push(doc.data());
-      });
-    });
+  const querySnapshot = await db.collection('groups').doc(student.group).collection('students').doc(studentDocName)
+    .collection('lessons').where("date", "==", date).get();
+  querySnapshot.forEach((doc) => {
+    lesson.push(doc.data());
+  });
   return {student, lesson};
 }
