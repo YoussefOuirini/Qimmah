@@ -91,6 +91,11 @@ export default Vue.extend({
         this.studentHomework = '';
         this.remarks = '';
       }
+      if (this.absence && this.absence.reason) {
+        this.behaviour = this.absence.reason;
+        this.presence = `afgemeld vanwege ${this.absence.reason}`;
+        this.madeHomework = this.absence.reason;
+      }
     }
   }
 })
