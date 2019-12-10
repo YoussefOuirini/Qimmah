@@ -1,12 +1,14 @@
 import firebase from "firebase/app";
 import 'firebase/firestore';
 import 'firebase/auth';
-import { config } from './config.js';
-import { getLessonDate, getTimeStamp } from "./common/getDate";
+import { config } from '../config.js';
+import { getLessonDate, getTimeStamp } from "../common/getDate";
 
 firebase.initializeApp(config.firebase);
 
-var db = firebase.firestore();
+export const db = firebase.firestore();
+
+export { getLessons, getDateLessons } from "./lessons";
 
 export async function writeRegistration(registration) {
   const studentDocName = getStudentDocName(registration);
@@ -17,26 +19,6 @@ export async function writeRegistration(registration) {
     .catch((error)=> {
       throw new Error(error)
     });
-}
-
-export async function getLessons() {
-  const registrations = await getUsersRegistrations();
-  const studentLessons = await registrations.map(async (registration) => {
-    const studentDocName = getStudentDocName(registration);
-    if (!registration.group) return;
-    const querySnapshot = await db.collection('groups').doc(registration.group).collection('students').doc(studentDocName).collection('lessons').get();
-    let lessons = [];
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      data.date = doc.id;
-      lessons.push(data);
-    });
-    return {
-      student: registration,
-      lessons
-    }
-  })
-  return Promise.all(studentLessons);
 }
 
 export async function getUsersRegistrations() {
@@ -193,10 +175,11 @@ export async function writeLessons(lessons) {
   });
 }
 
-export async function storeAbsence(absence, registration) {
-  const lessonsDate = getLessonDate(absence.timestamp);
+export async function storeAbsence(absenCall, registration) {
+  const lessonsDate = getLessonDate(absenCall.timestamp);
   const studentDocName = getStudentDocName(registration);
-  return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate).set(absence, {merge: true});
+  return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName)
+    .collection('lessons').doc(lessonsDate).set(absenCall, {merge: true});
 }
 
 export async function getAbsence(student) {
@@ -217,9 +200,15 @@ export async function getAllAbsentees() {
   const groupsStudents = await getAllStudents(groupsIDs);
   const filteredGroupsStudents = groupsStudents.filter(groupStudent => groupStudent.length).flat();
   const attendants = await getAbsentStudents(filteredGroupsStudents);
-  const absentees = attendants.filter((attendant) => attendant.absence.length);
+  const absentees = attendants.filter((attendant) => attendant.absences.length);
   const absences = getAbsences(absentees);
   return removeDuplicate(absences);
+}
+
+export function getStudentDocName(student) {
+  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
+  const filteredStudentDocName = studentDocName.replace(/\s+/g, '');
+  return filteredStudentDocName;
 }
 
 async function getGroupsIDs() {
@@ -241,8 +230,8 @@ async function getAllStudents(groupsIDs) {
 
 async function getAbsentStudents(groupStudents) {
   const absentStudentLessons  = await getStudentLessons(groupStudents, "presence", "afwezig");
-  const unkownReasonAbsentLessons  = await getStudentLessons(groupStudents, "reasonOfAbsence", "overige");
-  const sickStudentLessons = await getStudentLessons(groupStudents, "reasonOfAbsence", "ziekte");
+  const unkownReasonAbsentLessons  = await getStudentLessons(groupStudents, "absence.reason", "overige");
+  const sickStudentLessons = await getStudentLessons(groupStudents, "absence.reason", "ziekte");
   return absentStudentLessons.concat(unkownReasonAbsentLessons).concat(sickStudentLessons);
 }
 
@@ -261,7 +250,7 @@ async function getStudentLessons(groupsStudents, field, value) {
           absences.push(absence);
         })
       })
-    student.absence = absences;
+    student.absences = absences;
     return student;
   })
   return Promise.all(attendants);
@@ -269,7 +258,7 @@ async function getStudentLessons(groupsStudents, field, value) {
 
 function getAbsences(absentees) {
   return absentees.flatMap((absentee) => {
-    return absentee.absence.map((absence) => {
+    return absentee.absences.map((absence) => {
       const student = Object.assign({}, absentee);
       student.absence = absence;
       student.date = absence.date;
@@ -303,10 +292,4 @@ async function getGroup(groupName) {
     groups.push(doc.id)
   });
   return groups[0];
-}
-
-function getStudentDocName(student) {
-  const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
-  const filteredStudentDocName = studentDocName.replace(/\s+/g, '');
-  return filteredStudentDocName;
 }

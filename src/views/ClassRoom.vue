@@ -1,23 +1,29 @@
 <template>
   <b-container v-if="teachersGroups.length">
-    <b-form-select
-      v-model="selectedGroupName"
-      :options="teachersGroups"
-      text-field="groupName"
-      value-field="groupName"
-    >
-      <template v-slot:first>
-        <option :value="null" disabled>-- Selecteer een klas --</option>
-      </template>
-    </b-form-select>
-    <b-table
-      bordered
-      v-if="selectedGroupName && students.length"
-      :items="students"
-      :fields="studentFields"
-    >
-    </b-table>
+    <b-row>
+      <b-form-select
+        class="my-2"
+        v-model="selectedGroupName"
+        :options="teachersGroups"
+        text-field="groupName"
+        value-field="groupName"
+      >
+        <template v-slot:first>
+          <option :value="null" disabled>-- Selecteer een klas --</option>
+        </template>
+      </b-form-select>
+    </b-row>
     <Lesson v-if="selectedGroupName && students.length" v-bind:students="students" v-bind:selectedGroupName="selectedGroupName"/>
+    <b-row v-if="selectedGroupName && students.length">
+      <h3>Studentengegevens</h3>
+      <b-table
+        class="py-1"
+        bordered
+        :items="students"
+        :fields="studentFields"
+      >
+      </b-table>
+    </b-row>
   </b-container>
 </template>
 
@@ -26,7 +32,7 @@
   import firebase from "firebase/app";
   import 'firebase/auth';
   import Lesson from "../components/Lesson/Lesson"
-  import { getGroupsOf } from "../firebase.js";
+  import { getGroupsOf } from "@/firebase/firebase.js";
   import { getAge } from "../common/getAge";
 
   export default Vue.extend({

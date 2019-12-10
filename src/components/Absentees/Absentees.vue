@@ -12,7 +12,7 @@
 
 <script>
 import Vue from 'vue';
-import {getAllAbsentees} from "../../firebase";
+import {getAllAbsentees} from "@/firebase/firebase";
 import { getAge } from "../../common/getAge.js";
 
 export default Vue.extend({
@@ -51,15 +51,16 @@ export default Vue.extend({
         key: 'group',
         label: 'Klas'
       }, {
-        key: 'absence',
+        key: 'absences',
         label: 'Afwezigheid',
-        formatter: (absence) => {
+        formatter: (absences) => {
+          const absence = absences[0].absence;
           let absenceText = `Afwezig`;
-          if (absence.reasonOfAbsence) {
-            absenceText += ` vanwege ${absence.reasonOfAbsence}`;
+          if (absence && absence.reason) {
+            absenceText += ` vanwege ${absence.reason}`;
           }
-          if (absence.reasonOfAbsenceRemarks) {
-            absenceText += ` met als reden: ${absence.reasonOfAbsenceRemarks}`;
+          if (absence && absence.remarks) {
+            absenceText += ` met als reden: ${absence.remarks}`;
           }
           return absenceText;
         }

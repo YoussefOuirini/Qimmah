@@ -16,7 +16,7 @@
 <script>
   import Vue from "vue";
   import StudentLessons from "./StudentLessons.vue"
-  import { getLessons } from "../../firebase.js"
+  import { getLessons } from "@/firebase/firebase.js"
 
   export default Vue.extend({
     name: "Attendance",
@@ -62,7 +62,7 @@
         return studentsLessons.map((studentLessons) => {
           const {student, lessons } = studentLessons;
           const filteredLessons = lessons.filter((lesson) => {
-            if (lesson.reasonOfAbsence && !lesson.presence) {
+            if (lesson.reason && !lesson.presence) {
               return;
             }
             return lesson

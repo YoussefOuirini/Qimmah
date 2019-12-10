@@ -14,7 +14,7 @@
 
 <script>
 import Vue from 'vue';
-import { writeStudentToGroup, updateRegistration, removeStudentFromGroups } from "../../../firebase.js";
+import { writeStudentToGroup, updateRegistration, removeStudentFromGroups } from "@/firebase/firebase.js";
 
 export default Vue.extend({
   name: 'StudentGroup',
