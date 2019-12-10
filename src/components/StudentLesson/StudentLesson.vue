@@ -84,6 +84,7 @@ export default Vue.extend({
         this.presence = this.dateLesson.presence;
         this.madeHomework = this.dateLesson.madeHomework;
         this.studentHomework = this.dateLesson.studentHomework;
+        this.remarks = this.dateLesson.remarks;
       } else {
         this.behaviour = 'goed';
         this.presence = 'aanwezig';
