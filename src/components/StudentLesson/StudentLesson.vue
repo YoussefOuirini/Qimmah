@@ -73,6 +73,9 @@ export default Vue.extend({
     },
     absence() {
       return this.student.absence;
+    },
+    dateLesson() {
+      return this.lesson.lesson[0];
     }
   },
   methods: {
@@ -85,23 +88,20 @@ export default Vue.extend({
       }
     },
     loadLesson() {
-      const parsedLesson = JSON.parse(JSON.stringify(this.lesson.lesson))
-      const dateLesson = parsedLesson[0];
-      console.log(this.lesson.lesson);
-      // console.log(parsedLesson);
+      console.log(this.dateLesson);
       // this.loadAbsence();
-      if (!dateLesson) {return};
-      if (dateLesson.behaviour) {
-        this.behaviour = dateLesson.behaviour;
+      if (!this.dateLesson) {return};
+      if (this.dateLesson.behaviour) {
+        this.behaviour = this.dateLesson.behaviour;
       }
-      if (dateLesson.presence) {
-        this.presence = dateLesson.presence;
+      if (this.dateLesson.presence) {
+        this.presence = this.dateLesson.presence;
       }
-      if (dateLesson.madeHomework) {
-        this.madeHomework = dateLesson.madeHomework;
+      if (this.dateLesson.madeHomework) {
+        this.madeHomework = this.dateLesson.madeHomework;
       }
-      if (dateLesson.studentHomework) {
-        this.studentHomework = dateLesson.studentHomework;
+      if (this.dateLesson.studentHomework) {
+        this.studentHomework = this.dateLesson.studentHomework;
       }
     }
   }
