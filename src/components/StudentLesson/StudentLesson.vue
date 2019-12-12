@@ -72,6 +72,7 @@ export default Vue.extend({
       if (this.dateLesson) {
         return this.dateLesson.absence;
       }
+      return null;
     },
     dateLesson() {
       return this.lesson.lesson;
