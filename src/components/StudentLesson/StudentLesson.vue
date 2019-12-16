@@ -12,7 +12,7 @@
         <option value="afwezig">Afwezig</option>
       </b-form-select>
     </b-td>
-    <b-td colspan="2" v-if="!present">
+    <b-td colspan="2" v-if="!present && !absence">
         <p>{{lesson.student.name.first}} is afwezig</p>
     </b-td>
     <b-td v-if="present">
