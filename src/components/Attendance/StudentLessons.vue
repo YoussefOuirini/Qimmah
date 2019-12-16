@@ -59,7 +59,7 @@
     computed: {
       rows() {
         return this.lessons.length
-    },
+      },
     },
     methods: {
 

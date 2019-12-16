@@ -21,8 +21,16 @@
         bordered
         :items="students"
         :fields="studentFields"
-      >
-      </b-table>
+        :per-page="table.students.perPage"
+        :current-page="table.students.currentPage"
+      ></b-table>
+      <b-pagination
+        v-model="table.students.currentPage"
+        v-if="rows > table.students.perPage"
+        :total-rows="rows"
+        :per-page="table.students.perPage"
+        aria-controls="studentsTable"
+      ></b-pagination>
     </b-row>
   </b-container>
 </template>
@@ -45,6 +53,12 @@
     },
     data() {
       return {
+        table: {
+          students: {
+            currentPage: 1,
+            perPage: 10
+          }
+        },
         teachersGroups: [],
         selectedGroupName: '',
         studentFields: [{
@@ -97,6 +111,9 @@
         })
         return teachersGroup.students;
       },
+      rows() {
+        return this.students.length;
+      }
     },
     methods: {
       async getTeachersGroups() {
