@@ -12,14 +12,14 @@
         <option value="afwezig">Afwezig</option>
       </b-form-select>
     </b-td>
-    <b-td v-if="!absence || !absence.reason">
+    <b-td v-if="present">
       <b-form-select v-model="behaviour">
         <option value="goed">Goed</option>
         <option value="matig">Matig</option>
         <option value="onvoldoende">Onvoldoende</option>
       </b-form-select>
     </b-td>
-    <b-td v-if="!absence || !absence.reason">
+    <b-td v-if="present">
       <b-form-radio v-model="madeHomework" value="ja">Ja</b-form-radio>
       <b-form-radio v-model="madeHomework" value="nee">Nee</b-form-radio>
     </b-td>
@@ -56,6 +56,15 @@ export default Vue.extend({
     }
   },
   computed: {
+    present() {
+      if (this.absence && this.absence.reason) {
+        return false;
+      }
+      if (this.presence === 'afwezig') {
+        return false;
+      }
+      return true;
+    },
     variant() {
       if (this.absence && this.absence.reason) {
         return "warning";
