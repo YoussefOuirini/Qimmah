@@ -6,7 +6,7 @@
       <p v-if="absence.remarks" style="font-style:italic">en opmerking: {{absence.remarks}}</p>
     </b-td>
     <b-td v-if="!absence || !absence.reason">
-      <b-form-select v-model="presence">
+      <b-form-select @input="resetPresence" v-model="presence">
         <option value="aanwezig">Aanwezig</option>
         <option value="laat">Laat</option>
         <option value="afwezig">Afwezig</option>
@@ -113,6 +113,15 @@ export default Vue.extend({
         this.behaviour = this.absence.reason;
         this.presence = `afgemeld vanwege ${this.absence.reason}`;
         this.madeHomework = this.absence.reason;
+      }
+    },
+    resetPresence() {
+      if (this.presence !== 'afwezig') {
+        this.behaviour = 'goed';
+        this.madeHomework = 'ja';
+      } else {
+        this.madeHomework = 'afwezig';
+        this.behaviour = 'afwezig';
       }
     }
   }
