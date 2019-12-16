@@ -73,6 +73,9 @@ export default Vue.extend({
       const lessons = await getDateLessons(date, this.students);
       this.lessons = lessons;
       const groupHomework = lessons[0].lesson.groupHomework;
+      this.loadGroupHomework(groupHomework);
+    },
+    loadGroupHomework(groupHomework) {
       if (groupHomework) {
         this.groupHomework = groupHomework;
       } else {
