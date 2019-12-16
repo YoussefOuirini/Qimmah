@@ -14,7 +14,7 @@
       </b-form-group>
     </b-row>
     <b-row v-if="lessonDate" >
-      <b-table-simple hover caption-top v-if="lessons.length">
+      <b-table-simple hover caption-top outlined v-if="lessons.length">
         <caption>Voeg een les toe!</caption>
         <b-thead>
           <b-tr>
