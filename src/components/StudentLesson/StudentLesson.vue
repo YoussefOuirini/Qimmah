@@ -106,8 +106,7 @@ export default Vue.extend({
         this.remarks = '';
       }
       if (!this.present) {
-        this.madeHomework = 'afwezig';
-        this.behaviour = 'afwezig';
+        this.setAbsence();
       }
       if (this.absence && this.absence.reason) {
         this.behaviour = this.absence.reason;
@@ -120,9 +119,12 @@ export default Vue.extend({
         this.behaviour = 'goed';
         this.madeHomework = 'ja';
       } else {
-        this.madeHomework = 'afwezig';
-        this.behaviour = 'afwezig';
+        this.setAbsence()
       }
+    },
+    setAbsence() {
+      this.madeHomework = 'afwezig';
+      this.behaviour = 'afwezig';
     }
   }
 })
