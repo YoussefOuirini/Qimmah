@@ -58,7 +58,7 @@
     },
     computed: {
       rows() {
-        return this.lessons.length
+        return this.lessons.length;
       },
     },
     methods: {
