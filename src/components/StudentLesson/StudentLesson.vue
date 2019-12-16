@@ -6,17 +6,17 @@
       <p v-if="absence.remarks" style="font-style:italic">en opmerking: {{absence.remarks}}</p>
     </b-td>
     <b-td v-if="!absence || !absence.reason">
-      <b-form-select v-model="behaviour">
-        <option value="goed">Goed</option>
-        <option value="matig">Matig</option>
-        <option value="onvoldoende">Onvoldoende</option>
-      </b-form-select>
-    </b-td>
-    <b-td v-if="!absence || !absence.reason">
       <b-form-select v-model="presence">
         <option value="aanwezig">Aanwezig</option>
         <option value="laat">Laat</option>
         <option value="afwezig">Afwezig</option>
+      </b-form-select>
+    </b-td>
+    <b-td v-if="!absence || !absence.reason">
+      <b-form-select v-model="behaviour">
+        <option value="goed">Goed</option>
+        <option value="matig">Matig</option>
+        <option value="onvoldoende">Onvoldoende</option>
       </b-form-select>
     </b-td>
     <b-td v-if="!absence || !absence.reason">

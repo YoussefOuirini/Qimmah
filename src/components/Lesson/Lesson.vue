@@ -19,8 +19,8 @@
         <b-thead>
           <b-tr>
             <b-th>Naam</b-th>
-            <b-th>Gedrag</b-th>
             <b-th>Aanwezigheid</b-th>
+            <b-th>Gedrag</b-th>
             <b-th>Huiswerk gemaakt?</b-th>
             <b-th>Huiswerk</b-th>
             <b-th>Opmerkingen</b-th>
