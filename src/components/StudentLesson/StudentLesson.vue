@@ -6,28 +6,39 @@
       <p v-if="absence.remarks" style="font-style:italic">en opmerking: {{absence.remarks}}</p>
     </b-td>
     <b-td v-if="!absence || !absence.reason">
+      <b-form-select @input="resetPresence" v-model="presence">
+        <option value="aanwezig">Aanwezig</option>
+        <option value="laat">Laat</option>
+        <option value="afwezig">Afwezig</option>
+      </b-form-select>
+    </b-td>
+    <b-td colspan="2" v-if="!present && !absence">
+        <p>{{lesson.student.name.first}} is afwezig</p>
+    </b-td>
+    <b-td v-if="present">
       <b-form-select v-model="behaviour">
         <option value="goed">Goed</option>
         <option value="matig">Matig</option>
         <option value="onvoldoende">Onvoldoende</option>
       </b-form-select>
     </b-td>
-    <b-td v-if="!absence || !absence.reason">
-      <b-form-select v-model="presence">
-        <option value="aanwezig">Aanwezig</option>
-        <option value="laat">Laat</option>
-        <option value="afwezig">Afwezig</option>
-      </b-form-select>
-    </b-td>
-    <b-td v-if="!absence || !absence.reason">
+    <b-td v-if="present">
       <b-form-radio v-model="madeHomework" value="ja">Ja</b-form-radio>
       <b-form-radio v-model="madeHomework" value="nee">Nee</b-form-radio>
     </b-td>
-    <b-td>
-      <b-form-textarea v-model='studentHomework' placeholder="Schrijf het huiswerk van de student op."></b-form-textarea>
+    <b-td colspan="3">
+      <b-form-textarea
+        v-model='studentHomework'
+        max-rows="4"
+        placeholder="Schrijf het huiswerk van de student op."
+      ></b-form-textarea>
     </b-td>
-    <b-td>
-      <b-form-textarea v-model='remarks' placeholder="Schrijf een opmerking."></b-form-textarea>
+    <b-td colspan="3">
+      <b-form-textarea 
+        v-model='remarks'
+        max-rows="4"
+        placeholder="Schrijf een opmerking."
+      ></b-form-textarea>
     </b-td>
   </b-tr>
 </template>
@@ -56,6 +67,15 @@ export default Vue.extend({
     }
   },
   computed: {
+    present() {
+      if (this.absence && this.absence.reason) {
+        return false;
+      }
+      if (this.presence === 'afwezig') {
+        return false;
+      }
+      return true;
+    },
     variant() {
       if (this.absence && this.absence.reason) {
         return "warning";
@@ -93,11 +113,26 @@ export default Vue.extend({
         this.studentHomework = '';
         this.remarks = '';
       }
+      if (!this.present) {
+        this.setAbsence();
+      }
       if (this.absence && this.absence.reason) {
         this.behaviour = this.absence.reason;
         this.presence = `afgemeld vanwege ${this.absence.reason}`;
         this.madeHomework = this.absence.reason;
       }
+    },
+    resetPresence() {
+      if (this.presence !== 'afwezig') {
+        this.behaviour = 'goed';
+        this.madeHomework = 'ja';
+      } else {
+        this.setAbsence()
+      }
+    },
+    setAbsence() {
+      this.madeHomework = 'afwezig';
+      this.behaviour = 'afwezig';
     }
   }
 })

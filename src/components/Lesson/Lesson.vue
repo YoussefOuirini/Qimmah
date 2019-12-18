@@ -14,16 +14,16 @@
       </b-form-group>
     </b-row>
     <b-row v-if="lessonDate" >
-      <b-table-simple hover caption-top v-if="lessons.length">
+      <b-table-simple hover caption-top outlined v-if="lessons.length">
         <caption>Voeg een les toe!</caption>
         <b-thead>
           <b-tr>
             <b-th>Naam</b-th>
-            <b-th>Gedrag</b-th>
             <b-th>Aanwezigheid</b-th>
+            <b-th>Gedrag</b-th>
             <b-th>Huiswerk gemaakt?</b-th>
-            <b-th>Huiswerk</b-th>
-            <b-th>Opmerkingen</b-th>
+            <b-th colspan="3">Huiswerk</b-th>
+            <b-th colspan="3">Opmerkingen</b-th>
           </b-tr>
         </b-thead>
         <b-tbody>
@@ -34,16 +34,22 @@
           />
         </b-tbody>
       </b-table-simple>
-      <b-form-textarea v-model='groupHomework' placeholder="Schrijf het huiswerk van de klas op."></b-form-textarea><br>
+      <b-form-textarea 
+        v-if="lessons.length"
+        v-model='groupHomework'
+        max-rows="8"
+        placeholder="Schrijf het huiswerk van de klas op."
+      ></b-form-textarea>
+      <br>
       <b-button
+        v-if="lessons.length"
         class="my-3 mx-auto"
         @click="addLessons"
         :disabled="sendingLesson"
         variant="primary">Les toevoegen
       </b-button>
-      <br>
-      <h5>{{batchResponse}}</h5>
     </b-row>
+    <b-row><h5>{{lessonsRes}}</h5></b-row>
   </b-row>
 </template>
 
@@ -62,7 +68,7 @@ export default Vue.extend({
     return {
       lessonDate: '',
       groupHomework: '',
-      batchResponse: '',
+      lessonsRes: '',
       lessons: [],
       sendingLesson: false
     }
@@ -72,18 +78,31 @@ export default Vue.extend({
       const date = this.lessonDate;
       const lessons = await getDateLessons(date, this.students);
       this.lessons = lessons;
-      this.groupHomework = lessons[0].lesson.groupHomework;
+      const groupHomework = lessons[0].lesson.groupHomework;
+      this.loadGroupHomework(groupHomework);
+    },
+    loadGroupHomework(groupHomework) {
+      if (groupHomework) {
+        this.groupHomework = groupHomework;
+      } else {
+        this.groupHomework = '';
+      }
     },
     async addLessons() {
       this.sendingLesson = true;
       const lessons = this.getLessons();
-      const batchResponse = await writeLessons(lessons);
-      if (batchResponse.success) {
-        this.batchResponse = "Les successvol opgeslagen!"
-      } else {
-        this.batchResponse = "Er is is iets misgegaan! Probeer het opnieuw!"
+      try {
+        const batchResponse = await writeLessons(lessons);
+        if (batchResponse.success) {
+          this.lessonsRes = "Les succesvol opgeslagen!";
+        } else {
+          this.lessonsRes = "Er is is iets misgegaan! Probeer het opnieuw!";
+        }
+      } catch (e) {
+        this.lessonsRes = `Er is is iets misgegaan! ${e}`;
+      } finally {
+        this.sendingLesson = false;
       }
-      this.sendingLesson = false;
     },
     getLessons() {
       const lessons = this.$refs.studentLessons.map(studentLesson => {

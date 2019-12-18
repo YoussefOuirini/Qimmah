@@ -1,5 +1,6 @@
 import { getUsersRegistrations, getStudentDocName, db } from "./firebase";
-import { getLessonDate } from "../common/getDate";
+import { checkUserClaim } from "./auth";
+import { getLessonDate, getTimeStamp } from "../common/getDate";
 
 export async function getLessons() {
   const registrations = await getUsersRegistrations();
@@ -26,6 +27,28 @@ export async function getDateLessons(date, students) {
     return await getStudentDateLesson(date, student);
   });
   return Promise.all(studentsDateLessons);
+}
+
+export async function writeLessons(lessons) {
+  const userIsTeacher = await checkUserClaim('teacher');
+  if (!userIsTeacher) {
+    return new Error('User not authorized.');
+  }
+  const batch = db.batch();
+  lessons.forEach((studentGroupLesson) => {
+    const {student, groupName, lesson} = studentGroupLesson;
+    const studentDocName = getStudentDocName(student);
+    const lessonTimeStamp = getTimeStamp(lesson.date);
+    const lessonDate = getLessonDate(lessonTimeStamp);
+    const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lessonDate);
+    batch.set(lessonRef, lesson, {merge: true});
+  });
+  return batch.commit().then(()=> {
+    return {success: true};
+  })
+  .catch((error)=> {
+    throw new Error(error);
+  });
 }
 
 async function getStudentDateLesson(date, student) {

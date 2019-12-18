@@ -21,18 +21,25 @@
         bordered
         :items="students"
         :fields="studentFields"
-      >
-      </b-table>
+        :per-page="table.students.perPage"
+        :current-page="table.students.currentPage"
+      ></b-table>
+      <b-pagination
+        v-model="table.students.currentPage"
+        v-if="rows > table.students.perPage"
+        :total-rows="rows"
+        :per-page="table.students.perPage"
+        aria-controls="studentsTable"
+      ></b-pagination>
     </b-row>
   </b-container>
 </template>
 
 <script>
   import Vue from "vue";
-  import firebase from "firebase/app";
-  import 'firebase/auth';
   import Lesson from "../components/Lesson/Lesson"
-  import { getGroupsOf } from "@/firebase/firebase.js";
+  import { getGroupsOf } from "@/firebase/firebase";
+  import { getUserEmail } from "@/firebase/auth";
   import { getAge } from "../common/getAge";
 
   export default Vue.extend({
@@ -45,6 +52,12 @@
     },
     data() {
       return {
+        table: {
+          students: {
+            currentPage: 1,
+            perPage: 10
+          }
+        },
         teachersGroups: [],
         selectedGroupName: '',
         studentFields: [{
@@ -97,10 +110,14 @@
         })
         return teachersGroup.students;
       },
+      rows() {
+        return this.students.length;
+      }
     },
     methods: {
       async getTeachersGroups() {
-        this.teachersGroups = await getGroupsOf(firebase.auth().currentUser.email);
+        const userEmail = getUserEmail();
+        this.teachersGroups = await getGroupsOf(userEmail);
       },
     },
   })

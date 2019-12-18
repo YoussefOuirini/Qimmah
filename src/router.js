@@ -1,6 +1,3 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
@@ -8,7 +5,7 @@ import Login from './views/Login.vue';
 import SignUp from './views/SignUp.vue';
 import School from './views/School.vue';
 import ClassRoom from './views/ClassRoom.vue';
-import { checkUserClaim } from './firebase/firebase';
+import { checkUserClaim, getCurrentUser } from './firebase/auth';
 
 Vue.use(Router);
 
@@ -61,7 +58,7 @@ const router = new Router ({
 });
 
 router.beforeEach(async (to, from, next)=> {
-  const currentUser = firebase.auth().currentUser;
+  const currentUser = getCurrentUser();
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if (requiresAuth && !currentUser) next('login');

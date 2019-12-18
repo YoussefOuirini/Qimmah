@@ -1,17 +1,15 @@
 import Vue from "vue";
-import firebase from "firebase/app";
-import 'firebase/auth';
-import { checkUserClaim } from "@/firebase/firebase.js";
+import { getCurrentUser, getUserEmail, checkUserClaim, signOut } from "@/firebase/auth";
 import { EventBus } from "../../EventBus";
 
 export default Vue.extend({
   name: "Header",
   mounted() {
-    this.loggedInUser = firebase.auth().currentUser;
+    this.loggedInUser = getCurrentUser();
     this.checkUserClaims();
     EventBus.$on('userLoginChange', () => {
       this.checkUserClaims();
-      this.loggedInUser = firebase.auth().currentUser;
+      this.loggedInUser = getCurrentUser();
     });
     this.loadUserEmail();
   },
@@ -29,15 +27,15 @@ export default Vue.extend({
       this.userIsTeacher = await checkUserClaim('teacher');
     },
     logout() {
-      firebase.auth().signOut().then(() => {
+      signOut().then(() => {
         EventBus.reloadLoggedinUser();
-        this.loggedInUser = firebase.auth().currentUser;
+        this.loggedInUser = getCurrentUser();
         this.$router.replace('login');
       });
     },
     loadUserEmail() {
-      if (firebase.auth().currentUser) {
-        this.userEmail = firebase.auth().currentUser.email;
+      if (getCurrentUser()) {
+        this.userEmail = getUserEmail();
       }
     }
   }

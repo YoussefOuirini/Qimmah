@@ -1,9 +1,8 @@
 import Vue from "vue";
 import { config } from "../../config";
 import { writeRegistration } from "@/firebase/firebase";
-import firebase from "firebase/app";
-import 'firebase/auth';
 import { EventBus } from "../../EventBus.js";
+import { getCurrentUser } from "@/firebase/auth";
 
 export default Vue.extend({
   name: "RegistrationForm",
@@ -86,7 +85,7 @@ export default Vue.extend({
     submit() {
       this.loading = true
 
-      const user = firebase.auth().currentUser;
+      const user = getCurrentUser();
       const registration = this.form;
       registration.email = user.email;
       writeRegistration(registration).then((res)=> {
