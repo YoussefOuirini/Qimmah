@@ -35,12 +35,14 @@
         </b-tbody>
       </b-table-simple>
       <b-form-textarea 
+        v-if="lessons.length"
         v-model='groupHomework'
         max-rows="8"
         placeholder="Schrijf het huiswerk van de klas op."
       ></b-form-textarea>
       <br>
       <b-button
+        v-if="lessons.length"
         class="my-3 mx-auto"
         @click="addLessons"
         :disabled="sendingLesson"
@@ -92,12 +94,12 @@ export default Vue.extend({
       try {
         const batchResponse = await writeLessons(lessons);
         if (batchResponse.success) {
-          this.lessonsRes = "Les successvol opgeslagen!"
+          this.lessonsRes = "Les succesvol opgeslagen!";
         } else {
-          this.lessonsRes = "Er is is iets misgegaan! Probeer het opnieuw!"
+          this.lessonsRes = "Er is is iets misgegaan! Probeer het opnieuw!";
         }
-      } catch {
-        this.lessonsRes = "Er is is iets misgegaan! Probeer het later opnieuw!"
+      } catch (e) {
+        this.lessonsRes = `Er is is iets misgegaan! ${e}`;
       } finally {
         this.sendingLesson = false;
       }
