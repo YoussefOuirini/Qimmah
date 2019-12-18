@@ -47,7 +47,7 @@
         variant="primary">Les toevoegen
       </b-button>
       <br>
-      <h5>{{batchResponse}}</h5>
+      <h5>{{lessonsRes}}</h5>
     </b-row>
   </b-row>
 </template>
@@ -67,7 +67,7 @@ export default Vue.extend({
     return {
       lessonDate: '',
       groupHomework: '',
-      batchResponse: '',
+      lessonsRes: '',
       lessons: [],
       sendingLesson: false
     }
@@ -90,13 +90,18 @@ export default Vue.extend({
     async addLessons() {
       this.sendingLesson = true;
       const lessons = this.getLessons();
-      const batchResponse = await writeLessons(lessons);
-      if (batchResponse.success) {
-        this.batchResponse = "Les successvol opgeslagen!"
-      } else {
-        this.batchResponse = "Er is is iets misgegaan! Probeer het opnieuw!"
+      try {
+        const batchResponse = await writeLessons(lessons);
+        if (batchResponse.success) {
+          this.lessonsRes = "Les successvol opgeslagen!"
+        } else {
+          this.lessonsRes = "Er is is iets misgegaan! Probeer het opnieuw!"
+        }
+      } catch {
+        this.lessonsRes = "Er is is iets misgegaan! Probeer het later opnieuw!"
+      } finally {
+        this.sendingLesson = false;
       }
-      this.sendingLesson = false;
     },
     getLessons() {
       const lessons = this.$refs.studentLessons.map(studentLesson => {
