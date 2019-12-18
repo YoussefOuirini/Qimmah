@@ -26,11 +26,19 @@
       <b-form-radio v-model="madeHomework" value="ja">Ja</b-form-radio>
       <b-form-radio v-model="madeHomework" value="nee">Nee</b-form-radio>
     </b-td>
-    <b-td>
-      <b-form-textarea v-model='studentHomework' placeholder="Schrijf het huiswerk van de student op."></b-form-textarea>
+    <b-td colspan="3">
+      <b-form-textarea
+        v-model='studentHomework'
+        max-rows="4"
+        placeholder="Schrijf het huiswerk van de student op."
+      ></b-form-textarea>
     </b-td>
-    <b-td>
-      <b-form-textarea v-model='remarks' placeholder="Schrijf een opmerking."></b-form-textarea>
+    <b-td colspan="3">
+      <b-form-textarea 
+        v-model='remarks'
+        max-rows="4"
+        placeholder="Schrijf een opmerking."
+      ></b-form-textarea>
     </b-td>
   </b-tr>
 </template>

@@ -22,8 +22,8 @@
             <b-th>Aanwezigheid</b-th>
             <b-th>Gedrag</b-th>
             <b-th>Huiswerk gemaakt?</b-th>
-            <b-th>Huiswerk</b-th>
-            <b-th>Opmerkingen</b-th>
+            <b-th colspan="3">Huiswerk</b-th>
+            <b-th colspan="3">Opmerkingen</b-th>
           </b-tr>
         </b-thead>
         <b-tbody>
