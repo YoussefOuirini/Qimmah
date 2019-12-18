@@ -34,7 +34,12 @@
           />
         </b-tbody>
       </b-table-simple>
-      <b-form-textarea v-model='groupHomework' placeholder="Schrijf het huiswerk van de klas op."></b-form-textarea><br>
+      <b-form-textarea 
+        v-model='groupHomework'
+        max-rows="8"
+        placeholder="Schrijf het huiswerk van de klas op."
+      ></b-form-textarea>
+      <br>
       <b-button
         class="my-3 mx-auto"
         @click="addLessons"
