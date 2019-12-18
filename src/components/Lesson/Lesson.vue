@@ -46,9 +46,8 @@
         :disabled="sendingLesson"
         variant="primary">Les toevoegen
       </b-button>
-      <br>
-      <h5>{{lessonsRes}}</h5>
     </b-row>
+    <b-row><h5>{{lessonsRes}}</h5></b-row>
   </b-row>
 </template>
 
