@@ -37,10 +37,9 @@
 
 <script>
   import Vue from "vue";
-  import firebase from "firebase/app";
-  import 'firebase/auth';
   import Lesson from "../components/Lesson/Lesson"
-  import { getGroupsOf } from "@/firebase/firebase.js";
+  import { getGroupsOf } from "@/firebase/firebase";
+  import { getUserEmail } from "@/firebase/auth";
   import { getAge } from "../common/getAge";
 
   export default Vue.extend({
@@ -117,7 +116,8 @@
     },
     methods: {
       async getTeachersGroups() {
-        this.teachersGroups = await getGroupsOf(firebase.auth().currentUser.email);
+        const userEmail = getUserEmail();
+        this.teachersGroups = await getGroupsOf(userEmail);
       },
     },
   })

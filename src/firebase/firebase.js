@@ -1,28 +1,29 @@
 import firebase from "firebase/app";
 import 'firebase/firestore';
-import 'firebase/auth';
 import { config } from '../config.js';
-import { getLessonDate, getTimeStamp } from "../common/getDate";
+import { getLessonDate } from "../common/getDate";
+import { checkUserClaim, getUserEmail } from "./auth";
 
 firebase.initializeApp(config.firebase);
 
 export const db = firebase.firestore();
+export const auth = firebase.auth();
 
-export { getLessons, getDateLessons } from "./lessons";
+export { getLessons, getDateLessons, writeLessons } from "./lessons";
 
 export async function writeRegistration(registration) {
   const studentDocName = getStudentDocName(registration);
   return db.collection("registrations").doc(studentDocName).set(registration)
     .then(()=> {
-      return {success: true}
+      return {success: true};
     })
     .catch((error)=> {
-      throw new Error(error)
+      throw new Error(error);
     });
 }
 
 export async function getUsersRegistrations() {
-  const querySnapshot = await db.collection("registrations").where("email", "==", firebase.auth().currentUser.email).get();
+  const querySnapshot = await db.collection("registrations").where("email", "==", getUserEmail()).get();
   let registrations = [];
   querySnapshot.forEach((doc) => {
     registrations.push(doc.data())
@@ -133,14 +134,6 @@ export async function updateRegistration(registration, groupName) {
   });
 }
 
-export async function checkUserClaim(customClaim) {
-  const loggedInUser = firebase.auth().currentUser;
-  if (loggedInUser) {
-    const idTokenResult = await loggedInUser.getIdTokenResult();
-    return idTokenResult.claims[customClaim];
-  }
-}
-
 export async function getGroupsOf(teacherEmail) {
   const querySnapshot = await db.collection("groups").where("teachers", "array-contains", teacherEmail).get();
   let teachersGroups = [];
@@ -151,28 +144,6 @@ export async function getGroupsOf(teacherEmail) {
     teachersGroups.push(completeGroup)
   });
   return teachersGroups;
-}
-
-export async function writeLessons(lessons) {
-  const userIsTeacher = await checkUserClaim('teacher');
-  if (!userIsTeacher) {
-    return new Error('User not authorized.');
-  }
-  const batch = db.batch();
-  lessons.forEach((studentGroupLesson) => {
-    const {student, groupName, lesson} = studentGroupLesson;
-    const studentDocName = getStudentDocName(student);
-    const lessonTimeStamp = getTimeStamp(lesson.date);
-    const lessonDate = getLessonDate(lessonTimeStamp);
-    const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lessonDate);
-    batch.set(lessonRef, lesson, {merge: true});
-  });
-  return batch.commit().then(()=> {
-    return {success: true};
-  })
-  .catch((error)=> {
-    throw new Error(error);
-  });
 }
 
 export async function storeAbsence(absenCall, registration) {
