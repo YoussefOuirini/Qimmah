@@ -43,8 +43,8 @@ export async function writeLessons(lessons) {
     const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lessonDate);
     batch.set(lessonRef, lesson, {merge: true});
   });
-  return batch.commit().then((res)=> {
-    return {success: true, response: res};
+  return batch.commit().then(()=> {
+    return {success: true};
   })
   .catch((error)=> {
     throw new Error(error);
