@@ -1,5 +1,5 @@
 <template>
-  <b-container v-if="absentees.length">
+  <b-row v-if="absentees.length">
     <h1>Bekijk de afwezigheidsmeldingen</h1>
     <b-table
       striped hover
@@ -7,7 +7,7 @@
       :fields="absenteeFields"
     >
     </b-table>
-  </b-container>
+  </b-row>
 </template>
 
 <script>
