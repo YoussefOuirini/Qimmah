@@ -12,6 +12,8 @@
       ></b-pagination>
       <b-table
         striped hover
+        sort-by="date"
+        sort-desc="true"
         :items="absentees"
         :fields="absenteeFields"
         :per-page="perPage"
@@ -39,7 +41,8 @@ export default Vue.extend({
       absentees: [],
       absenteeFields: [{
         key: 'date',
-        label: 'Datum'
+        label: 'Datum',
+        sortable: true
       }, {
         key: "name",
         label: "Naam",
