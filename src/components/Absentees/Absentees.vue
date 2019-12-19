@@ -34,7 +34,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      perPage: 10,
+      perPage: 5,
       currentPage: 1,
       absentees: [],
       absenteeFields: [{
