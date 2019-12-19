@@ -26,29 +26,7 @@
     },
     data() {
       return {
-        studentsLessons: [],
-        lessonsFields: [{
-          key: "date",
-          label: "Lesdatum"
-        }, {
-          key: "presence",
-          label: "Aanwezigheid"
-        }, {
-          key: "madeHomework",
-          label: "Huiswerk gemaakt?"
-        }, {
-          key: "behaviour",
-          label: "Gedrag"
-        }, {
-          key: "groupHomework",
-          label: "Klassenhuiswerk"
-        }, {
-          key: "studentHomework",
-          label: "Individuele Huiswerk"
-        }, {
-          key: "remarks",
-          label: "Opmerkingen"
-        }]
+        studentsLessons: []
       }
     },
     methods: {
