@@ -1,12 +1,24 @@
 <template>
   <b-row v-if="absentees.length">
-    <h1>Bekijk de afwezigheidsmeldingen</h1>
-    <b-table
-      striped hover
-      :items="absentees"
-      :fields="absenteeFields"
-    >
-    </b-table>
+    <b-row><h1>Bekijk de afwezigheidsmeldingen</h1></b-row>
+    <b-row>
+      <b-pagination
+        align="center"
+        v-model="currentPage"
+        v-if="rows > perPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="absentees"
+      ></b-pagination>
+      <b-table
+        striped hover
+        :items="absentees"
+        :fields="absenteeFields"
+        :per-page="perPage"
+        :current-page="currentPage"
+      >
+      </b-table>
+    </b-row>
   </b-row>
 </template>
 
@@ -22,6 +34,8 @@ export default Vue.extend({
   },
   data() {
     return {
+      perPage: 10,
+      currentPage: 1,
       absentees: [],
       absenteeFields: [{
         key: 'date',
@@ -48,6 +62,9 @@ export default Vue.extend({
         key: 'phoneNumber',
         label: 'Telefoonnummer'
       }, {
+        key: 'email',
+        label: 'Email'
+      },{
         key: 'group',
         label: 'Klas'
       }, {
@@ -65,6 +82,11 @@ export default Vue.extend({
           return absenceText;
         }
       }],
+    }
+  },
+  computed: {
+    rows() {
+      return this.absentees.length;
     }
   },
   methods: {
