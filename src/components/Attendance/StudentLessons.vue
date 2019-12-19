@@ -6,7 +6,7 @@
         id="studentLessons"
         bordered
         sort-by="date"
-        sort-desc="true"
+        sort-desc
         :items="lessons"
         :fields="lessonsFields"
         :per-page="perPage"

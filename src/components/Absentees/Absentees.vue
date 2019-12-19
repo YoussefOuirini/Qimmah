@@ -13,11 +13,12 @@
       <b-table
         striped hover
         sort-by="date"
-        sort-desc="true"
+        sort-desc
         :items="absentees"
         :fields="absenteeFields"
         :per-page="perPage"
         :current-page="currentPage"
+        :tbody-tr-class="rowClass"
       >
       </b-table>
     </b-row>
@@ -95,6 +96,11 @@ export default Vue.extend({
   methods: {
     async loadAbsentees() {
       this.absentees = await getAllAbsentees();
+    },
+    rowClass(item, type) {
+      console.log(item);
+      if (!item) return;
+      if (item.absences[0].presence === 'afwezig') return 'table-danger';
     }
   }
 })

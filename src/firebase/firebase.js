@@ -75,7 +75,7 @@ export async function getGroups() {
 export async function removeStudentFromGroups(student, groups) {
   const userIsModerator = await checkUserClaim('moderator');
   if (!userIsModerator) {
-    return new Error('User not authorized.')
+    return new Error('User not authorized.');
   }
   const studentDocName = getStudentDocName(student);
   groups.forEach((group) => {
