@@ -5,6 +5,8 @@
       <b-table
         id="studentLessons"
         bordered
+        sort-by="date"
+        sort-desc="true"
         :items="lessons"
         :fields="lessonsFields"
         :per-page="perPage"
@@ -34,7 +36,8 @@
         perPage: 5,
         lessonsFields: [{
           key: "date",
-          label: "Lesdatum"
+          label: "Lesdatum",
+          sortable: true
         }, {
           key: "presence",
           label: "Aanwezigheid"
@@ -60,9 +63,6 @@
       rows() {
         return this.lessons.length;
       },
-    },
-    methods: {
-
-    },
+    }
   })
 </script>
