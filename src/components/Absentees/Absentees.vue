@@ -19,12 +19,12 @@
               placeholder="Typ in om te zoeken"
             ></b-form-input>
             <b-input-group-append>
-              <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+              <b-button :disabled="!filter" @click="filter = ''">Klaren</b-button>
             </b-input-group-append>
           </b-input-group>
         </b-form-group>
       </b-col>
-      <b-col>
+      <b-col sm="7" md="6" class="my-1">
         <b-pagination
           align="center"
           v-model="currentPage"
