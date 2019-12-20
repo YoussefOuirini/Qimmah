@@ -1,55 +1,51 @@
 <template>
   <b-row v-if="absentees.length">
-    <b-row><h1>Bekijk de afwezigheidsmeldingen</h1></b-row>
-    <b-row>
-      <b-col lg="6" class="my-1">
-        <b-form-group
-          label="Filter"
-          label-cols-sm="3"
-          label-align-sm="right"
-          label-size="sm"
-          label-for="filterInput"
-          class="mb-0"
-        >
-          <b-input-group size="sm">
-            <b-form-input
-              v-model="filter"
-              type="search"
-              id="filterInput"
-              placeholder="Typ in om te zoeken"
-            ></b-form-input>
-            <b-input-group-append>
-              <b-button :disabled="!filter" @click="filter = ''">Klaren</b-button>
-            </b-input-group-append>
-          </b-input-group>
-        </b-form-group>
-      </b-col>
-      <b-col sm="7" md="6" class="my-1">
-        <b-pagination
-          align="center"
-          v-model="currentPage"
-          :total-rows="rows"
-          :per-page="perPage"
-          aria-controls="absentees"
-          class="my-0"
-        ></b-pagination>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-table
-        striped hover
-        sort-by="date"
-        sort-desc
-        :items="absentees"
-        :fields="absenteeFields"
-        :per-page="perPage"
-        :current-page="currentPage"
-        :filter="filter"
-        @filtered="onFiltered"
-        :tbody-tr-class="rowClass"
+    <h1>Bekijk de afwezigheidsmeldingen</h1>
+    <b-col lg="6" class="my-1">
+      <b-form-group
+        label="Filter"
+        label-cols-sm="3"
+        label-align-sm="right"
+        label-size="sm"
+        label-for="filterInput"
+        class="mb-0"
       >
-      </b-table>
-    </b-row>
+        <b-input-group size="sm">
+          <b-form-input
+            v-model="filter"
+            type="search"
+            id="filterInput"
+            placeholder="Typ in om te zoeken"
+          ></b-form-input>
+          <b-input-group-append>
+            <b-button :disabled="!filter" @click="filter = ''">Klaren</b-button>
+          </b-input-group-append>
+        </b-input-group>
+      </b-form-group>
+    </b-col>
+    <b-col sm="7" md="6" class="my-1">
+      <b-pagination
+        align="center"
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="absentees"
+        class="my-0"
+      ></b-pagination>
+    </b-col>
+    <b-table
+      striped hover
+      sort-by="date"
+      sort-desc
+      :items="absentees"
+      :fields="absenteeFields"
+      :per-page="perPage"
+      :current-page="currentPage"
+      :filter="filter"
+      @filtered="onFiltered"
+      :tbody-tr-class="rowClass"
+    >
+    </b-table>
   </b-row>
 </template>
 
