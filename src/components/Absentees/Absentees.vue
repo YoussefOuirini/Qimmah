@@ -2,14 +2,40 @@
   <b-row v-if="absentees.length">
     <b-row><h1>Bekijk de afwezigheidsmeldingen</h1></b-row>
     <b-row>
-      <b-pagination
-        align="center"
-        v-model="currentPage"
-        v-if="rows > perPage"
-        :total-rows="rows"
-        :per-page="perPage"
-        aria-controls="absentees"
-      ></b-pagination>
+      <b-col lg="6" class="my-1">
+        <b-form-group
+          label="Filter"
+          label-cols-sm="3"
+          label-align-sm="right"
+          label-size="sm"
+          label-for="filterInput"
+          class="mb-0"
+        >
+          <b-input-group size="sm">
+            <b-form-input
+              v-model="filter"
+              type="search"
+              id="filterInput"
+              placeholder="Typ in om te zoeken"
+            ></b-form-input>
+            <b-input-group-append>
+              <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>
+      </b-col>
+      <b-col>
+        <b-pagination
+          align="center"
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          aria-controls="absentees"
+          class="my-0"
+        ></b-pagination>
+      </b-col>
+    </b-row>
+    <b-row>
       <b-table
         striped hover
         sort-by="date"
@@ -18,6 +44,8 @@
         :fields="absenteeFields"
         :per-page="perPage"
         :current-page="currentPage"
+        :filter="filter"
+        @filtered="onFiltered"
         :tbody-tr-class="rowClass"
       >
       </b-table>
@@ -33,12 +61,15 @@ import { getAge } from "../../common/getAge.js";
 export default Vue.extend({
   name: "Absentees",
   mounted() {
-    this.loadAbsentees()
+    this.loadAbsentees();
+    this.rows = this.absentees.length;
   },
   data() {
     return {
       perPage: 5,
       currentPage: 1,
+      rows: 1,
+      filter: null,
       absentees: [],
       absenteeFields: [{
         key: 'date',
@@ -88,11 +119,6 @@ export default Vue.extend({
       }],
     }
   },
-  computed: {
-    rows() {
-      return this.absentees.length;
-    }
-  },
   methods: {
     async loadAbsentees() {
       this.absentees = await getAllAbsentees();
@@ -101,6 +127,11 @@ export default Vue.extend({
       if (!item) return;
       if (item.absences[0].absence && item.absences[0].absence.reason === 'overige') return 'table-warning';
       if (item.absences[0].presence === 'afwezig') return 'table-danger';
+    },
+    onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.rows = filteredItems.length;
+      this.currentPage = 1;
     }
   }
 })
