@@ -58,7 +58,6 @@ export default Vue.extend({
   name: "Absentees",
   mounted() {
     this.loadAbsentees();
-    this.rows = this.absentees.length;
   },
   data() {
     return {
@@ -118,6 +117,7 @@ export default Vue.extend({
   methods: {
     async loadAbsentees() {
       this.absentees = await getAllAbsentees();
+      this.rows = this.absentees.length;
     },
     rowClass(item) {
       if (!item) return;
