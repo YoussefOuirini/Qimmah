@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid>
     <Absentees />
     <Groups v-if="users.length" v-bind:users="users"/>
     <Users v-if="users.length" v-bind:users="users"/>
