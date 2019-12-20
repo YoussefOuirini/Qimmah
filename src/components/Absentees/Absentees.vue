@@ -97,9 +97,9 @@ export default Vue.extend({
     async loadAbsentees() {
       this.absentees = await getAllAbsentees();
     },
-    rowClass(item, type) {
-      console.log(item);
+    rowClass(item) {
       if (!item) return;
+      if (item.absences[0].absence && item.absences[0].absence.reason === 'overige') return 'table-warning';
       if (item.absences[0].presence === 'afwezig') return 'table-danger';
     }
   }
