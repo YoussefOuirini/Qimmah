@@ -86,7 +86,8 @@ export default Vue.extend({
         key: "birthDate",
         label: "Leeftijd",
         formatter: (value) => {
-          return getAge(value)
+          if (!value) return 'Leeftijd onbekend';
+          return getAge(value);
         },
       }, {
         key: 'phoneNumber',
