@@ -9,8 +9,8 @@ firebase.initializeApp(config.firebase);
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 
-export { getLessons, getDateLessons, writeLessons } from "./lessons";
-
+export { getAllRegistrations } from './registrations';
+export { getLessons, getDateLessons, writeLessons } from './lessons';
 export { getAllAbsentees } from './absence';
 
 export async function writeRegistration(registration) {
@@ -26,15 +26,6 @@ export async function writeRegistration(registration) {
 
 export async function getUsersRegistrations() {
   const querySnapshot = await db.collection("registrations").where("email", "==", getUserEmail()).get();
-  let registrations = [];
-  querySnapshot.forEach((doc) => {
-    registrations.push(doc.data());
-  });
-  return registrations;
-}
-
-export async function getAllRegistrations() {
-  const querySnapshot = await db.collection("registrations").get();
   let registrations = [];
   querySnapshot.forEach((doc) => {
     registrations.push(doc.data());
