@@ -1,4 +1,25 @@
 import { db, getStudentsOf, getStudentDocName } from './firebase';
+import { getLessonDate } from "../common/getDate";
+
+export async function storeAbsence(absenCall, registration) {
+  const lessonsDate = getLessonDate(absenCall.timestamp);
+  const studentDocName = getStudentDocName(registration);
+  return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName)
+    .collection('lessons').doc(lessonsDate).set(absenCall, {merge: true});
+}
+
+export async function getAbsence(student) {
+  const lessonsDate = getLessonDate();
+  const studentDocName = getStudentDocName(student);
+  const absenceRef = db.collection("groups").doc(student.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate);
+  return absenceRef.get().then((doc) => {
+    if (doc.exists) {
+      return doc.data();
+    }
+  }).catch((error) => {
+    return error;
+  });
+}
 
 export async function getAllAbsentees() {
   const groupsIDs = await getGroupsIDs();

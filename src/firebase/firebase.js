@@ -1,7 +1,6 @@
 import firebase from "firebase/app";
 import 'firebase/firestore';
 import { config } from '../config.js';
-import { getLessonDate } from "../common/getDate";
 import { checkUserClaim, getUserEmail } from "./auth";
 
 firebase.initializeApp(config.firebase);
@@ -11,7 +10,7 @@ export const auth = firebase.auth();
 
 export { getAllRegistrations, writeRegistration, updateRegistration } from './registrations';
 export { getLessons, getDateLessons, writeLessons } from './lessons';
-export { getAllAbsentees } from './absence';
+export { storeAbsence, getAbsence, getAllAbsentees } from './absence';
 export { getGroups, createGroup } from './groups';
 export { deleteStudent, removeStudentFromGroups, writeStudentToGroup } from './students';
 
@@ -58,26 +57,6 @@ export async function getGroupsOf(teacherEmail) {
     teachersGroups.push(completeGroup);
   });
   return teachersGroups;
-}
-
-export async function storeAbsence(absenCall, registration) {
-  const lessonsDate = getLessonDate(absenCall.timestamp);
-  const studentDocName = getStudentDocName(registration);
-  return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName)
-    .collection('lessons').doc(lessonsDate).set(absenCall, {merge: true});
-}
-
-export async function getAbsence(student) {
-  const lessonsDate = getLessonDate();
-  const studentDocName = getStudentDocName(student);
-  const absenceRef = db.collection("groups").doc(student.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate);
-  return absenceRef.get().then((doc) => {
-    if (doc.exists) {
-      return doc.data();
-    }
-  }).catch((error) => {
-    return error;
-  });
 }
 
 export function getStudentDocName(student) {
