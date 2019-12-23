@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-row>
     <h1>Beheer de leraar van de klas</h1>
     <b-table
       id="groups"
@@ -25,7 +25,7 @@
       <b-button @click="addTeacher" size="sm">Leraar Toevoegen aan klas</b-button>
       <b-button @click="removeTeacher" variant="danger" size="sm">Leraar Verwijderen</b-button>
     </b-form><br>
-  </b-container>
+  </b-row>
 </template>
 
 <script>
