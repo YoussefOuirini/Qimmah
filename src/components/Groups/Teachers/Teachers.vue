@@ -1,30 +1,34 @@
 <template>
-  <b-row>
+  <b-row class="m-1">
     <h1>Beheer de leraar van de klas</h1>
     <b-table
       id="groups"
       ref="groupsTable"
       v-if="groups.length && users.length"
-      striped hover selectable
-      select-mode="single"
+      striped hover
       :items="groups"
       :fields="groupFields"
-      @row-selected="onRowSelectedGroup"
-    ></b-table>
-    <b-form v-if="selectedGroupForTeacher" inline>
-      <b-form-select
-        v-model="selectedTeacher"
-        :options="teachers"
-        text-field="email"
-        value-field="email"
-      >
-        <template v-slot:first>
-          <option :value="null" disabled>-- Selecteer een leraar --</option>
-        </template>
-      </b-form-select>
-      <b-button @click="addTeacher" size="sm">Leraar Toevoegen aan klas</b-button>
-      <b-button @click="removeTeacher" variant="danger" size="sm">Leraar Verwijderen</b-button>
-    </b-form><br>
+    >
+      <template v-slot:cell(teachers)="data">
+        <b-row v-for="teacher in data.value" :key="teacher.email" >
+          <b class="text-info">{{ teacher }}</b>
+          <b-button @click="removeTeacher(teacher, data.item.groupName)" variant="danger" size="sm">Leraar Verwijderen</b-button>
+        </b-row>
+        <b-row>
+          <b-form-select
+            v-model="selectedTeacher"
+            :options="teachers"
+            text-field="email"
+            value-field="email"
+          >
+            <template v-slot:first>
+              <option :value="null" disabled>-- Selecteer een leraar --</option>
+            </template>
+          </b-form-select>
+          <b-button @click="addTeacher(data, data.item.groupName)" size="sm">Leraar Toevoegen aan klas</b-button>
+        </b-row>
+      </template>
+    </b-table>
   </b-row>
 </template>
 
@@ -38,25 +42,12 @@ export default Vue.extend({
   data() {
     return {
       selectedTeacher: '',
-      selectedGroupForTeacher: '',
       groupFields: [{
         key: "groupName",
         label: "Klas",
       }, {
         key: "teachers",
-        label: "Leraren",
-        formatter: (value) => {
-          if (value) {
-            let teachersText = '';
-            value.forEach((teacherEmail, index) => {
-              teachersText += ` ${teacherEmail}`;
-              if (index !== value.length-1) {
-              teachersText += ` &`;
-              }
-            });
-            return teachersText;
-          }
-        }
+        label: "Leraren"
       }],
     }
   },
@@ -64,21 +55,18 @@ export default Vue.extend({
     teachers() {
       return this.users.filter((user) => {
         if (user.customClaims && user.customClaims.teacher) {
-          return user
+          return user;
         }
       })
     }
   },
   methods: {
-    onRowSelectedGroup(group) {
-      this.selectedGroupForTeacher = group[0]
-    },
-    async addTeacher() {
-      await updateGroupTeacher(this.selectedTeacher, this.selectedGroupForTeacher.groupName);
+    async addTeacher(selectedTeacher, groupName) {
+      await updateGroupTeacher(selectedTeacher, groupName);
       this.reloadGroups();
     },
-    async removeTeacher() {
-      await removeGroupTeacher(this.selectedTeacher, this.selectedGroupForTeacher.groupName);
+    async removeTeacher(teacher, groupName) {
+      await removeGroupTeacher(teacher, groupName);
       this.reloadGroups();
     },
     reloadGroups() {
