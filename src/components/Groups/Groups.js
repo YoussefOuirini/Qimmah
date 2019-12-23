@@ -17,6 +17,7 @@ export default Vue.extend ({
   data() {
     return {
       isLoaded: true,
+      showGroupsInput: false,
       groupName: "",
       groups: [],
       registrations: []
@@ -24,15 +25,15 @@ export default Vue.extend ({
   },
   computed: {
     state() {
-      return (this.groupName.length >= 4 && !this.groupAlreadyExists) ? true : false;
+      return (this.groupName.length >= 3 && !this.groupAlreadyExists) ? true : false;
     },
     invalidFeedback() {
       if (this.groupAlreadyExists) {
         return 'Klas bestaat al.';
-      } else if (this.groupName.length > 4) {
+      } else if (this.groupName.length > 3) {
         return '';
       } else if (this.groupName.length > 0) {
-        return 'Vul minstens 4 letters in.';
+        return 'Vul minstens 3 letters in.';
       } else {
         return 'Vul iets in.';
       }
@@ -47,6 +48,9 @@ export default Vue.extend ({
     },
   },
   methods: {
+    toggleShowAddGroups() {
+      this.showGroupsInput = !this.showGroupsInput;
+    },
     async addGroup() {
       if (this.groupAlreadyExists) {
         return;
