@@ -15,17 +15,19 @@
           <b-button @click="removeTeacher(teacher, data.item.groupName)" variant="danger" size="sm">Leraar Verwijderen</b-button>
         </b-row>
         <b-row>
-          <b-form-select
-            v-model="selectedTeacher"
-            :options="teachers"
-            text-field="email"
-            value-field="email"
-          >
-            <template v-slot:first>
-              <option :value="null" disabled>-- Selecteer een leraar --</option>
-            </template>
-          </b-form-select>
-          <b-button @click="addTeacher(data, data.item.groupName)" size="sm">Leraar Toevoegen aan klas</b-button>
+          <b-form inline>
+            <b-form-select
+              v-model="selectedTeacher"
+              :options="teachers"
+              text-field="email"
+              value-field="email"
+            >
+              <template v-slot:first>
+                <option :value="null" disabled>-- Selecteer een leraar --</option>
+              </template>
+            </b-form-select>
+            <b-button @click="addTeacher(data, data.item.groupName)" size="sm">Leraar Toevoegen aan klas</b-button>
+          </b-form>
         </b-row>
       </template>
     </b-table>
