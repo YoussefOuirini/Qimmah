@@ -1,5 +1,14 @@
 import { db, getStudentDocName } from './firebase';
-import { checkUserClaim } from './auth';
+import { checkUserClaim, getUserEmail } from './auth';
+
+export async function getUsersRegistrations() {
+  const querySnapshot = await db.collection("registrations").where("email", "==", getUserEmail()).get();
+  let registrations = [];
+  querySnapshot.forEach((doc) => {
+    registrations.push(doc.data());
+  });
+  return registrations;
+}
 
 export async function getAllRegistrations() {
   const querySnapshot = await db.collection("registrations").get();

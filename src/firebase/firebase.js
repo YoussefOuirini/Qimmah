@@ -1,27 +1,18 @@
 import firebase from "firebase/app";
 import 'firebase/firestore';
 import { config } from '../config.js';
-import { checkUserClaim, getUserEmail } from "./auth";
+import { checkUserClaim } from "./auth";
 
 firebase.initializeApp(config.firebase);
 
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 
-export { getAllRegistrations, writeRegistration, updateRegistration } from './registrations';
+export { getAllRegistrations, writeRegistration, updateRegistration, getUsersRegistrations } from './registrations';
 export { getLessons, getDateLessons, writeLessons } from './lessons';
 export { storeAbsence, getAbsence, getAllAbsentees } from './absence';
 export { getGroups, createGroup } from './groups';
 export { deleteStudent, removeStudentFromGroups, writeStudentToGroup } from './students';
-
-export async function getUsersRegistrations() {
-  const querySnapshot = await db.collection("registrations").where("email", "==", getUserEmail()).get();
-  let registrations = [];
-  querySnapshot.forEach((doc) => {
-    registrations.push(doc.data());
-  });
-  return registrations;
-}
 
 export async function updateGroupTeacher(teacherEmail, groupName) {
   const userIsModerator = await checkUserClaim('moderator');
