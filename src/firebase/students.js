@@ -21,3 +21,13 @@ export async function removeStudentFromGroups(student, groups) {
       });
   });
 }
+
+export async function writeStudentToGroup(student, groupName) {
+  const userIsModerator = await checkUserClaim('moderator');
+  if (!userIsModerator) {
+    return new Error('User not authorized.');
+  }
+  const updatedStudent = Object.assign(student, {group: groupName});
+  const studentDocName = getStudentDocName(student);
+  return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(updatedStudent);
+}

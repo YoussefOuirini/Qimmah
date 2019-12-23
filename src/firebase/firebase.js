@@ -9,11 +9,11 @@ firebase.initializeApp(config.firebase);
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 
-export { getAllRegistrations, writeRegistration } from './registrations';
+export { getAllRegistrations, writeRegistration, updateRegistration } from './registrations';
 export { getLessons, getDateLessons, writeLessons } from './lessons';
 export { getAllAbsentees } from './absence';
 export { getGroups, createGroup } from './groups';
-export { deleteStudent } from './students';
+export { deleteStudent, removeStudentFromGroups, writeStudentToGroup } from './students';
 
 export async function getUsersRegistrations() {
   const querySnapshot = await db.collection("registrations").where("email", "==", getUserEmail()).get();
@@ -22,16 +22,6 @@ export async function getUsersRegistrations() {
     registrations.push(doc.data());
   });
   return registrations;
-}
-
-export async function writeStudentToGroup(student, groupName) {
-  const userIsModerator = await checkUserClaim('moderator');
-  if (!userIsModerator) {
-    return new Error('User not authorized.');
-  }
-  const updatedStudent = Object.assign(student, {group: groupName});
-  const studentDocName = getStudentDocName(student);
-  return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(updatedStudent);
 }
 
 export async function updateGroupTeacher(teacherEmail, groupName) {
@@ -55,22 +45,6 @@ export async function removeGroupTeacher(teacherEmail, groupName) {
   const groupRef = await db.collection("groups").doc(group);
   return groupRef.update({
     teachers: firebase.firestore.FieldValue.arrayRemove(teacherEmail)
-  });
-}
-
-export async function updateRegistration(registration, groupName) {
-  const userIsModerator = await checkUserClaim('moderator');
-  if (!userIsModerator) {
-    return new Error('User not authorized.');
-  }
-  const studentDocName = getStudentDocName(registration);
-  const registrationRef = db.collection("registrations").doc(studentDocName);
-  return registrationRef.update({
-    group: groupName
-  }).then(() => {
-    return {success: true};
-  }).catch((error) => {
-    return new Error('Error updating document: ', error);
   });
 }
 

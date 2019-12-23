@@ -1,4 +1,5 @@
 import { db, getStudentDocName } from './firebase';
+import { checkUserClaim } from './auth';
 
 export async function getAllRegistrations() {
   const querySnapshot = await db.collection("registrations").get();
@@ -18,4 +19,20 @@ export async function writeRegistration(registration) {
     .catch((error)=> {
       throw new Error(error);
     });
+}
+
+export async function updateRegistration(registration, groupName) {
+  const userIsModerator = await checkUserClaim('moderator');
+  if (!userIsModerator) {
+    return new Error('User not authorized.');
+  }
+  const studentDocName = getStudentDocName(registration);
+  const registrationRef = db.collection("registrations").doc(studentDocName);
+  return registrationRef.update({
+    group: groupName
+  }).then(() => {
+    return {success: true};
+  }).catch((error) => {
+    return new Error('Error updating document: ', error);
+  });
 }
