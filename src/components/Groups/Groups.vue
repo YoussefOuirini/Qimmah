@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-row>
     <b-container>
       <b-form-group
         id="group"
@@ -20,7 +20,7 @@
     </b-container>
     <Teachers v-if="groups.length && users.length" v-bind:groups="groups" v-bind:users="users" @reloadGroups="loadGroups"/>
     <Students v-if="registrations.length" v-bind:registrations="registrations" v-bind:groups="groups" @reloadRegistrations="loadRegistrations"/>
-  </b-container>
+  </b-row>
 </template>
 
 <script>
