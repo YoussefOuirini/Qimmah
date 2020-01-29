@@ -11,12 +11,12 @@
         <template v-slot:cell(group)="data">
           <p>{{data.item.group}}</p>
           <b-form inline>
-            <b-form-select size="sm" v-model="selectedGroupForStudent" :options="groups" text-field="groupName">
+            <b-form-select size="sm" :ref="data.index" :options="groups" text-field="groupName">
               <template v-slot:first>
                 <option :value="null" disabled>-- Selecteer een klas --</option>
               </template>
             </b-form-select>
-            <b-button @click="addRegistrationToGroup(registration)" size="sm"> Toevoegen aan klas</b-button>
+            <b-button @click="addRegistrationToGroup(data.item, data.index)" size="sm"> Toevoegen aan klas</b-button>
           </b-form>
         </template>
       </b-table>
@@ -63,10 +63,11 @@ export default Vue.extend({
     }
   },
   methods: {
-    async addRegistrationToGroup(registration) {
+    async addRegistrationToGroup(registration, studentRef) {
+      const selectedGroupForStudent = this.$refs[studentRef].localValue;
       await removeStudentFromGroups(registration, this.groups);
-      await writeStudentToGroup(registration, this.selectedGroupForStudent);
-      await updateRegistration(registration, this.selectedGroupForStudent);
+      await writeStudentToGroup(registration, selectedGroupForStudent);
+      await updateRegistration(registration, selectedGroupForStudent);
       await this.reloadRegistrations();
     },
     reloadRegistrations() {
