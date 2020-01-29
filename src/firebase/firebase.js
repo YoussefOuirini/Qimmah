@@ -1,100 +1,18 @@
 import firebase from "firebase/app";
 import 'firebase/firestore';
 import { config } from '../config.js';
-import { getLessonDate } from "../common/getDate";
-import { checkUserClaim, getUserEmail } from "./auth";
+import { checkUserClaim } from "./auth";
 
 firebase.initializeApp(config.firebase);
 
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 
-export { getLessons, getDateLessons, writeLessons } from "./lessons";
-
-export { getAllAbsentees } from './absence';
-
-export async function writeRegistration(registration) {
-  const studentDocName = getStudentDocName(registration);
-  return db.collection("registrations").doc(studentDocName).set(registration)
-    .then(()=> {
-      return {success: true};
-    })
-    .catch((error)=> {
-      throw new Error(error);
-    });
-}
-
-export async function getUsersRegistrations() {
-  const querySnapshot = await db.collection("registrations").where("email", "==", getUserEmail()).get();
-  let registrations = [];
-  querySnapshot.forEach((doc) => {
-    registrations.push(doc.data());
-  });
-  return registrations;
-}
-
-export async function getAllRegistrations() {
-  const querySnapshot = await db.collection("registrations").get();
-  let registrations = [];
-  querySnapshot.forEach((doc) => {
-    registrations.push(doc.data());
-  });
-  return registrations;
-}
-
-export async function createGroup(group) {
-  const userIsModerator = await checkUserClaim('moderator');
-  if (!userIsModerator) {
-    return new Error('User not authorized.');
-  }
-  return db.collection("groups").doc(group.groupName).set(group)
-    .then(()=> {
-      return {success: true};
-    })
-    .catch((error)=> {
-      throw new Error(error);
-    });
-}
-
-export async function deleteStudent(student) {
-  const studentDocName = getStudentDocName(student);
-  await db.collection('registrations').doc(studentDocName).delete();
-  const allGroups = await getGroups();
-  await removeStudentFromGroups(student, allGroups);
-}
-
-export async function getGroups() {
-  const querySnapshot = await db.collection("groups").get();
-  let groups = [];
-  querySnapshot.forEach((doc) => {
-    groups.push(doc.data());
-  });
-  return groups;
-}
-
-export async function removeStudentFromGroups(student, groups) {
-  const userIsModerator = await checkUserClaim('moderator');
-  if (!userIsModerator) {
-    return new Error('User not authorized.');
-  }
-  const studentDocName = getStudentDocName(student);
-  groups.forEach((group) => {
-    db.collection('groups').doc(group.groupName).collection('students').doc(studentDocName).delete()
-      .catch((error) => {
-        return new Error("Error removing document: ", error);
-      });
-  });
-}
-
-export async function writeStudentToGroup(student, groupName) {
-  const userIsModerator = await checkUserClaim('moderator');
-  if (!userIsModerator) {
-    return new Error('User not authorized.');
-  }
-  const updatedStudent = Object.assign(student, {group: groupName});
-  const studentDocName = getStudentDocName(student);
-  return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(updatedStudent);
-}
+export { getAllRegistrations, writeRegistration, updateRegistration, getUsersRegistrations } from './registrations';
+export { getLessons, getDateLessons, writeLessons } from './lessons';
+export { storeAbsence, getAbsence, getAllAbsentees } from './absence';
+export { getGroups, createGroup } from './groups';
+export { deleteStudent, removeStudentFromGroups, writeStudentToGroup } from './students';
 
 export async function updateGroupTeacher(teacherEmail, groupName) {
   const userIsModerator = await checkUserClaim('moderator');
@@ -120,22 +38,6 @@ export async function removeGroupTeacher(teacherEmail, groupName) {
   });
 }
 
-export async function updateRegistration(registration, groupName) {
-  const userIsModerator = await checkUserClaim('moderator');
-  if (!userIsModerator) {
-    return new Error('User not authorized.');
-  }
-  const studentDocName = getStudentDocName(registration);
-  const registrationRef = db.collection("registrations").doc(studentDocName);
-  return registrationRef.update({
-    group: groupName
-  }).then(() => {
-    return {success: true};
-  }).catch((error) => {
-    return new Error('Error updating document: ', error);
-  });
-}
-
 export async function getGroupsOf(teacherEmail) {
   const querySnapshot = await db.collection("groups").where("teachers", "array-contains", teacherEmail).get();
   let teachersGroups = [];
@@ -146,26 +48,6 @@ export async function getGroupsOf(teacherEmail) {
     teachersGroups.push(completeGroup);
   });
   return teachersGroups;
-}
-
-export async function storeAbsence(absenCall, registration) {
-  const lessonsDate = getLessonDate(absenCall.timestamp);
-  const studentDocName = getStudentDocName(registration);
-  return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName)
-    .collection('lessons').doc(lessonsDate).set(absenCall, {merge: true});
-}
-
-export async function getAbsence(student) {
-  const lessonsDate = getLessonDate();
-  const studentDocName = getStudentDocName(student);
-  const absenceRef = db.collection("groups").doc(student.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate);
-  return absenceRef.get().then((doc) => {
-    if (doc.exists) {
-      return doc.data();
-    }
-  }).catch((error) => {
-    return error;
-  });
 }
 
 export function getStudentDocName(student) {
