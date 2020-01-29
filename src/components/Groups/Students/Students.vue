@@ -51,9 +51,6 @@ export default Vue.extend({
         key: "education",
         label: "Onderwijs"
       }, {
-        key: "group",
-        label: "Klas"
-      }, {
         key: "birthDate",
         label: "Leeftijd",
         formatter: (value) => {
@@ -69,7 +66,6 @@ export default Vue.extend({
       },{
         key: 'group',
         label: 'Klas'
-      }, {
       }]
     }
   },
