@@ -17,7 +17,6 @@ export default Vue.extend ({
   data() {
     return {
       isLoaded: true,
-      showGroupsInput: false,
       groupName: "",
       groups: [],
       registrations: []
@@ -35,7 +34,7 @@ export default Vue.extend ({
       } else if (this.groupName.length > 0) {
         return 'Vul minstens 3 letters in.';
       } else {
-        return 'Vul iets in.';
+        return 'Geef de nieuwe klas een naam.';
       }
     },
     validFeedback() {
@@ -48,9 +47,6 @@ export default Vue.extend ({
     },
   },
   methods: {
-    toggleShowAddGroups() {
-      this.showGroupsInput = !this.showGroupsInput;
-    },
     async addGroup() {
       if (this.groupAlreadyExists) {
         return;
