@@ -8,6 +8,17 @@
         :fields="studentsFields"
         striped hover
       >
+        <template v-slot:cell(group)="data">
+          <p>{{data.item.group}}</p>
+          <b-form inline>
+            <b-form-select size="sm" v-model="selectedGroupForStudent" :options="groups" text-field="groupName">
+              <template v-slot:first>
+                <option :value="null" disabled>-- Selecteer een klas --</option>
+              </template>
+            </b-form-select>
+            <b-button @click="addRegistrationToGroup(registration)" size="sm"> Toevoegen aan klas</b-button>
+          </b-form>
+        </template>
         <b-thead>
           <b-tr>
             <b-th>Naam</b-th>
@@ -32,6 +43,7 @@
 import Vue from 'vue';
 import StudentGroup from './StudentGroup.vue';
 import { getAge } from "@/common/getAge.js";
+import { writeStudentToGroup, updateRegistration, removeStudentFromGroups } from "@/firebase/firebase.js";
 
 export default Vue.extend({
   name: "Students",
@@ -63,7 +75,8 @@ export default Vue.extend({
       }, {
         key: 'email',
         label: 'Email'
-      },{
+      },
+      {
         key: 'group',
         label: 'Klas'
       }]
@@ -74,6 +87,12 @@ export default Vue.extend({
       if (date) {
         return getAge(date)
       }
+    },
+    async addRegistrationToGroup(registration) {
+      await removeStudentFromGroups(registration, this.groups);
+      await writeStudentToGroup(registration, this.selectedGroupForStudent);
+      await updateRegistration(registration, this.selectedGroupForStudent);
+      await this.reloadRegistrations();
     },
     reloadRegistrations() {
       this.$emit('reloadRegistrations', true);
