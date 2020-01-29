@@ -1,9 +1,11 @@
 <template>
   <b-row v-if="registrations.length">
     <h1>Voeg studenten toe aan klassen</h1>
-      <b-table-simple
+      <b-table
         id="students"
         ref="studentsTable"
+        :items="registrations"
+        :fields="studentsFields"
         striped hover
       >
         <b-thead>
@@ -22,7 +24,7 @@
             <StudentGroup :registration="registration" :groups="groups" @reloadRegistration="reloadRegistrations"/>
           </b-tr>
         </b-tbody>
-      </b-table-simple>
+      </b-table>
   </b-row>
 </template>
 
@@ -37,6 +39,40 @@ export default Vue.extend({
     StudentGroup
   },
   props: ['registrations', 'groups'],
+  data() {
+    return {
+      studentsFields: [{
+        key: "name",
+        label: "Naam",
+        formatter: (value) => {
+          return `${value.first} ${value.last}`
+        }
+      }, {
+        key: "education",
+        label: "Onderwijs"
+      }, {
+        key: "group",
+        label: "Klas"
+      }, {
+        key: "birthDate",
+        label: "Leeftijd",
+        formatter: (value) => {
+          if (!value) return 'Leeftijd onbekend';
+          return getAge(value);
+        },
+      }, {
+        key: 'phoneNumber',
+        label: 'Telefoonnummer'
+      }, {
+        key: 'email',
+        label: 'Email'
+      },{
+        key: 'group',
+        label: 'Klas'
+      }, {
+      }]
+    }
+  },
   methods: {
     calculatedAge(date) {
       if (date) {
