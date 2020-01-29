@@ -17,11 +17,11 @@
         <b-row>
           <b-form inline>
             <b-form-input
-              v-model="teacherEmail"
+              :ref="data.index"
               placeholder="Vul de email in"
               type="email"
             ></b-form-input>
-            <b-button @click="addTeacher(data.item.groupName)" size="sm">Leraar Toevoegen aan klas</b-button>
+            <b-button @click="addTeacher(data.index, data.item.groupName)" size="sm">Leraar Toevoegen aan klas</b-button>
           </b-form>
         </b-row>
       </template>
@@ -58,8 +58,8 @@ export default Vue.extend({
     }
   },
   methods: {
-    async addTeacher(groupName) {
-      await updateGroupTeacher(this.teacherEmail, groupName);
+    async addTeacher(teacherEmailRef, groupName) {
+      await updateGroupTeacher(this.$refs[teacherEmailRef].localValue, groupName);
       this.reloadGroups();
     },
     async removeTeacher(teacher, groupName) {
