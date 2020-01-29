@@ -31,6 +31,7 @@
     <b-table
       id="students"
       ref="studentsTable"
+      sort-by="group"
       :items="registrations"
       :fields="studentsFields"
       :per-page="perPage"
@@ -92,7 +93,8 @@ export default Vue.extend({
       },
       {
         key: 'group',
-        label: 'Klas'
+        label: 'Klas',
+        sortable: true
       }]
     }
   },
@@ -102,7 +104,7 @@ export default Vue.extend({
         return this.registrations.length;
       },
       set(newValue) {
-        this.registrations.length = newValue;
+        return newValue;
       }
     }
   },
