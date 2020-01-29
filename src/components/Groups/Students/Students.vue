@@ -1,6 +1,17 @@
 <template>
   <b-row v-if="registrations.length">
     <h1>Voeg studenten toe aan klassen</h1>
+    <b-input-group size="sm">
+      <b-form-input
+        v-model="filter"
+        type="search"
+        id="filterInput"
+        placeholder="Typ in om een leerling te filteren"
+      ></b-form-input>
+      <b-input-group-append>
+        <b-button :disabled="!filter" @click="filter = ''">Klaren</b-button>
+      </b-input-group-append>
+    </b-input-group>
     <b-form-group
       label="Filter"
       label-cols-sm="3"
@@ -8,19 +19,7 @@
       label-size="sm"
       label-for="filterInput"
       class="m-1"
-    >
-      <b-input-group size="sm">
-        <b-form-input
-          v-model="filter"
-          type="search"
-          id="filterInput"
-          placeholder="Typ in om een leerling te filteren"
-        ></b-form-input>
-        <b-input-group-append>
-          <b-button :disabled="!filter" @click="filter = ''">Klaren</b-button>
-        </b-input-group-append>
-      </b-input-group>
-    </b-form-group>
+    ></b-form-group>
     <b-pagination
       v-model="currentPage"
       :total-rows="rows"
