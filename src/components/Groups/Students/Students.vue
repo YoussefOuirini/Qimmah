@@ -1,25 +1,56 @@
 <template>
   <b-row v-if="registrations.length">
     <h1>Voeg studenten toe aan klassen</h1>
-      <b-table
-        id="students"
-        ref="studentsTable"
-        :items="registrations"
-        :fields="studentsFields"
-        striped hover
-      >
-        <template v-slot:cell(group)="data">
-          <p>{{data.item.group}}</p>
-          <b-form inline>
-            <b-form-select size="sm" :ref="data.index" :options="groups" text-field="groupName">
-              <template v-slot:first>
-                <option :value="null" disabled>-- Selecteer een klas --</option>
-              </template>
-            </b-form-select>
-            <b-button @click="addRegistrationToGroup(data.item, data.index)" size="sm"> Toevoegen aan klas</b-button>
-          </b-form>
-        </template>
-      </b-table>
+    <b-form-group
+      label="Filter"
+      label-cols-sm="3"
+      label-align-sm="right"
+      label-size="sm"
+      label-for="filterInput"
+      class="m-1"
+    >
+      <b-input-group size="sm">
+        <b-form-input
+          v-model="filter"
+          type="search"
+          id="filterInput"
+          placeholder="Typ in om een leerling te filteren"
+        ></b-form-input>
+        <b-input-group-append>
+          <b-button :disabled="!filter" @click="filter = ''">Klaren</b-button>
+        </b-input-group-append>
+      </b-input-group>
+    </b-form-group>
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      aria-controls="students"
+      class="m-1"
+    ></b-pagination>
+    <b-table
+      id="students"
+      ref="studentsTable"
+      :items="registrations"
+      :fields="studentsFields"
+      :per-page="perPage"
+      :current-page="currentPage"
+      :filter="filter"
+      @filtered="onFiltered"
+      striped hover
+    >
+      <template v-slot:cell(group)="data">
+        <p>{{data.item.group}}</p>
+        <b-form inline>
+          <b-form-select size="sm" :ref="data.index" :options="groups" text-field="groupName">
+            <template v-slot:first>
+              <option :value="null" disabled>-- Selecteer een klas --</option>
+            </template>
+          </b-form-select>
+          <b-button @click="addRegistrationToGroup(data.item, data.index)" size="sm"> Toevoegen aan klas</b-button>
+        </b-form>
+      </template>
+    </b-table>
   </b-row>
 </template>
 
@@ -33,6 +64,9 @@ export default Vue.extend({
   props: ['registrations', 'groups'],
   data() {
     return {
+      perPage: 5,
+      currentPage: 1,
+      filter: null,
       studentsFields: [{
         key: "name",
         label: "Naam",
@@ -62,6 +96,16 @@ export default Vue.extend({
       }]
     }
   },
+  computed: {
+    rows: {
+      get() {
+        return this.registrations.length;
+      },
+      set(newValue) {
+        this.registrations.length = newValue;
+      }
+    }
+  },
   methods: {
     async addRegistrationToGroup(registration, studentRef) {
       const selectedGroupForStudent = this.$refs[studentRef].localValue;
@@ -72,6 +116,10 @@ export default Vue.extend({
     },
     reloadRegistrations() {
       this.$emit('reloadRegistrations', true);
+    },
+    onFiltered(filteredItems) {
+      this.rows = filteredItems.length;
+      this.currentPage = 1;
     }
   }
 })
