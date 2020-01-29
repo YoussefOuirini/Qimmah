@@ -1,5 +1,5 @@
 <template>
-  <b-container v-if="registrations.length">
+  <b-row v-if="registrations.length">
     <h1>Voeg studenten toe aan klassen</h1>
       <b-table-simple
         id="students"
@@ -23,7 +23,7 @@
           </b-tr>
         </b-tbody>
       </b-table-simple>
-  </b-container>
+  </b-row>
 </template>
 
 <script>
