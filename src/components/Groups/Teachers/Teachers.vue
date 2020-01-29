@@ -18,7 +18,7 @@
           <b-form inline>
             <b-form-input
               v-model="teacherEmail"
-              placeholder="Vul de email van de leraar in"
+              placeholder="Vul de email in"
               type="email"
             ></b-form-input>
             <b-button @click="addTeacher(data.item.groupName)" size="sm">Leraar Toevoegen aan klas</b-button>
