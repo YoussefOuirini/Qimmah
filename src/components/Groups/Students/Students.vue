@@ -63,11 +63,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    calculatedAge(date) {
-      if (date) {
-        return getAge(date)
-      }
-    },
     async addRegistrationToGroup(registration) {
       await removeStudentFromGroups(registration, this.groups);
       await writeStudentToGroup(registration, this.selectedGroupForStudent);
