@@ -66,7 +66,7 @@ async function getStudentLessons(groupsStudents, field, value) {
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           const absence = doc.data();
-          absence.date = doc.id;
+          absence.date = checkDate(absence);
           absences.push(absence);
         });
       });
@@ -74,6 +74,13 @@ async function getStudentLessons(groupsStudents, field, value) {
     return student;
   });
   return Promise.all(attendants);
+}
+
+function checkDate(absence) {
+  if (absence.date) {
+    return absence.date;
+  }
+  return getLessonDate(absence.timestamp);
 }
 
 function getAbsences(absentees) {
