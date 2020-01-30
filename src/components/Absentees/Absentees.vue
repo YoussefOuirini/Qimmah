@@ -54,6 +54,7 @@
 import Vue from 'vue';
 import {getAllAbsentees} from "@/firebase/firebase";
 import { getAge } from "../../common/getAge.js";
+import { getTimeStamp, getLessonDate } from "../../common/getDate.js";
 
 export default Vue.extend({
   name: "Absentees",
@@ -70,7 +71,11 @@ export default Vue.extend({
       absenteeFields: [{
         key: 'date',
         label: 'Datum',
-        sortable: true
+        sortable: true,
+        formatter: (value) => {
+          const timeStamp = getTimeStamp(value);
+          return getLessonDate(timeStamp);
+        }
       }, {
         key: "name",
         label: "Naam",
@@ -133,8 +138,12 @@ export default Vue.extend({
     sortDates(aRow, bRow, key) {
       const a = aRow[key];
       const b = bRow[key];
-      const dateA = a.split('-').reverse().join('');
-      const dateB = b.split('-').reverse().join('');
+
+      if (!a || !b) {
+        return -1;
+      }
+      const dateA = a.split('-').join('');
+      const dateB = b.split('-').join('');
       return dateA < dateB ? -1 : dateA > dateB ? 1 : 0;
     }
   }
