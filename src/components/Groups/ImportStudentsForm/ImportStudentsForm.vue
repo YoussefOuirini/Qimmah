@@ -27,9 +27,13 @@ export default Vue.extend({
     }
   },
   methods: {
-    uploadFile() {
-      uploadStudents(this.file);
-    }
+    async uploadFile() {
+      await uploadStudents(this.file);
+      this.reloadRegistrations();
+    },
+    reloadRegistrations() {
+      this.$emit('reloadRegistrations', true);
+    },
   }
 })
 </script>

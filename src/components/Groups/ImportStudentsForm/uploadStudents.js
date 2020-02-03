@@ -1,7 +1,7 @@
 import parse from 'csv-parse';
 import {writeRegistration} from '../../../firebase/registrations';
 
-export function uploadStudents(file) {
+export async function uploadStudents(file) {
   const reader = new FileReader();
   reader.onload = () => {
     parse(reader.result, {delimiter: ';', from: 2}, (err, data) => {
