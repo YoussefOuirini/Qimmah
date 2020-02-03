@@ -34,10 +34,11 @@ function mapStudentJSON(data, i) {
   const zipCode = data[i][5];
   const city = data[i][6];
   const streetName = data[i][7];
-  const education = data[i][8];
-  const parentFirstName = data[i][9];
-  const parentLastName = data[i][10];
-  const phoneNumber = data[i][11];
+  const houseNumber = data[i][8];
+  const education = data[i][9];
+  const parentFirstName = data[i][10];
+  const parentLastName = data[i][11];
+  const phoneNumber = data[i][12];
 
   const newStudent = {
     name: {
@@ -50,7 +51,8 @@ function mapStudentJSON(data, i) {
     address: {
       zipCode,
       city,
-      streetName
+      streetName,
+      houseNumber
     },
     education,
     parent: {
