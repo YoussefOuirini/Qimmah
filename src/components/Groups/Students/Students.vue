@@ -115,6 +115,7 @@ export default Vue.extend({
       await removeStudentFromGroups(registration, this.groups);
       await writeStudentToGroup(registration, selectedGroupForStudent);
       await updateRegistration(registration, selectedGroupForStudent);
+      this.$refs[studentRef].localValue = "";
       await this.reloadRegistrations();
     },
     reloadRegistrations() {

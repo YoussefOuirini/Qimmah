@@ -1,13 +1,15 @@
 import Vue from "vue";
 import Teachers from "./Teachers/Teachers.vue";
 import Students from "./Students/Students.vue";
+import ImportStudentsForm from "./ImportStudentsForm/ImportStudentsForm.vue";
 import { createGroup, getGroups, getAllRegistrations } from "@/firebase/firebase.js";
 
 export default Vue.extend ({
   name: "Groups",
   components: {
     Teachers,
-    Students
+    Students,
+    ImportStudentsForm
   },
   props: ['users'],
   mounted() {
