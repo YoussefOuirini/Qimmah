@@ -11,7 +11,7 @@
           accept=".csv"
         ></b-form-file>
         <h6 style="color:green" class="ml-5">{{uploadResponse}}</h6>
-        <b-button @click="uploadFile" class="ml-5" :disabled="loading">
+        <b-button @click="uploadFile" class="ml-5" :disabled="loading || !file">
           <b-spinner v-if="loading" small type="grow"></b-spinner>
           Uploaden
         </b-button>
