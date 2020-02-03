@@ -4,7 +4,7 @@ import {writeRegistration} from '../../../firebase/registrations';
 export function uploadStudents(file) {
   const reader = new FileReader();
   reader.onload = () => {
-    parse(reader.result, (err, data) => {
+    parse(reader.result, {delimiter: ';'}, (err, data) => {
       const studentsJSON = getStudentsJSON(data);
       studentsJSON.forEach(student => {
         writeRegistration(student);
