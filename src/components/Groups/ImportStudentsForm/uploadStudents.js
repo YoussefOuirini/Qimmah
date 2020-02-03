@@ -1,20 +1,17 @@
-import csv from 'csv';
+import parse from 'csv-parse';
 import {writeRegistration} from '../../../firebase/registrations';
 
 export function uploadStudents(file) {
   const reader = new FileReader();
   reader.onload = () => {
-    console.log('reading');
-    csv.parse(reader.result, (err, data) => {
-      console.log('parsing');
+    parse(reader.result, (err, data) => {
       const studentsJSON = getStudentsJSON(data);
       studentsJSON.forEach(student => {
-        console.log(student);
         writeRegistration(student);
       });
     });
   };
-  reader.readAsArrayBuffer(file);
+  reader.readAsBinaryString(file);
 }
 
 function getStudentsJSON(data) {
