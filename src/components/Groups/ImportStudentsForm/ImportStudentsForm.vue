@@ -10,10 +10,8 @@
           class="m-5 px-5"
           accept=".csv"
         ></b-form-file>
+        <b-button @click="uploadFile" class="ml-5">Uploaden</b-button>
       </b-col>
-    </b-form-row>
-    <b-form-row>
-      <b-col class="m-5 px-4">Geselecteerde document: {{ file ? file.name : '' }}</b-col>
     </b-form-row>
   </b-row>
 </template>
