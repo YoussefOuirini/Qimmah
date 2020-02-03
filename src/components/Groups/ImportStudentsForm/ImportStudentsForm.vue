@@ -10,8 +10,11 @@
           class="mx-5 px-5"
           accept=".csv"
         ></b-form-file>
-        <h6 class="ml-5">{{uploadResponse}}</h6>
-        <b-button @click="uploadFile" class="ml-5">Uploaden</b-button>
+        <h6 style="color:green" class="ml-5">{{uploadResponse}}</h6>
+        <b-button @click="uploadFile" class="ml-5" :disabled="loading">
+          <b-spinner v-if="loading" small type="grow"></b-spinner>
+          Uploaden
+        </b-button>
       </b-col>
     </b-form-row>
   </b-row>
@@ -25,15 +28,18 @@ export default Vue.extend({
   data() {
     return {
       file: null,
-      uploadResponse: null
+      uploadResponse: null,
+      loading: false
     }
   },
   methods: {
     async uploadFile() {
+      this.loading = true;
       await uploadStudents(this.file);
       this.file = null;
-      this.uploadResponse = "Studenten geüpload!";
       this.reloadRegistrations();
+      this.uploadResponse = "Studenten geüpload!";
+      this.loading = false;
     },
     reloadRegistrations() {
       this.$emit('reloadRegistrations', true);
