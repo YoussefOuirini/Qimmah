@@ -18,11 +18,17 @@
 
 <script>
 import Vue from 'vue';
+import { uploadStudents } from './uploadStudents';
 
 export default Vue.extend({
   data() {
     return {
       file: null
+    }
+  },
+  methods: {
+    uploadFile() {
+      uploadStudents(this.file);
     }
   }
 })
