@@ -19,6 +19,7 @@
       </b-form-group>
     </b-form-row>
     <Students v-if="registrations.length" v-bind:registrations="registrations" v-bind:groups="groups" @reloadRegistrations="loadRegistrations"/>
+    <ImportStudentsForm />
   </b-row>
 </template>
 
