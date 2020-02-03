@@ -5,14 +5,14 @@ export function uploadStudents(file) {
   const reader = new FileReader();
   reader.onload = () => {
     console.log('reading');
-    csv.parse((reader.result, (err, data) => {
+    csv.parse(reader.result, (err, data) => {
       console.log('parsing');
       const studentsJSON = getStudentsJSON(data);
       studentsJSON.forEach(student => {
         console.log(student);
         writeRegistration(student);
       });
-    }));
+    });
   };
   reader.readAsArrayBuffer(file);
 }
