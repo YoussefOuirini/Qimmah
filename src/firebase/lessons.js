@@ -11,7 +11,6 @@ export async function getLessons() {
     let lessons = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      data.date = doc.id;
       lessons.push(data);
     });
     return {
