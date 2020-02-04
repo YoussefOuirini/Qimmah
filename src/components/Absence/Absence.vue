@@ -16,7 +16,7 @@
 <script>
   import Vue from "vue";
   import { storeAbsence } from "@/firebase/firebase";
-import { getLessonDate } from "../../common/date";
+  import { getYYYYMMDD } from "../../common/date";
 
   export default Vue.extend({
     name: "Absence",
@@ -43,8 +43,9 @@ import { getLessonDate } from "../../common/date";
           remarks: this.remarks
         }
         const timestamp = Date.now();
+        const date = getYYYYMMDD();
         const absenceCall = {
-          date: getLessonDate(timestamp),
+          date,
           timestamp,
           absence
         };
