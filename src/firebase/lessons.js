@@ -1,6 +1,6 @@
 import { getUsersRegistrations, getStudentDocName, db } from "./firebase";
 import { checkUserClaim } from "./auth";
-import { getLessonDate, getTimeStamp } from "../common/getDate";
+import { getLessonDate, getTimeStamp } from "../common/date";
 
 export async function getLessons() {
   const registrations = await getUsersRegistrations();

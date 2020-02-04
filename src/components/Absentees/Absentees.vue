@@ -54,7 +54,7 @@
 import Vue from 'vue';
 import {getAllAbsentees} from "@/firebase/firebase";
 import { getAge } from "../../common/getAge.js";
-import { getTimeStamp, getLessonDate } from "../../common/getDate.js";
+import { getTimeStamp, getLessonDate } from "../../common/date.js";
 
 export default Vue.extend({
   name: "Absentees",
