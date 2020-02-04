@@ -2,10 +2,9 @@ import { db, getStudentsOf, getStudentDocName } from './firebase';
 import { getLessonDate } from "../common/date";
 
 export async function storeAbsence(absenCall, registration) {
-  const lessonsDate = getLessonDate(absenCall.timestamp);
   const studentDocName = getStudentDocName(registration);
   return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName)
-    .collection('lessons').doc(lessonsDate).set(absenCall, {merge: true});
+    .collection('lessons').doc(absenCall.date).set(absenCall, {merge: true});
 }
 
 export async function getAbsence(student) {

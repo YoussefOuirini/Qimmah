@@ -16,6 +16,7 @@
 <script>
   import Vue from "vue";
   import { storeAbsence } from "@/firebase/firebase";
+import { getLessonDate } from "../../common/date";
 
   export default Vue.extend({
     name: "Absence",
@@ -41,8 +42,10 @@
           reason: this.reason,
           remarks: this.remarks
         }
+        const timestamp = Date.now();
         const absenceCall = {
-          timestamp: Date.now(),
+          date: getLessonDate(timestamp),
+          timestamp,
           absence
         };
         await storeAbsence(absenceCall, this.registration);
