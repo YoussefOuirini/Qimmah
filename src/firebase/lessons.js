@@ -1,6 +1,6 @@
 import { getUsersRegistrations, getStudentDocName, db } from "./firebase";
 import { checkUserClaim } from "./auth";
-import { getLessonDate, getTimeStamp } from "../common/getDate";
+import { getLessonDate, getTimeStamp } from "../common/date";
 
 export async function getLessons() {
   const registrations = await getUsersRegistrations();
@@ -11,7 +11,6 @@ export async function getLessons() {
     let lessons = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      data.date = doc.id;
       lessons.push(data);
     });
     return {

@@ -1,5 +1,5 @@
 import { db, getStudentsOf, getStudentDocName } from './firebase';
-import { getLessonDate } from "../common/getDate";
+import { getLessonDate } from "../common/date";
 
 export async function storeAbsence(absenCall, registration) {
   const lessonsDate = getLessonDate(absenCall.timestamp);

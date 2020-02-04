@@ -7,6 +7,7 @@
         bordered
         sort-by="date"
         sort-desc
+        :sort-compare="sort"
         :items="lessons"
         :fields="lessonsFields"
         :per-page="perPage"
@@ -26,6 +27,7 @@
 
 <script>
   import Vue from "vue";
+  import { sortDates, getTimeStamp, getLessonDate } from "../../common/date";
 
   export default Vue.extend({
     name: "Attendance",
@@ -37,7 +39,11 @@
         lessonsFields: [{
           key: "date",
           label: "Lesdatum",
-          sortable: true
+          sortable: true,
+          formatter: (value) => {
+            const timeStamp = getTimeStamp(value);
+            return getLessonDate(timeStamp);
+          }
         }, {
           key: "presence",
           label: "Aanwezigheid"
@@ -62,7 +68,12 @@
     computed: {
       rows() {
         return this.lessons.length;
-      },
+      }
+    },
+    methods: {
+      sort(aRow, bRow, key) {
+        sortDates(aRow, bRow, key);
+      }
     }
   })
 </script>
