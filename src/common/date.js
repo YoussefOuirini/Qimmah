@@ -8,6 +8,20 @@ export function getLessonDate(timeStamp) {
   return lessonDate.toLocaleDateString("nl-NL", options);
 }
 
+export function getYYYYMMDD() {
+  var d = new Date(),
+  month = '' + (d.getMonth() + 1),
+  day = '' + d.getDate(),
+  year = d.getFullYear();
+
+  if (month.length < 2) 
+    month = '0' + month;
+  if (day.length < 2) 
+    day = '0' + day;
+
+  return [year, month, day].join('-');
+}
+
 export function getTimeStamp(dateString) {
   const parsedDate = Date.parse(dateString);
   return parsedDate;
