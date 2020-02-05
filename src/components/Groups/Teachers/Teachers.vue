@@ -60,9 +60,10 @@ export default Vue.extend({
   methods: {
     async addTeacher(teacherEmailRef, groupName) {
       const teacherEmail = this.$refs[teacherEmailRef].localValue;
-      const response = await addToTeachers({email: teacherEmail});
-      console.log(response);
-      await updateGroupTeacher(teacherEmail, groupName);
+      const writeSuccess = await addToTeachers({email: teacherEmail});
+      if (writeSuccess) {
+        await updateGroupTeacher(teacherEmail, groupName);
+      }
       this.reloadGroups();
     },
     async removeTeacher(teacher, groupName) {
