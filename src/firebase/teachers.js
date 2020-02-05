@@ -74,7 +74,7 @@ async function updateRemovedTeachers(deleteResponse, teacherEmail) {
   }
   const isTeacher = await userIs({email: teacherEmail});
   if (!isTeacher.length) {
-    return await removeFromTeachers(teacherEmail);
+    return await removeFromTeachers({email: teacherEmail});
   }
   return { success: true};
 }
@@ -89,7 +89,7 @@ async function userIs(teacher) {
 }
 
 async function removeFromTeachers(user) {
-  const deleteResponse = await db.collection("teachers").doc(user.email).delete(user).then(() => {
+  const deleteResponse = await db.collection("teachers").doc(user.email).delete().then(() => {
     return { success: true};
   });
   return deleteResponse;
