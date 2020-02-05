@@ -1,7 +1,6 @@
 import firebase from "firebase/app";
 import 'firebase/firestore';
 import { config } from '../config.js';
-import { checkUserClaim } from "./auth";
 
 firebase.initializeApp(config.firebase);
 
@@ -13,30 +12,9 @@ export { getLessons, getDateLessons, writeLessons } from './lessons';
 export { storeAbsence, getAbsence, getAllAbsentees } from './absence';
 export { getGroups, createGroup } from './groups';
 export { deleteStudent, removeStudentFromGroups, writeStudentToGroup } from './students';
+export { updateGroupTeacher, removeGroupTeacher } from './teachers';
+export { checkUserClaim } from './auth';
 
-export async function updateGroupTeacher(teacherEmail, groupName) {
-  const userIsModerator = await checkUserClaim('moderator');
-  if (!userIsModerator) {
-    return new Error('User not authorized.');
-  }
-  const group = await getGroup(groupName);
-  const groupRef = await db.collection("groups").doc(group);
-  return groupRef.update({
-    teachers: firebase.firestore.FieldValue.arrayUnion(teacherEmail)
-  });
-}
-
-export async function removeGroupTeacher(teacherEmail, groupName) {
-  const userIsModerator = await checkUserClaim('moderator');
-  if (!userIsModerator) {
-    return new Error('User not authorized.');
-  }
-  const group = await getGroup(groupName);
-  const groupRef = await db.collection("groups").doc(group);
-  return groupRef.update({
-    teachers: firebase.firestore.FieldValue.arrayRemove(teacherEmail)
-  });
-}
 
 export async function getGroupsOf(teacherEmail) {
   const querySnapshot = await db.collection("groups").where("teachers", "array-contains", teacherEmail).get();
@@ -63,13 +41,4 @@ export async function getStudentsOf(teachersGroup) {
     students.push(student.data());
   });
   return students;
-}
-
-async function getGroup(groupName) {
-  const querySnapshot = await db.collection("groups").where("groupName", "==", groupName).get();
-  let groups = [];
-  querySnapshot.forEach((doc) => {
-    groups.push(doc.id);
-  });
-  return groups[0];
 }
