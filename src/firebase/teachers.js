@@ -24,6 +24,27 @@ export async function removeGroupTeacher(teacherEmail, groupName) {
   });
 }
 
+export async function getGroupsOf(teacherEmail) {
+  const querySnapshot = await db.collection("groups").where("teachers", "array-contains", teacherEmail).get();
+  let teachersGroups = [];
+  querySnapshot.forEach(async (doc) => {
+    const teachersGroup = doc.data();
+    const students = await getStudentsOf(teachersGroup);
+    const completeGroup = Object.assign(teachersGroup, {students});
+    teachersGroups.push(completeGroup);
+  });
+  return teachersGroups;
+}
+
+export async function getStudentsOf(teachersGroup) {
+  const querySnapshot = await db.collection("groups").doc(teachersGroup.groupName).collection('students').get();
+  let students = [];
+  querySnapshot.forEach((student) => {
+    students.push(student.data());
+  });
+  return students;
+}
+
 export async function addToTeachers(user) {
   const userIsModerator = await checkUserClaim('moderator');
   if (!userIsModerator) {
