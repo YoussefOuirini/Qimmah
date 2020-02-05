@@ -1,4 +1,4 @@
-import { db, checkUserClaim } from './firebase';
+import { db, firestore, checkUserClaim } from './firebase';
 
 export async function updateGroupTeacher(teacherEmail, groupName) {
   const userIsModerator = await checkUserClaim('moderator');
@@ -6,9 +6,9 @@ export async function updateGroupTeacher(teacherEmail, groupName) {
     return new Error('User not authorized.');
   }
   const group = await getGroup(groupName);
-  const groupRef = await db.collection("groups").doc(group);
+  const groupRef = db.collection("groups").doc(group);
   return groupRef.update({
-    teachers: db.FieldValue.arrayUnion(teacherEmail)
+    teachers: firestore.FieldValue.arrayUnion(teacherEmail)
   });
 }
 
@@ -18,9 +18,9 @@ export async function removeGroupTeacher(teacherEmail, groupName) {
     return new Error('User not authorized.');
   }
   const group = await getGroup(groupName);
-  const groupRef = await db.collection("groups").doc(group);
+  const groupRef = db.collection("groups").doc(group);
   return groupRef.update({
-    teachers: db.FieldValue.arrayRemove(teacherEmail)
+    teachers: firestore.FieldValue.arrayRemove(teacherEmail)
   });
 }
 
