@@ -59,6 +59,15 @@ export async function removeGroupTeacher(teacherEmail, groupName) {
   return await updateRemovedTeachers(removedTeacherFromGroup, teacherEmail);
 }
 
+export async function userIs(teacher) {
+  const querySnapshot = await db.collection("groups").where("teachers", "array-contains", teacher.email).get();
+  let teacherGroups = [];
+  querySnapshot.forEach((doc) => {
+    teacherGroups.push(doc.data());
+  });
+  return teacherGroups.length > 0;
+}
+
 async function getGroup(groupName) {
   const querySnapshot = await db.collection("groups").where("groupName", "==", groupName).get();
   let groups = [];
@@ -73,19 +82,10 @@ async function updateRemovedTeachers(deleteResponse, teacherEmail) {
     return { success: false };
   }
   const isTeacher = await userIs({email: teacherEmail});
-  if (!isTeacher.length) {
+  if (!isTeacher) {
     return await removeFromTeachers({email: teacherEmail});
   }
   return { success: true};
-}
-
-async function userIs(teacher) {
-  const querySnapshot = await db.collection("groups").where("teachers", "array-contains", teacher.email).get();
-  let teacherGroups = [];
-  querySnapshot.forEach((doc) => {
-    teacherGroups.push(doc.data());
-  });
-  return teacherGroups;
 }
 
 async function removeFromTeachers(user) {
