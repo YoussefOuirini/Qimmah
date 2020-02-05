@@ -31,7 +31,7 @@
 
 <script>
 import Vue from "vue";
-import { updateGroupTeacher, removeGroupTeacher } from "@/firebase/firebase.js"
+import { updateGroupTeacher, removeGroupTeacher, addToTeachers } from "@/firebase/firebase.js"
 
 export default Vue.extend({
   name: "Teachers",
@@ -59,7 +59,10 @@ export default Vue.extend({
   },
   methods: {
     async addTeacher(teacherEmailRef, groupName) {
-      await updateGroupTeacher(this.$refs[teacherEmailRef].localValue, groupName);
+      const teacherEmail = this.$refs[teacherEmailRef].localValue;
+      const response = await addToTeachers({email: teacherEmail});
+      console.log(response);
+      await updateGroupTeacher(teacherEmail, groupName);
       this.reloadGroups();
     },
     async removeTeacher(teacher, groupName) {

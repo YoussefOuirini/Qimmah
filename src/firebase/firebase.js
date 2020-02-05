@@ -12,9 +12,8 @@ export { getLessons, getDateLessons, writeLessons } from './lessons';
 export { storeAbsence, getAbsence, getAllAbsentees } from './absence';
 export { getGroups, createGroup } from './groups';
 export { deleteStudent, removeStudentFromGroups, writeStudentToGroup } from './students';
-export { updateGroupTeacher, removeGroupTeacher } from './teachers';
-export { checkUserClaim } from './auth';
-
+export { addToTeachers, updateGroupTeacher, removeGroupTeacher } from './teachers';
+export { checkUserClaim, getCurrentUser } from './auth';
 
 export async function getGroupsOf(teacherEmail) {
   const querySnapshot = await db.collection("groups").where("teachers", "array-contains", teacherEmail).get();

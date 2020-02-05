@@ -24,6 +24,24 @@ export async function removeGroupTeacher(teacherEmail, groupName) {
   });
 }
 
+export async function addToTeachers(user) {
+  const userIsModerator = await checkUserClaim('moderator');
+  if (!userIsModerator) {
+    return new Error('User not authorized.');
+  }
+  console.log(user);
+  const writeResponse = await db.collection("teachers").doc(user.email).set(user);
+  return writeResponse;
+}
+
+// export async function userIs(teacher) {
+
+// }
+
+// export async function removeFromTeachers(user) {
+
+// }
+
 async function getGroup(groupName) {
   const querySnapshot = await db.collection("groups").where("groupName", "==", groupName).get();
   let groups = [];
