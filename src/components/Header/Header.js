@@ -1,17 +1,14 @@
 import Vue from "vue";
-import { getCurrentUser, getUserEmail, checkUserClaim, signOut } from "@/firebase/auth";
+import { getCurrentUser, getUserEmail, checkUserClaim, signOut, userIs } from "@/firebase/firebase";
 import { EventBus } from "../../EventBus";
 
 export default Vue.extend({
   name: "Header",
   mounted() {
-    this.loggedInUser = getCurrentUser();
-    this.checkUserClaims();
+    this.loadUserData();
     EventBus.$on('userLoginChange', () => {
-      this.checkUserClaims();
-      this.loggedInUser = getCurrentUser();
+      this.loadUserData();
     });
-    this.loadUserEmail();
   },
   data() {
     return {
@@ -24,7 +21,8 @@ export default Vue.extend({
   methods: {
     async checkUserClaims() {
       this.userIsModerator = await checkUserClaim('moderator');
-      this.userIsTeacher = await checkUserClaim('teacher');
+      const teacher = getCurrentUser();
+      this.userIsTeacher = await userIs(teacher);
     },
     logout() {
       signOut().then(() => {
@@ -37,6 +35,11 @@ export default Vue.extend({
       if (getCurrentUser()) {
         this.userEmail = getUserEmail();
       }
+    },
+    loadUserData() {
+      this.checkUserClaims();
+      this.loggedInUser = getCurrentUser();
+      this.loadUserEmail();
     }
   }
 });

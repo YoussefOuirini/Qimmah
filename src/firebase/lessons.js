@@ -1,5 +1,4 @@
-import { getUsersRegistrations, getStudentDocName, db } from "./firebase";
-import { checkUserClaim } from "./auth";
+import { getUsersRegistrations, getStudentDocName, db, userIs, getCurrentUser } from "./firebase";
 import { getLessonDate, getTimeStamp } from "../common/date";
 
 export async function getLessons() {
@@ -29,7 +28,8 @@ export async function getDateLessons(date, students) {
 }
 
 export async function writeLessons(lessons) {
-  const userIsTeacher = await checkUserClaim('teacher');
+  const teacher = getCurrentUser();
+  const userIsTeacher = await userIs(teacher);
   if (!userIsTeacher) {
     return new Error('User not authorized.');
   }

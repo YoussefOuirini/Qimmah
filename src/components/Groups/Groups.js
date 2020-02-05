@@ -46,7 +46,7 @@ export default Vue.extend ({
       return this.groups.some((group) => {
         return group.groupName === this.groupName;
       });
-    },
+    }
   },
   methods: {
     async addGroup() {

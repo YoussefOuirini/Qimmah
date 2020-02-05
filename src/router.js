@@ -5,7 +5,7 @@ import Login from './views/Login.vue';
 import SignUp from './views/SignUp.vue';
 import School from './views/School.vue';
 import ClassRoom from './views/ClassRoom.vue';
-import { checkUserClaim, getCurrentUser } from './firebase/auth';
+import { checkUserClaim, getCurrentUser, userIs } from './firebase/firebase';
 
 Vue.use(Router);
 
@@ -71,8 +71,9 @@ router.beforeEach(async (to, from, next)=> {
     }
   }
   else if (requiresAuth && to.path === '/klas') {
-    const isTeacher = await checkUserClaim('teacher');
-    if (isTeacher) {
+    const teacher = getCurrentUser();
+    const userIsTeacher = await userIs(teacher);
+    if (userIsTeacher) {
       next();
     } else{
       next('false');
