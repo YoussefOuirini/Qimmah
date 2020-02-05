@@ -12,48 +12,6 @@ export async function updateGroupTeacher(teacherEmail, groupName) {
   });
 }
 
-export async function removeGroupTeacher(teacherEmail, groupName) {
-  const userIsModerator = await checkUserClaim('moderator');
-  if (!userIsModerator) {
-    return new Error('User not authorized.');
-  }
-  const group = await getGroup(groupName);
-  const groupRef = db.collection("groups").doc(group);
-  const removedTeacherFromGroup = await groupRef.update({
-    teachers: firestore.FieldValue.arrayRemove(teacherEmail)
-  }).then(() => { 
-    return {success: true};
-  });
-  return await updateRemovedTeachers(removedTeacherFromGroup, teacherEmail);
-}
-
-async function updateRemovedTeachers(deleteResponse, teacherEmail) {
-  if (!deleteResponse.success) {
-    return { success: false };
-  }
-  const isTeacher = await userIs({email: teacherEmail});
-  if (!isTeacher.length) {
-    return await removeFromTeachers(teacherEmail);
-  }
-  return { success: true};
-}
-
-async function userIs(teacher) {
-  const querySnapshot = await db.collection("groups").where("teachers", "array-contains", teacher.email).get();
-  let teacherGroups = [];
-  querySnapshot.forEach((doc) => {
-    teacherGroups.push(doc.data());
-  });
-  return teacherGroups;
-}
-
-async function removeFromTeachers(user) {
-  const deleteResponse = await db.collection("teachers").doc(user.email).delete(user).then(() => {
-    return { success: true};
-  });
-  return deleteResponse;
-}
-
 export async function getGroupsOf(teacherEmail) {
   const querySnapshot = await db.collection("groups").where("teachers", "array-contains", teacherEmail).get();
   let teachersGroups = [];
@@ -86,6 +44,21 @@ export async function addToTeachers(user) {
   return writeResponse;
 }
 
+export async function removeGroupTeacher(teacherEmail, groupName) {
+  const userIsModerator = await checkUserClaim('moderator');
+  if (!userIsModerator) {
+    return new Error('User not authorized.');
+  }
+  const group = await getGroup(groupName);
+  const groupRef = db.collection("groups").doc(group);
+  const removedTeacherFromGroup = await groupRef.update({
+    teachers: firestore.FieldValue.arrayRemove(teacherEmail)
+  }).then(() => { 
+    return {success: true};
+  });
+  return await updateRemovedTeachers(removedTeacherFromGroup, teacherEmail);
+}
+
 async function getGroup(groupName) {
   const querySnapshot = await db.collection("groups").where("groupName", "==", groupName).get();
   let groups = [];
@@ -93,4 +66,31 @@ async function getGroup(groupName) {
     groups.push(doc.id);
   });
   return groups[0];
+}
+
+async function updateRemovedTeachers(deleteResponse, teacherEmail) {
+  if (!deleteResponse.success) {
+    return { success: false };
+  }
+  const isTeacher = await userIs({email: teacherEmail});
+  if (!isTeacher.length) {
+    return await removeFromTeachers(teacherEmail);
+  }
+  return { success: true};
+}
+
+async function userIs(teacher) {
+  const querySnapshot = await db.collection("groups").where("teachers", "array-contains", teacher.email).get();
+  let teacherGroups = [];
+  querySnapshot.forEach((doc) => {
+    teacherGroups.push(doc.data());
+  });
+  return teacherGroups;
+}
+
+async function removeFromTeachers(user) {
+  const deleteResponse = await db.collection("teachers").doc(user.email).delete(user).then(() => {
+    return { success: true};
+  });
+  return deleteResponse;
 }
