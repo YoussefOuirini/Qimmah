@@ -5,13 +5,9 @@ import { EventBus } from "../../EventBus";
 export default Vue.extend({
   name: "Header",
   mounted() {
-    this.checkUserClaims();
-    this.loggedInUser = getCurrentUser();
-    this.loadUserEmail();
+    this.loadUserData();
     EventBus.$on('userLoginChange', () => {
-      this.checkUserClaims();
-      this.loggedInUser = getCurrentUser();
-      this.loadUserEmail();
+      this.loadUserData();
     });
   },
   data() {
@@ -39,6 +35,11 @@ export default Vue.extend({
       if (getCurrentUser()) {
         this.userEmail = getUserEmail();
       }
+    },
+    loadUserData() {
+      this.checkUserClaims();
+      this.loggedInUser = getCurrentUser();
+      this.loadUserEmail();
     }
   }
 });
