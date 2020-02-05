@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { getCurrentUser, getUserEmail, checkUserClaim, signOut } from "@/firebase/auth";
+import { getCurrentUser, getUserEmail, checkUserClaim, signOut, userIs } from "@/firebase/firebase";
 import { EventBus } from "../../EventBus";
 
 export default Vue.extend({
@@ -24,7 +24,8 @@ export default Vue.extend({
   methods: {
     async checkUserClaims() {
       this.userIsModerator = await checkUserClaim('moderator');
-      this.userIsTeacher = await checkUserClaim('teacher');
+      const teacher = getCurrentUser();
+      this.userIsTeacher = await userIs(teacher);
     },
     logout() {
       signOut().then(() => {

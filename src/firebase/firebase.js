@@ -14,7 +14,7 @@ export { storeAbsence, getAbsence, getAllAbsentees } from './absence';
 export { getGroups, createGroup } from './groups';
 export { deleteStudent, removeStudentFromGroups, writeStudentToGroup } from './students';
 export { addToTeachers, updateGroupTeacher, removeGroupTeacher, getGroupsOf, getStudentsOf, userIs } from './teachers';
-export { checkUserClaim, getCurrentUser } from './auth';
+export { getCurrentUser, getUserEmail, checkUserClaim, signOut } from './auth';
 
 export function getStudentDocName(student) {
   const studentDocName = `${student.name.first}${student.name.last}${student.education}`;
