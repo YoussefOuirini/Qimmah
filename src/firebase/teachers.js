@@ -29,8 +29,9 @@ export async function addToTeachers(user) {
   if (!userIsModerator) {
     return new Error('User not authorized.');
   }
-  console.log(user);
-  const writeResponse = await db.collection("teachers").doc(user.email).set(user);
+  const writeResponse = await db.collection("teachers").doc(user.email).set(user).then(() => {
+    return { success: true};
+  });
   return writeResponse;
 }
 
