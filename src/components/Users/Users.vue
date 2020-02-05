@@ -6,7 +6,7 @@
         @input="searchUsers()"
         v-model="search.text"
         type="text"
-        placeholder="Zoek met naar gebruikers met email"
+        placeholder="Zoek naar gebruikers met email"
       ></b-form-input>
       <span class="search-icon">
         <i class="fas fa-search"></i>
