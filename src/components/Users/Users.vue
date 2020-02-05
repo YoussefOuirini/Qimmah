@@ -31,9 +31,6 @@
         :current-page="currentPage"
         @row-selected="onRowSelected"
       >
-        <template v-slot:cell(leraar)="data">
-          {{ data.value }}
-        </template>
         <template v-slot:cell(moderator)="data">
           {{ data.value }}
         </template>
@@ -41,8 +38,6 @@
     </div>
     <div v-if="selectedUser">
       <b-button-group>
-        <b-button v-if="!hasCustomClaims || !selectedUser.customClaims.teacher" @click="setUser({'teacher': true})" variant="primary"> Maak {{selectedUser.email}} leraar </b-button>
-        <b-button v-if="hasCustomClaims && selectedUser.customClaims.teacher" @click="setUser({'teacher': false})" variant="danger">Verwijder {{selectedUser.email}} als leraar </b-button>
         <b-button v-if="!hasCustomClaims || !selectedUser.customClaims.moderator" @click="setUser({'moderator': true})" variant="warning"> Maak {{selectedUser.email}} moderator</b-button>
         <b-button v-if="hasCustomClaims && selectedUser.customClaims.moderator" @click="setUser({'moderator': false})" variant="danger">Verwijder {{selectedUser.email}} als moderator</b-button>
       </b-button-group>
@@ -69,16 +64,6 @@ export default Vue.extend({
       fields: [{
           key: 'email',
           label: 'Email'
-        },{
-          key: 'leraar',
-          label: 'Leraar',
-          formatter: (value, key, item) => {
-            if (item.customClaims && item.customClaims.teacher) {
-              return "Ja"
-            } else {
-              return "Nee"
-            }
-          }
         },{
           key: 'moderator',
           label: 'Beheerder',
