@@ -60,6 +60,7 @@ export async function removeGroupTeacher(teacherEmail, groupName) {
 }
 
 export async function userIs(teacher) {
+  if (!teacher) { return; }
   const querySnapshot = await db.collection("groups").where("teachers", "array-contains", teacher.email).get();
   let teacherGroups = [];
   querySnapshot.forEach((doc) => {
