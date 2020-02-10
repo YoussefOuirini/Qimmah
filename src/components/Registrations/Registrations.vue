@@ -5,14 +5,23 @@
       :fields="registrationFields"
     >
       <template v-slot:cell(actions)="row">
-        <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">
-          Info modal
+        <b-button size="sm" variant="warning" @click="absence(row.item, row.index, $event.target)" class="mr-1">
+          Afmelden
         </b-button>
         <b-button size="sm" @click="row.toggleDetails">
           {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
         </b-button>
       </template>
     </b-table>
+    <b-modal
+      size="lg"
+      :id="absenceModal.id"
+      :ref="absenceModal.id"
+      title="Afmelden van de les"
+      ok-only ok-title="Niet afmelden"
+    >
+      <Absence :registration="absenceModal.registration" @hide="resetAbsenceModal"/>
+    </b-modal>
     <b-table-simple striped>
       <b-thead>
         <b-tr>
@@ -31,15 +40,21 @@
 <script>
   import Vue from "vue";
   import Registration from "../Registration/Registration.vue";
+  import Absence from "../Absence/Absence.vue";
 
   export default Vue.extend ({
     name: "Registrations",
     components: {
-      Registration
+      Registration,
+      Absence
     },
     props: ["registrations"],
     data() {
       return {
+        absenceModal: {
+          id: 'absence-modal',
+          registration: ''
+        },
         registrationFields: [{
           key: 'name',
           label: 'Naam',
@@ -55,5 +70,19 @@
         }]
       }
     },
+    methods: {
+      closeModal() {
+        this.$refs[this.absenceModal.id].hide()
+      },
+      absence(item, index, button) {
+        this.absenceModal.registration = item;
+        this.$root.$emit('bv::show::modal', this.absenceModal.id, button);
+      },
+      resetAbsenceModal() {
+        this.closeModal();
+        this.absenceModal.title = '';
+        this.absenceModal.registration = '';
+      },
+    }
   })
 </script>
