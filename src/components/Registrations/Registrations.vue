@@ -1,5 +1,18 @@
 <template>
   <b-container v-if="registrations.length">
+    <b-table
+      :items="registrations"
+      :fields="registrationFields"
+    >
+      <template v-slot:cell(actions)="row">
+        <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">
+          Info modal
+        </b-button>
+        <b-button size="sm" @click="row.toggleDetails">
+          {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+        </b-button>
+      </template>
+    </b-table>
     <b-table-simple striped>
       <b-thead>
         <b-tr>
@@ -24,6 +37,23 @@
     components: {
       Registration
     },
-    props: ["registrations"]
+    props: ["registrations"],
+    data() {
+      return {
+        registrationFields: [{
+          key: 'name',
+          label: 'Naam',
+          formatter: (name) => {
+            return `${name.first} ${name.last}`;
+          }
+        }, {
+          key: 'group',
+          label: 'Klas'
+        }, {
+          key: 'actions',
+          label: 'Acties'
+        }]
+      }
+    },
   })
 </script>
