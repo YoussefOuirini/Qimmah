@@ -30,7 +30,7 @@
     },
     data() {
       return {
-        registrations: [],
+        registrations: []
       }
     },
     methods: {
