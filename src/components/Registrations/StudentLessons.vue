@@ -1,7 +1,7 @@
 <template>
   <b-row>
     <h4>{{student.name.first}} {{student.name.last}} klas {{student.group}}</h4>
-    <div v-if="rows" class="overflow-auto">
+    <div class="overflow-auto">
       <b-table
         id="studentLessons"
         bordered
@@ -12,7 +12,14 @@
         :fields="lessonsFields"
         :per-page="perPage"
         :current-page="currentPage"
+        :busy="isBusy"
       >
+        <template v-slot:table-busy>
+          <div class="text-center text-danger my-2">
+            <b-spinner class="align-middle"></b-spinner>
+            <strong>Aan het laden...</strong>
+          </div>
+        </template>
       </b-table>
       <b-pagination
         v-model="currentPage"
@@ -34,10 +41,13 @@
     name: "StudentLessons",
     props: ['student'],
     async mounted() {
+      this.isBusy = true;
       await this.loadLessons();
+      this.isBusy = false;
     },
     data() {
       return {
+        isBusy: false,
         currentPage: 1,
         perPage: 5,
         lessons: [],
