@@ -1,6 +1,5 @@
 <template>
   <b-row>
-    <h4>{{student.name.first}} {{student.name.last}} klas {{student.group}}</h4>
     <div class="overflow-auto">
       <b-table
         id="studentLessons"
