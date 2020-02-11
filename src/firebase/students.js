@@ -2,10 +2,10 @@ import { db, getStudentDocName, getGroups} from './firebase';
 import { checkUserClaim } from './auth';
 
 export async function deleteStudent(student) {
-  const studentDocName = getStudentDocName(student);
-  await db.collection('registrations').doc(studentDocName).delete();
   const allGroups = await getGroups();
   await removeStudentFromGroups(student, allGroups);
+  const studentDocName = getStudentDocName(student);
+  await db.collection('registrations').doc(studentDocName).delete();
 }
 
 export async function removeStudentFromGroups(student, groups) {
