@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container v-if="registrations.length">
     <b-table
       :busy="isBusy"
       :items="registrations"
@@ -101,7 +101,7 @@
       async deleteRegistration(registration) {
         await deleteStudent(registration);
         EventBus.reloadRegistration()
-      },
+      }
     }
   })
 </script>

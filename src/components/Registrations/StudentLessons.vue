@@ -1,5 +1,8 @@
 <template>
-  <b-row>
+  <b-row v-if="!lessons">
+    <h1>Nog geen lessen</h1>
+  </b-row>
+  <b-row v-else-if="lessons">
     <div class="overflow-auto">
       <b-table
         id="studentLessons"
@@ -95,7 +98,11 @@
     },
     computed: {
       rows() {
-        return this.lessons.length;
+        if (this.lessons && this.lessons.length) {
+          return this.lessons.length;
+        } else {
+          return 0;
+        }
       }
     },
     methods: {
@@ -105,6 +112,7 @@
         this.lessons = filteredStudentLessons;
       },
       filterLessons(lessons) {
+        if (!lessons) { return; }
         return lessons.filter((lesson) => {
           if (lesson.absence && lesson.absence.reason && !lesson.presence) {
             return;
