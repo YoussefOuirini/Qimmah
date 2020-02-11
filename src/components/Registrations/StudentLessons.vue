@@ -19,10 +19,12 @@
             <strong>Aan het laden...</strong>
           </div>
         </template>
-        <template v-slot:cell(signoff)="data">
+        <template v-slot:cell(signoff)="row">
           <b-form-checkbox
+            :ref="row.index"
             value=true
             unchecked-value=false
+            @input="update(row.item, row.index)"
           >
             Paraaf
           </b-form-checkbox>
@@ -108,6 +110,9 @@
           }
           return lesson;
         });
+      },
+      update(lesson, index) {
+        const signedOff = (this.$refs[index].localChecked === "true");
       },
       sort(aRow, bRow, key) {
         sortDates(aRow, bRow, key);
