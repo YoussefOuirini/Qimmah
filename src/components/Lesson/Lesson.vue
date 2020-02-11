@@ -24,6 +24,7 @@
             <b-th>Huiswerk gemaakt?</b-th>
             <b-th colspan="3">Huiswerk</b-th>
             <b-th colspan="3">Opmerkingen</b-th>
+            <b-th>Paraaf</b-th>
           </b-tr>
         </b-thead>
         <b-tbody>
