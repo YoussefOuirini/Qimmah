@@ -19,6 +19,14 @@
             <strong>Aan het laden...</strong>
           </div>
         </template>
+        <template v-slot:cell(signoff)="data">
+          <b-form-checkbox
+            value=true
+            unchecked-value=false
+          >
+            Paraaf
+          </b-form-checkbox>
+        </template>
       </b-table>
       <b-pagination
         v-model="currentPage"
@@ -76,6 +84,9 @@
         }, {
           key: "remarks",
           label: "Opmerkingen"
+        }, {
+          key: "signoff",
+          label: "Aftekenen"
         }]
       }
     },
