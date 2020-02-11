@@ -78,23 +78,15 @@
     methods: {
       async loadLessons() {
         const lessons = await getLessonsOf(this.student);
-        console.log(lessons);
-        // const filteredStudentLessons = this.filterLessons(lessons);
-        this.lessons = lessons;
+        const filteredStudentLessons = this.filterLessons(lessons);
+        this.lessons = filteredStudentLessons;
       },
-      filterLessons(studentsLessons) {
-        return studentsLessons.map((studentLessons) => {
-          const {student, lessons } = studentLessons;
-          const filteredLessons = lessons.filter((lesson) => {
-            if (lesson.absence && lesson.absence.reason && !lesson.presence) {
-              return;
-            }
-            return lesson
-          });
-          return {
-            student,
-            lessons: filteredLessons
+      filterLessons(lessons) {
+        return lessons.filter((lesson) => {
+          if (lesson.absence && lesson.absence.reason && !lesson.presence) {
+            return;
           }
+          return lesson;
         });
       },
       sort(aRow, bRow, key) {
