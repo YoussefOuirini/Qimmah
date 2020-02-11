@@ -80,9 +80,6 @@
       }
     },
     methods: {
-      closeModal() {
-        this.$refs[this.absenceModal.id].hide()
-      },
       absence(item, index, button) {
         this.absenceModal.registration = item;
         this.$root.$emit('bv::show::modal', this.absenceModal.id, button);
@@ -92,6 +89,9 @@
         this.absenceModal.title = '';
         this.absenceModal.registration = '';
       },
+      closeModal() {
+        this.$refs[this.absenceModal.id].hide()
+      }
     }
   })
 </script>
