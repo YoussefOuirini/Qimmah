@@ -5,12 +5,22 @@
       :fields="registrationFields"
     >
       <template v-slot:cell(actions)="row">
+        <b-button size="sm" @click="row.toggleDetails" class="mr-1">
+          {{ row.detailsShowing ? 'Verbeg' : 'Toon' }} Lessen
+        </b-button>
         <b-button size="sm" variant="warning" @click="absence(row.item, row.index, $event.target)" class="mr-1">
           Afmelden
         </b-button>
-        <b-button size="sm" @click="row.toggleDetails">
-          {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
-        </b-button>
+      </template>
+      <template v-slot:row-details="row">
+        <b-card>
+          <StudentLessons
+            :student="row.item"
+          />
+          <!-- <ul>
+            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+          </ul> -->
+        </b-card>
       </template>
     </b-table>
     <b-modal
@@ -41,12 +51,14 @@
   import Vue from "vue";
   import Registration from "../Registration/Registration.vue";
   import Absence from "../Absence/Absence.vue";
+  import StudentLessons from "./StudentLessons.vue";
 
   export default Vue.extend ({
     name: "Registrations",
     components: {
       Registration,
-      Absence
+      Absence,
+      StudentLessons
     },
     props: ["registrations"],
     data() {
