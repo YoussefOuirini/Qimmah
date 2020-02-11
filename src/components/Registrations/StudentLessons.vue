@@ -22,9 +22,10 @@
         <template v-slot:cell(signoff)="row">
           <b-form-checkbox
             :ref="row.index"
+            :checked="row.item.signedOff"
             value=true
             unchecked-value=false
-            @input="update(row.item, row.index)"
+            @change="update(row.item, row.index)"
           >
             Paraaf
           </b-form-checkbox>
@@ -115,8 +116,7 @@
         const signedOff = (this.$refs[index].localChecked === "true");
         const student = this.student;
         const lessonUpdate = Object.assign(lesson, { signedOff })
-        const updateRes = await update(student, lessonUpdate);
-        console.log(updateRes);
+        await update(student, lessonUpdate);
       },
       sort(aRow, bRow, key) {
         sortDates(aRow, bRow, key);
