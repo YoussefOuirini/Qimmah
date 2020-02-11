@@ -43,6 +43,18 @@ export async function writeLessons(lessons) {
   });
 }
 
+export async function update(student, lessonUpdate) {
+  const studentDocName = getStudentDocName(student);
+  const lessonTimeStamp = getTimeStamp(lessonUpdate.date);
+  const lessonDate = getLessonDate(lessonTimeStamp);
+  const lessonRef = db.collection("groups").doc(student.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonDate);
+  return await lessonRef.update({signedOff: lessonUpdate.signedOff}).then(() => {
+    return { success: true };
+  }).catch(( error ) => {
+    return {success: false, error};
+  });
+}
+
 async function getStudentDateLesson(date, student) {
   const studentDocName = getStudentDocName(student);
   const lessonDate = getLessonDate(date);

@@ -44,7 +44,7 @@
 <script>
   import Vue from "vue";
   import { sortDates, getTimeStamp, getLessonDate } from "@/common/date";
-  import { getLessonsOf } from "@/firebase/firebase";
+  import { getLessonsOf, update } from "@/firebase/firebase";
 
   export default Vue.extend({
     name: "StudentLessons",
@@ -111,8 +111,12 @@
           return lesson;
         });
       },
-      update(lesson, index) {
+      async update(lesson, index) {
         const signedOff = (this.$refs[index].localChecked === "true");
+        const student = this.student;
+        const lessonUpdate = Object.assign(lesson, { signedOff })
+        const updateRes = await update(student, lessonUpdate);
+        console.log(updateRes);
       },
       sort(aRow, bRow, key) {
         sortDates(aRow, bRow, key);

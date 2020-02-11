@@ -9,7 +9,7 @@ export const db = firebase.firestore();
 export const auth = firebase.auth();
 
 export { getAllRegistrations, writeRegistration, updateRegistration, getUsersRegistrations } from './registrations';
-export { getLessonsOf, getDateLessons, writeLessons } from './lessons';
+export { getLessonsOf, getDateLessons, writeLessons, update } from './lessons';
 export { storeAbsence, getAbsence, getAllAbsentees } from './absence';
 export { getGroups, createGroup } from './groups';
 export { deleteStudent, removeStudentFromGroups, writeStudentToGroup } from './students';
