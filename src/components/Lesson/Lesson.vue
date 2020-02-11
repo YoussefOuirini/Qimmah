@@ -96,6 +96,7 @@ export default Vue.extend({
         const batchResponse = await writeLessons(lessons);
         if (batchResponse.success) {
           this.lessonsRes = "Les succesvol opgeslagen!";
+          this.loadLessons();
         } else {
           this.lessonsRes = "Er is is iets misgegaan! Probeer het opnieuw!";
         }
@@ -118,7 +119,8 @@ export default Vue.extend({
             remarks: studentLesson.remarks,
             groupHomework: this.groupHomework,
             date: this.lessonDate,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            signedOff: false
           }
         };
       });
