@@ -1,24 +1,5 @@
-import { getUsersRegistrations, getStudentDocName, db, userIs, getCurrentUser } from "./firebase";
+import { getStudentDocName, db, userIs, getCurrentUser } from "./firebase";
 import { getLessonDate, getTimeStamp } from "../common/date";
-
-export async function getLessons() {
-  const registrations = await getUsersRegistrations();
-  const studentLessons = registrations.map(async (registration) => {
-    const studentDocName = getStudentDocName(registration);
-    if (!registration.group) return;
-    const querySnapshot = await db.collection('groups').doc(registration.group).collection('students').doc(studentDocName).collection('lessons').get();
-    let lessons = [];
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      lessons.push(data);
-    });
-    return {
-      student: registration,
-      lessons
-    };
-  });
-  return Promise.all(studentLessons);
-}
 
 export async function getLessonsOf(student) {
   const studentDocName = getStudentDocName(student);
