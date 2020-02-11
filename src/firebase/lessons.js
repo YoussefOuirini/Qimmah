@@ -20,6 +20,18 @@ export async function getLessons() {
   return Promise.all(studentLessons);
 }
 
+export async function getLessonsOf(student) {
+  const studentDocName = getStudentDocName(student);
+  if (!student.group) return;
+  const querySnapshot = await db.collection('groups').doc(student.group).collection('students').doc(studentDocName).collection('lessons').get();
+  let lessons = [];
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    lessons.push(data);
+  });
+  return lessons;
+}
+
 export async function getDateLessons(date, students) {
   const studentsDateLessons = students.map(async(student) => {
     return await getStudentDateLesson(date, student);
