@@ -11,6 +11,7 @@
         <b-button size="sm" variant="warning" @click="absence(row.item, row.index, $event.target)" class="mr-1">
           Afmelden
         </b-button>
+        <b-button size="sm" variant="danger" @click="deleteRegistration(row.item)">Verwijder registratie</b-button>
       </template>
       <template v-slot:row-details="row">
         <b-card>
@@ -49,6 +50,8 @@
   import Registration from "../Registration/Registration.vue";
   import Absence from "../Absence/Absence.vue";
   import StudentLessons from "./StudentLessons.vue";
+  import { EventBus } from "../../EventBus";
+  import { deleteStudent} from "@/firebase/firebase.js";
 
   export default Vue.extend ({
     name: "Registrations",
@@ -91,7 +94,11 @@
       },
       closeModal() {
         this.$refs[this.absenceModal.id].hide()
-      }
+      },
+      async deleteRegistration(registration) {
+        await deleteStudent(registration);
+        EventBus.reloadRegistration()
+      },
     }
   })
 </script>
