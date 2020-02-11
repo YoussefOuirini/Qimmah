@@ -40,6 +40,9 @@
         placeholder="Schrijf een opmerking."
       ></b-form-textarea>
     </b-td>
+    <b-td>
+      <p v-if="dateLesson.signedOff" class="h1"><b-icon-check-box></b-icon-check-box></p>
+    </b-td>
   </b-tr>
 </template>
 

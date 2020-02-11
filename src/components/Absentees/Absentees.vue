@@ -37,6 +37,7 @@
       striped hover
       sort-by="date"
       sort-desc
+      :busy="isBusy"
       :sort-compare="sort"
       :items="absentees"
       :fields="absenteeFields"
@@ -46,6 +47,12 @@
       @filtered="onFiltered"
       :tbody-tr-class="rowClass"
     >
+      <template v-slot:table-busy>
+        <div class="text-center text-danger my-2">
+          <b-spinner class="align-middle"></b-spinner>
+          <strong>Loading...</strong>
+        </div>
+      </template>
     </b-table>
   </b-row>
 </template>
@@ -67,6 +74,7 @@ export default Vue.extend({
       currentPage: 1,
       rows: 1,
       filter: null,
+      isBusy: false, 
       absentees: [],
       absenteeFields: [{
         key: 'date',
@@ -122,9 +130,14 @@ export default Vue.extend({
     }
   },
   methods: {
+    toggleBusy() {
+      this.isBusy = !this.isBusy
+    },
     async loadAbsentees() {
+      this.toggleBusy();
       this.absentees = await getAllAbsentees();
       this.rows = this.absentees.length;
+      this.toggleBusy();
     },
     rowClass(item) {
       if (!item) return;

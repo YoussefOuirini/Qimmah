@@ -24,6 +24,7 @@
             <b-th>Huiswerk gemaakt?</b-th>
             <b-th colspan="3">Huiswerk</b-th>
             <b-th colspan="3">Opmerkingen</b-th>
+            <b-th>Paraaf</b-th>
           </b-tr>
         </b-thead>
         <b-tbody>
@@ -95,6 +96,7 @@ export default Vue.extend({
         const batchResponse = await writeLessons(lessons);
         if (batchResponse.success) {
           this.lessonsRes = "Les succesvol opgeslagen!";
+          this.loadLessons();
         } else {
           this.lessonsRes = "Er is is iets misgegaan! Probeer het opnieuw!";
         }
@@ -117,7 +119,8 @@ export default Vue.extend({
             remarks: studentLesson.remarks,
             groupHomework: this.groupHomework,
             date: this.lessonDate,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            signedOff: false
           }
         };
       });

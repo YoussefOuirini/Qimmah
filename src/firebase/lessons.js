@@ -1,23 +1,16 @@
-import { getUsersRegistrations, getStudentDocName, db, userIs, getCurrentUser } from "./firebase";
+import { getStudentDocName, db, userIs, getCurrentUser } from "./firebase";
 import { getLessonDate, getTimeStamp } from "../common/date";
 
-export async function getLessons() {
-  const registrations = await getUsersRegistrations();
-  const studentLessons = registrations.map(async (registration) => {
-    const studentDocName = getStudentDocName(registration);
-    if (!registration.group) return;
-    const querySnapshot = await db.collection('groups').doc(registration.group).collection('students').doc(studentDocName).collection('lessons').get();
-    let lessons = [];
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      lessons.push(data);
-    });
-    return {
-      student: registration,
-      lessons
-    };
+export async function getLessonsOf(student) {
+  const studentDocName = getStudentDocName(student);
+  if (!student.group) return;
+  const querySnapshot = await db.collection('groups').doc(student.group).collection('students').doc(studentDocName).collection('lessons').get();
+  let lessons = [];
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    lessons.push(data);
   });
-  return Promise.all(studentLessons);
+  return lessons;
 }
 
 export async function getDateLessons(date, students) {
@@ -47,6 +40,18 @@ export async function writeLessons(lessons) {
   })
   .catch((error)=> {
     throw new Error(error);
+  });
+}
+
+export async function update(student, lessonUpdate) {
+  const studentDocName = getStudentDocName(student);
+  const lessonTimeStamp = getTimeStamp(lessonUpdate.date);
+  const lessonDate = getLessonDate(lessonTimeStamp);
+  const lessonRef = db.collection("groups").doc(student.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonDate);
+  return await lessonRef.update({signedOff: lessonUpdate.signedOff}).then(() => {
+    return { success: true };
+  }).catch(( error ) => {
+    return {success: false, error};
   });
 }
 
