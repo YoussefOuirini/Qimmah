@@ -1,6 +1,6 @@
 <template>
   <b-form v-if="registration">
-    <label class="mr-sm-2" for="inline-form-custom-select-pref">Meld {{registration.name.first}} af voor de les.</label>
+    <label class="mr-sm-2" for="inline-form-custom-select-pref">Meld {{registration.name.first}} af voor de les van vandaag.</label>
     <b-form-select
       class="mb-2 mr-sm-2 mb-sm-0"
       v-model="reason"
