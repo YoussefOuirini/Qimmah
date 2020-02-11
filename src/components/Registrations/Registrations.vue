@@ -1,6 +1,7 @@
 <template>
-  <b-container v-if="registrations.length">
+  <b-container>
     <b-table
+      :busy="isBusy"
       :items="registrations"
       :fields="registrationFields"
     >
@@ -17,6 +18,12 @@
         <b-card>
           <StudentLessons :student="row.item"/>
         </b-card>
+      </template>
+      <template v-slot:table-busy>
+        <div class="text-center text-danger my-2">
+          <b-spinner class="align-middle"></b-spinner>
+          <strong>Aan het laden...</strong>
+        </div>
       </template>
     </b-table>
     <b-modal
@@ -36,7 +43,7 @@
   import AbsenceForm from "./AbsenceForm.vue";
   import StudentLessons from "./StudentLessons.vue";
   import { EventBus } from "../../EventBus";
-  import { deleteStudent} from "@/firebase/firebase.js";
+  import { deleteStudent, getUsersRegistrations} from "@/firebase/firebase.js";
 
   export default Vue.extend ({
     name: "Registrations",
@@ -44,9 +51,16 @@
       AbsenceForm,
       StudentLessons
     },
-    props: ["registrations"],
+    mounted() {
+      this.loadRegistrations(),
+      EventBus.$on('registration', () => {
+        this.loadRegistrations();
+      })
+    },
     data() {
       return {
+        registrations: [],
+        isBusy: false,
         absenceModal: {
           id: 'absence-modal',
           registration: ''
@@ -67,6 +81,11 @@
       }
     },
     methods: {
+      async loadRegistrations() {
+        this.isBusy = true;
+        this.registrations = await getUsersRegistrations()
+        this.isBusy = false;
+      },
       absence(item, index, button) {
         this.absenceModal.registration = item;
         this.$root.$emit('bv::show::modal', this.absenceModal.id, button);
