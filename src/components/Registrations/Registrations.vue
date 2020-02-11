@@ -15,9 +15,7 @@
       </template>
       <template v-slot:row-details="row">
         <b-card>
-          <StudentLessons
-            :student="row.item"
-          />
+          <StudentLessons :student="row.item"/>
         </b-card>
       </template>
     </b-table>
