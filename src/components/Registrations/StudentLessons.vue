@@ -34,17 +34,17 @@
           </b-form-checkbox>
         </template>
         <template v-slot:cell(homework)="data">
-          <pre
-            v-if="data.item.studentHomework"
-            style="overflow-wrap:break-word; white-space:pre-wrap; background:white"
-            class="mt-3 mb-0">
-            {{ data.item.studentHomework}} 
-          </pre>
-          <pre
-            style="overflow-wrap:break-word; white-space:pre-wrap; background:white"
-            class="mt-3 mb-0">
+          <div
+            v-if='data.item.studentHomework !== ""'
+            style="text-align: left; white-space: pre-line;"
+          >
+            {{ data.item.studentHomework}}
+          </div>
+          <div
+            style="text-align: left; white-space: pre-line;"
+          >
             {{ data.item.groupHomework}}
-          </pre>
+          </div>
         </template>
       </b-table>
       <b-pagination
@@ -96,10 +96,7 @@
           label: "Gedrag"
         }, {
           key: "homework",
-          label: "Klassenhuiswerk"
-        }, {
-          key: "studentHomework",
-          label: "Individuele Huiswerk"
+          label: "Huiswerk"
         }, {
           key: "remarks",
           label: "Opmerkingen"
