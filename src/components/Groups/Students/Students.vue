@@ -1,5 +1,5 @@
 <template>
-  <b-row v-if="registrations.length">
+  <b-container v-if="registrations.length">
     <h1>Voeg studenten toe aan klassen</h1>
     <b-form-group
       label="Filter"
@@ -14,8 +14,7 @@
           v-model="filter"
           type="search"
           id="filterInput"
-          placeholder="Naam leerling"
-          class="py-1"
+          placeholder="Vul wat in om te filteren"
         ></b-form-input>
         <b-input-group-append>
           <b-button :disabled="!filter" @click="filter = ''">Klaren</b-button>
@@ -53,7 +52,7 @@
         </b-form>
       </template>
     </b-table>
-  </b-row>
+  </b-container>
 </template>
 
 <script>
