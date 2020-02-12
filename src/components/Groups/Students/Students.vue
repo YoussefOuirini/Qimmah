@@ -44,9 +44,9 @@
       <template v-slot:cell(group)="data">
         <p>{{data.item.group}}</p>
         <b-form inline>
-          <b-form-select size="sm" :ref="data.index" :options="groups" text-field="groupName">
+          <b-form-select size="sm" :ref="data.index" :options="groupNames" text-field="groupName">
             <template v-slot:first>
-              <option :value="null" disabled>-- Selecteer een klas --</option>
+              <b-form-select-option :value="null" disabled>-- Selecteer een klas --</b-form-select-option>
             </template>
           </b-form-select>
           <b-button @click="addRegistrationToGroup(data.item, data.index)" size="sm"> Toevoegen aan klas</b-button>
@@ -107,6 +107,9 @@ export default Vue.extend({
       set(newValue) {
         return newValue;
       }
+    },
+    groupNames() {
+      return this.groups.map((group) => group.groupName);
     }
   },
   methods: {
