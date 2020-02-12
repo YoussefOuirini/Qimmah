@@ -33,6 +33,19 @@
             Paraaf
           </b-form-checkbox>
         </template>
+        <template v-slot:cell(homework)="data">
+          <pre
+            v-if="data.item.studentHomework"
+            style="overflow-wrap:break-word; white-space:pre-wrap; background:white"
+            class="mt-3 mb-0">
+            {{ data.item.studentHomework}} 
+          </pre>
+          <pre
+            style="overflow-wrap:break-word; white-space:pre-wrap; background:white"
+            class="mt-3 mb-0">
+            {{ data.item.groupHomework}}
+          </pre>
+        </template>
       </b-table>
       <b-pagination
         v-model="currentPage"
@@ -82,7 +95,7 @@
           key: "behaviour",
           label: "Gedrag"
         }, {
-          key: "groupHomework",
+          key: "homework",
           label: "Klassenhuiswerk"
         }, {
           key: "studentHomework",
