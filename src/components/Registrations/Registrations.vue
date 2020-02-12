@@ -76,7 +76,7 @@
           label: 'Klas'
         }, {
           key: 'actions',
-          label: 'Acties'
+          label: ''
         }]
       }
     },
