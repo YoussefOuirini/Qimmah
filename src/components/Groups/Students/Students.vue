@@ -1,34 +1,39 @@
 <template>
-  <b-row v-if="registrations.length">
+  <b-container v-if="registrations.length">
     <h1>Voeg studenten toe aan klassen</h1>
-    <b-form-group
-      label="Filter"
-      label-cols-sm="3"
-      label-align-sm="right"
-      label-size="sm"
-      label-for="filterInput"
-      class="m-1"
-    >
-      <b-input-group size="md">
-        <b-form-input
-          v-model="filter"
-          type="search"
-          id="filterInput"
-          placeholder="Naam leerling"
-          class="py-1"
-        ></b-form-input>
-        <b-input-group-append>
-          <b-button :disabled="!filter" @click="filter = ''">Klaren</b-button>
-        </b-input-group-append>
-      </b-input-group>
-    </b-form-group>
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="students"
-      class="m-1"
-    ></b-pagination>
+    <b-row>
+      <b-col>
+        <b-form-group
+          label="Filter"
+          label-cols-sm="3"
+          label-align-sm="right"
+          label-size="sm"
+          label-for="filterInput"
+          class="m-1"
+        >
+          <b-input-group size="md">
+            <b-form-input
+              v-model="filter"
+              type="search"
+              id="filterInput"
+              placeholder="Vul wat om de studenten te filteren..."
+            ></b-form-input>
+            <b-input-group-append>
+              <b-button :disabled="!filter" @click="filter = ''">Klaren</b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>  
+      </b-col>
+      <b-col>
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          aria-controls="students"
+          class="m-1"
+        ></b-pagination>
+      </b-col>
+    </b-row>
     <b-table
       id="students"
       ref="studentsTable"
@@ -44,16 +49,16 @@
       <template v-slot:cell(group)="data">
         <p>{{data.item.group}}</p>
         <b-form inline>
-          <b-form-select size="sm" :ref="data.index" :options="groups" text-field="groupName">
+          <b-form-select size="sm" :ref="data.index" :options="groupNames" text-field="groupName">
             <template v-slot:first>
-              <option :value="null" disabled>-- Selecteer een klas --</option>
+              <b-form-select-option :value="null" disabled>-- Selecteer een klas --</b-form-select-option>
             </template>
           </b-form-select>
           <b-button @click="addRegistrationToGroup(data.item, data.index)" size="sm"> Toevoegen aan klas</b-button>
         </b-form>
       </template>
     </b-table>
-  </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -107,6 +112,9 @@ export default Vue.extend({
       set(newValue) {
         return newValue;
       }
+    },
+    groupNames() {
+      return this.groups.map((group) => group.groupName);
     }
   },
   methods: {
