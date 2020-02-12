@@ -16,7 +16,7 @@
               v-model="filter"
               type="search"
               id="filterInput"
-              placeholder="Vul wat in om te filteren"
+              placeholder="Vul wat om de studenten te filteren..."
             ></b-form-input>
             <b-input-group-append>
               <b-button :disabled="!filter" @click="filter = ''">Klaren</b-button>
