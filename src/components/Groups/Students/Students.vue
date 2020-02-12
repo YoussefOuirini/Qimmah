@@ -1,33 +1,39 @@
 <template>
   <b-container v-if="registrations.length">
     <h1>Voeg studenten toe aan klassen</h1>
-    <b-form-group
-      label="Filter"
-      label-cols-sm="3"
-      label-align-sm="right"
-      label-size="sm"
-      label-for="filterInput"
-      class="m-1"
-    >
-      <b-input-group size="md">
-        <b-form-input
-          v-model="filter"
-          type="search"
-          id="filterInput"
-          placeholder="Vul wat in om te filteren"
-        ></b-form-input>
-        <b-input-group-append>
-          <b-button :disabled="!filter" @click="filter = ''">Klaren</b-button>
-        </b-input-group-append>
-      </b-input-group>
-    </b-form-group>
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="students"
-      class="m-1"
-    ></b-pagination>
+    <b-row>
+      <b-col>
+        <b-form-group
+          label="Filter"
+          label-cols-sm="3"
+          label-align-sm="right"
+          label-size="sm"
+          label-for="filterInput"
+          class="m-1"
+        >
+          <b-input-group size="md">
+            <b-form-input
+              v-model="filter"
+              type="search"
+              id="filterInput"
+              placeholder="Vul wat in om te filteren"
+            ></b-form-input>
+            <b-input-group-append>
+              <b-button :disabled="!filter" @click="filter = ''">Klaren</b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>  
+      </b-col>
+      <b-col>
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          aria-controls="students"
+          class="m-1"
+        ></b-pagination>
+      </b-col>
+    </b-row>
     <b-table
       id="students"
       ref="studentsTable"
