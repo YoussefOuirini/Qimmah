@@ -9,10 +9,17 @@
         <b-button size="sm" @click="row.toggleDetails" class="mr-1">
           {{ row.detailsShowing ? 'Verbeg' : 'Toon' }} Lessen
         </b-button>
-        <b-button size="sm" variant="warning" @click="absence(row.item, row.index, $event.target)" class="mr-1">
+        <b-button size="sm" variant="info" @click="absence(row.item, row.index, $event.target)" class="mr-1">
           Afmelden
         </b-button>
-        <b-button size="sm" variant="danger" @click="deleteRegistration(row.item)">Verwijder registratie</b-button>
+        <b-dropdown no-caret variant="link">
+          <template v-slot:button-content>
+            <b-icon-three-dots-vertical></b-icon-three-dots-vertical>
+          </template>
+          <b-dropdown-item size="sm" variant="danger" @click="deleteRegistration(row.item)">
+            Verwijder registratie
+          </b-dropdown-item>
+        </b-dropdown>
       </template>
       <template v-slot:row-details="row">
         <b-card>
