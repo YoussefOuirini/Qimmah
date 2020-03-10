@@ -19,7 +19,7 @@
   import { getYYYYMMDD } from "../../common/date";
 
   export default Vue.extend({
-    name: "Absence",
+    name: "AbsenceForm",
     props: ["registration"],
     data() {
       return {
