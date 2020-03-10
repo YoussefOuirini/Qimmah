@@ -16,7 +16,7 @@
           <template v-slot:button-content>
             <b-icon-three-dots-vertical></b-icon-three-dots-vertical>
           </template>
-          <b-dropdown-item size="sm" variant="danger" @click="deleteRegistration(row.item)">
+          <b-dropdown-item size="sm" variant="warning" @click="deleteRegistrationModal(row.item, row.index, $event.target)">
             Verwijder registratie
           </b-dropdown-item>
         </b-dropdown>
@@ -42,20 +42,31 @@
     >
       <AbsenceForm :registration="absenceModal.registration" @hide="resetAbsenceModal"/>
     </b-modal>
+    <b-modal
+      size="lg"
+      :id="deletionModal.id"
+      :ref="deletionModal.id"
+      title="Registratie Verwijderen"
+      ok-only ok-title="Niet verwijderen"
+    >
+      <DeletionForm :registration="deletionModal.registration" @hide="resetDeletionModal"/>
+    </b-modal>
   </b-container>
 </template>
 
 <script>
   import Vue from "vue";
   import AbsenceForm from "./AbsenceForm.vue";
+  import DeletionForm from "./DeletionForm.vue";
   import StudentLessons from "./StudentLessons.vue";
   import { EventBus } from "../../EventBus";
-  import { deleteStudent, getUsersRegistrations} from "@/firebase/firebase.js";
+  import { getUsersRegistrations } from "@/firebase/firebase.js";
 
   export default Vue.extend ({
     name: "Registrations",
     components: {
       AbsenceForm,
+      DeletionForm,
       StudentLessons
     },
     mounted() {
@@ -70,6 +81,10 @@
         isBusy: false,
         absenceModal: {
           id: 'absence-modal',
+          registration: ''
+        },
+        deletionModal: {
+          id: 'deletion-modal',
           registration: ''
         },
         registrationFields: [{
@@ -97,17 +112,22 @@
         this.absenceModal.registration = item;
         this.$root.$emit('bv::show::modal', this.absenceModal.id, button);
       },
+      deleteRegistrationModal(item, index, button) {
+        this.deletionModal.registration = item;
+        this.$root.$emit('bv::show::modal', this.deletionModal.id, button);
+      },
       resetAbsenceModal() {
-        this.closeModal();
+        this.closeModal(this.absenceModal.id);
         this.absenceModal.title = '';
         this.absenceModal.registration = '';
       },
-      closeModal() {
-        this.$refs[this.absenceModal.id].hide()
+      resetDeletionModal() {
+        this.closeModal(this.deletionModal.id);
+        this.absenceModal.title = '';
+        this.absenceModal.registration = '';
       },
-      async deleteRegistration(registration) {
-        await deleteStudent(registration);
-        EventBus.reloadRegistration()
+      closeModal(modalId) {
+        this.$refs[modalId].hide()
       }
     }
   })
