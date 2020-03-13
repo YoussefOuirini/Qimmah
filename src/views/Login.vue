@@ -1,5 +1,6 @@
 <template>
-  <b-container class="login">
+  <b-container id="firebaseui-auth-container"></b-container>
+  <!-- <b-container class="login">
     <h3> Inloggen</h3>
     <b-input type="text" v-model="email" placeholder="Email"></b-input><br>
     <b-input type="password" v-model="password" placeholder="Wachtwoord"></b-input><br>
@@ -10,12 +11,13 @@
       </b-button>
     </p>
     <p>Nog geen account? <router-link to="/registreer">Maak er een!</router-link></p>
-  </b-container>
+  </b-container> -->
 </template>
 
 <script>
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import {ui, uiConfig } from '../firebase/firebaseui';
 import { EventBus } from '../EventBus.js';
 
 export default {
@@ -25,6 +27,9 @@ export default {
       email: '',
       password: ''
     };
+  },
+  mounted() {
+    ui.start('#firebaseui-auth-container', uiConfig);
   },
   methods: {
     login() {
