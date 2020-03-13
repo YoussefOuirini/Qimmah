@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import * as firebaseui from 'firebase/firebaseui';
+import * as firebaseui from 'firebaseui';
 import 'firebase/firestore';
 import { config } from '../config.js';
 
