@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import * as firebaseui from 'firebaseui';
+import firebaseui from '../assets/npm__nl';
 import { auth } from './firebase';
 
 export const uiConfig = {
