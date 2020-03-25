@@ -10,11 +10,6 @@ export default Vue.extend({
   name: "Jitsi",
   mounted() {
     joinCall(this.$route.params.group)
-  },
-  data() {
-    return {
-      groupName: ''
-    }
   }
 })
 </script>
