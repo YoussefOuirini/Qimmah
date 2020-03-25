@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 import Login from './views/Login.vue';
 import School from './views/School.vue';
 import ClassRoom from './views/ClassRoom.vue';
+import Jitsi from './views/Jitsi.vue';
 import { checkUserClaim, getCurrentUser, userIs } from './firebase/firebase';
 
 Vue.use(Router);
@@ -39,6 +40,14 @@ const router = new Router ({
       path: '/klas',
       name: 'ClassRoom',
       component: ClassRoom,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/jitsi/:groupName',
+      name: 'jitsi',
+      component: Jitsi,
       meta: {
         requiresAuth: true
       }
