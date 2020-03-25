@@ -1,13 +1,11 @@
-const domain = 'meet.jit.si';
-const options = {
-    roomName: 'JitsiMeetAPIExample',
+export function joinCall(groupName) {
+  const domain = 'meet.jit.si';
+  const options = {
+    roomName: groupName,
     width: 700,
     height: 700,
-    parentNode: document.querySelector('#meet')
-};
-const api = new window.JitsiMeetExternalAPI(domain, options);
+    parentNode: document.querySelector('#jitsi')
+  };
 
-export function getIframe() {
-  const iframe = api.getIFrame();
-  return iframe;
+  const api = new window.JitsiMeetExternalAPI(domain, options);
 }
