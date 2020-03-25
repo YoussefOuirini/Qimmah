@@ -7,5 +7,5 @@ export function joinCall(groupName) {
     parentNode: document.querySelector('#jitsi')
   };
 
-  const api = new window.JitsiMeetExternalAPI(domain, options);
+  new window.JitsiMeetExternalAPI(domain, options);
 }
