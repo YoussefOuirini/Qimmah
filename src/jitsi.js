@@ -14,8 +14,8 @@ export function joinCall(groupName) {
   const domain = 'meet.jit.si';
   const options = {
     roomName: groupName,
-    width: 700,
-    height: 700,
+    width: 1000,
+    height: 1000,
     parentNode: document.querySelector('#jitsi')
   };
   const call = new jitsiCall(domain, options);
