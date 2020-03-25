@@ -15,7 +15,7 @@ export function joinCall(groupName) {
   const options = {
     roomName: groupName,
     width: 1000,
-    height: 700,
+    height: 600,
     parentNode: document.querySelector('#jitsi')
   };
   const call = new jitsiCall(domain, options);
