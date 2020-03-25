@@ -13,6 +13,15 @@
         </template>
       </b-form-select>
     </b-row>
+    <b-row>
+      <b-button
+        v-if='selectedGroupName'
+        class="my-3 mx-auto"
+        variant="success"
+        @click="jitsi"
+      > Online les joinen
+      </b-button>
+    </b-row>
     <Lesson v-if="selectedGroupName && students.length" v-bind:students="students" v-bind:selectedGroupName="selectedGroupName"/>
     <b-row v-if="selectedGroupName && students.length">
       <h3>Studentengegevens</h3>
@@ -119,6 +128,9 @@
         const userEmail = getUserEmail();
         this.teachersGroups = await getGroupsOf(userEmail);
       },
-    },
+      jitsi() {
+        this.$router.push({ name: 'jitsi', params: { group: this.selectedGroupName }})
+      }
+    }
   })
 </script>

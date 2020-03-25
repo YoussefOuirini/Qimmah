@@ -47,10 +47,8 @@
         class="my-3 mx-auto"
         @click="addLessons"
         :disabled="sendingLesson"
-        variant="primary">Les toevoegen
-      </b-button>
-      <b-button size="sm" variant="success" @click="jitsi" class="mr-1">
-        Online les joinen
+        variant="primary"
+        > Les toevoegen
       </b-button>
     </b-row>
     <b-row><h5>{{lessonsRes}}</h5></b-row>
@@ -128,9 +126,6 @@ export default Vue.extend({
         };
       });
       return lessons;
-    },
-    jitsi() {
-      this.$router.push({ name: 'jitsi', params: { group: this.selectedGroupName }})
     }
   }
 })
