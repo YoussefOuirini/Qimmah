@@ -9,7 +9,15 @@ import { joinCall } from "../jitsi";
 export default Vue.extend({
   name: "Jitsi",
   mounted() {
-    joinCall(this.$route.params.group)
+    this.call = joinCall(this.$route.params.group);
+  },
+  beforeDestroy() {
+    this.call.hangup();
+  },
+  data() {
+    return {
+      call: {}
+    }
   }
 })
 </script>
