@@ -45,7 +45,7 @@ const router = new Router ({
       }
     },
     {
-      path: '/jitsi/:groupName',
+      path: '/jitsi/:group',
       name: 'jitsi',
       component: Jitsi,
       meta: {
