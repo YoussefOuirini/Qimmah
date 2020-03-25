@@ -12,6 +12,9 @@
         <b-button size="sm" variant="info" @click="absence(row.item, row.index, $event.target)" class="mr-1">
           Afmelden
         </b-button>
+        <b-button size="sm" variant="success" @click="jitsi(row.item)" class="mr-1">
+          Online les joinen
+        </b-button>
         <b-dropdown no-caret variant="link">
           <template v-slot:button-content>
             <b-icon-three-dots-vertical></b-icon-three-dots-vertical>
@@ -128,6 +131,9 @@
       },
       closeModal(modalId) {
         this.$refs[modalId].hide()
+      },
+      jitsi(student) {
+        this.$router.push({ name: 'jitsi', params: { group: student.group }})
       }
     }
   })
