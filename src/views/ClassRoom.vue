@@ -19,7 +19,7 @@
         class="my-3 mx-auto"
         variant="success"
         @click="jitsi"
-      > Online les joinen
+      > Online les
       </b-button>
     </b-row>
     <Lesson v-if="selectedGroupName && students.length" v-bind:students="students" v-bind:selectedGroupName="selectedGroupName"/>

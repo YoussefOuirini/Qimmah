@@ -13,7 +13,7 @@
           Afmelden
         </b-button>
         <b-button size="sm" variant="success" @click="jitsi(row.item)" class="mr-1">
-          Online les joinen
+          Online les volgen
         </b-button>
         <b-dropdown no-caret variant="link">
           <template v-slot:button-content>
