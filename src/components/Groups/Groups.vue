@@ -26,7 +26,7 @@
       title="Nieuwe student inschrijven"
       ok-only ok-title="Niet inschrijven"
     >
-      <RegistrationForm @reloadRegistrations="loadRegistrations"/>
+      <RegistrationForm @reloadRegistrations="loadRegistrations" :admin='true'/>
     </b-modal>
     <Students v-if="registrations.length" v-bind:registrations="registrations" v-bind:groups="groups" @reloadRegistrations="loadRegistrations"/>
   </b-container>

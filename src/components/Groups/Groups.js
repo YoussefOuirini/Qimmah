@@ -11,7 +11,7 @@ export default Vue.extend ({
     Students,
     RegistrationForm
   },
-  props: ['users'],
+  : ['users'],
   mounted() {
     this.loadGroups();
     this.loadRegistrations();

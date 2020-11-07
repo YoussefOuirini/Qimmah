@@ -6,6 +6,7 @@ import { getCurrentUser } from "@/firebase/auth";
 
 export default Vue.extend({
   name: "RegistrationForm",
+  props: ['admin'],
   data() {
     return {
       form: {
@@ -90,7 +91,7 @@ export default Vue.extend({
       const user = getCurrentUser();
       const registration = this.form;
 
-      if (!this.form.parent.email) {
+      if (!this.form.parent.email && !this.admin) {
         registration.email = user.email;
       }
       writeRegistration(registration).then((res)=> {
