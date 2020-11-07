@@ -98,10 +98,14 @@ export default Vue.extend({
         EventBus.reloadRegistration();
         if (res.success) {
           this.registrationResponseText = "Inschrijving is successvol!";
+          this.reloadRegistrations();
         } else {
           this.registrationResponseText = "Inschrijving is mislukt :( Sorry baas! Probeer het later opnieuw!";
         }
       });
+    },
+    reloadRegistrations() {
+      this.$emit('reloadRegistrations', true);
     }
   }
-})
+});
