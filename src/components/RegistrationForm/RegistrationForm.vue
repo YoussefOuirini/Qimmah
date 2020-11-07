@@ -116,14 +116,12 @@
               required
             ></b-form-input>
           </b-form-group>
-        </b-col>
-        <b-col>
           <b-form-group
             id="input-group-3"
             label="Welke studie:"
             label-for="input-3"
           ><b-form-select v-model="form.education" class="mb-3">
-              <option :value="null">Kies waarvoor u uwzelf of uw kind wilt inschrijven</option>
+              <option :value="null">Studie</option>
               <option value="Qoraan">Dar al-Qoraan</option>
               <option v-if="form.underage===true" value="Basisonderwijs">Basisonderwijs</option>
               <option v-else value="Arabisch">Arabisch voor volwassenen</option>
@@ -140,7 +138,6 @@
           </b-row>
           <b-row v-if="form.arabic === false && form.education === 'Qoraan'">
             <h6 style="font-style:oblique; color:lightSalmon">Om mee te doen met Dar al-Qoran is het van belang om de arabisch te kunnen lezen.</h6>
-            <h6 style="font-style:italic; color:red">U kunt zich inschrijven voor de cursussen arabisch om eerst arabisch te leren.</h6>
           </b-row>
         </b-col>
       </b-row>
