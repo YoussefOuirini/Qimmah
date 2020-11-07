@@ -2,6 +2,7 @@ import Vue from "vue";
 import Teachers from "./Teachers/Teachers.vue";
 import Students from "./Students/Students.vue";
 import ImportStudentsForm from "./ImportStudentsForm/ImportStudentsForm.vue";
+import RegistrationForm from "../RegistrationForm/RegistrationForm.vue";
 import { createGroup, getGroups, getAllRegistrations } from "@/firebase/firebase.js";
 
 export default Vue.extend ({
@@ -9,7 +10,8 @@ export default Vue.extend ({
   components: {
     Teachers,
     Students,
-    ImportStudentsForm
+    ImportStudentsForm,
+    RegistrationForm
   },
   props: ['users'],
   mounted() {
@@ -21,7 +23,10 @@ export default Vue.extend ({
       isLoaded: true,
       groupName: "",
       groups: [],
-      registrations: []
+      registrations: [],
+      registrationModal: {
+        id: 'registration-modal',
+      }
     };
   },
   computed: {
@@ -49,6 +54,9 @@ export default Vue.extend ({
     }
   },
   methods: {
+    registration(button) {
+      this.$root.$emit('bv::show::modal', this.registrationModal.id, button);
+    },
     async addGroup() {
       if (this.groupAlreadyExists) {
         return;

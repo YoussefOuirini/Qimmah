@@ -18,6 +18,16 @@
         </b-input-group>
       </b-form-group>
     </b-form-row>
+        <b-button  @click="registration($event.target)">Student inschrijven</b-button>
+    <b-modal
+      size="lg"
+      :id="registrationModal.id"
+      :ref="registrationModal.id"
+      title="Nieuwe student inschrijven"
+      ok-only ok-title="Niet inschrijven"
+    >
+      <RegistrationForm/>
+    </b-modal>
     <Students v-if="registrations.length" v-bind:registrations="registrations" v-bind:groups="groups" @reloadRegistrations="loadRegistrations"/>
     <ImportStudentsForm @reloadRegistrations="loadRegistrations"/>
   </b-container>
