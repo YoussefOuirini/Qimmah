@@ -29,7 +29,6 @@
       <RegistrationForm/>
     </b-modal>
     <Students v-if="registrations.length" v-bind:registrations="registrations" v-bind:groups="groups" @reloadRegistrations="loadRegistrations"/>
-    <ImportStudentsForm @reloadRegistrations="loadRegistrations"/>
   </b-container>
 </template>
 
