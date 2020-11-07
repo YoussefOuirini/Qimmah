@@ -88,7 +88,6 @@
               v-on:input="checkAge"
             ></b-form-input>
           </b-form-group>
-
           <b-form-group v-if="form.underage" id="input-group-6" label="Vul de gegevens van de ouder/verzorger in" label-for="input-6">
             <b-form-input
               id="input-6"
@@ -102,6 +101,13 @@
               v-model="form.parent.name.last"
               required
               placeholder="Achternaam"
+            ></b-form-input>
+            <br>
+            <b-form-input
+              id="parentEmail"
+              v-model="form.parent.email"
+              required
+              placeholder="Email"
             ></b-form-input>
           </b-form-group>
           <b-form-group
@@ -121,7 +127,7 @@
             label="Welke studie:"
             label-for="input-3"
           ><b-form-select v-model="form.education" class="mb-3">
-              <option :value="null">Studie</option>
+              <option :value="null">Selecteer een studie</option>
               <option value="Qoraan">Dar al-Qoraan</option>
               <option v-if="form.underage===true" value="Basisonderwijs">Basisonderwijs</option>
               <option v-else value="Arabisch">Arabisch voor volwassenen</option>
