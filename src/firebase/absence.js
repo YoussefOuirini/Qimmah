@@ -4,14 +4,14 @@ import { getLessonDate } from "../common/date";
 export async function storeAbsence(absenCall, registration) {
   const lessonsDate = getLessonDate(absenCall.timestamp);
   const studentDocName = getStudentDocName(registration);
-  return db.collection("groups").doc(registration.group).collection('students').doc(studentDocName)
+  return db.collection("schools").doc("alhimmah").collection("groups").doc(registration.group).collection('students').doc(studentDocName)
     .collection('lessons').doc(lessonsDate).set(absenCall, {merge: true});
 }
 
 export async function getAbsence(student) {
   const lessonsDate = getLessonDate();
   const studentDocName = getStudentDocName(student);
-  const absenceRef = db.collection("groups").doc(student.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate);
+  const absenceRef = db.collection("schools").doc("alhimmah").collection("groups").doc(student.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonsDate);
   return absenceRef.get().then((doc) => {
     if (doc.exists) {
       return doc.data();
@@ -33,7 +33,7 @@ export async function getAllAbsentees() {
 
 async function getGroupsIDs() {
   let groupsIDs = [];
-  await db.collection("groups").get().then((querySnapshot) => {
+  await db.collection("schools").doc("alhimmah").collection("groups").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
       groupsIDs.push(doc.id);
     });
@@ -60,7 +60,7 @@ async function getStudentLessons(groupsStudents, field, value) {
     const student = Object.assign({}, groupsStudent);
     const studentDocName = getStudentDocName(groupsStudent);
     let absences = [];
-    await db.collection("groups").doc(groupsStudent.group).collection("students").doc(studentDocName).collection("lessons")
+    await db.collection("schools").doc("alhimmah").collection("groups").doc(groupsStudent.group).collection("students").doc(studentDocName).collection("lessons")
       .where(field, "==", value)
       .get()
       .then((querySnapshot) => {

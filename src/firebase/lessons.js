@@ -4,7 +4,7 @@ import { getLessonDate, getTimeStamp } from "../common/date";
 export async function getLessonsOf(student) {
   const studentDocName = getStudentDocName(student);
   if (!student.group) return;
-  const querySnapshot = await db.collection('groups').doc(student.group).collection('students').doc(studentDocName).collection('lessons').get();
+  const querySnapshot = await db.collection("schools").doc("alhimmah").collection('groups').doc(student.group).collection('students').doc(studentDocName).collection('lessons').get();
   let lessons = [];
   querySnapshot.forEach((doc) => {
     const data = doc.data();
@@ -32,7 +32,7 @@ export async function writeLessons(lessons) {
     const studentDocName = getStudentDocName(student);
     const lessonTimeStamp = getTimeStamp(lesson.date);
     const lessonDate = getLessonDate(lessonTimeStamp);
-    const lessonRef = db.collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lessonDate);
+    const lessonRef = db.collection("schools").doc("alhimmah").collection("groups").doc(groupName).collection('students').doc(studentDocName).collection('lessons').doc(lessonDate);
     batch.set(lessonRef, lesson, {merge: true});
   });
   return batch.commit().then(()=> {
@@ -47,7 +47,7 @@ export async function update(student, lessonUpdate) {
   const studentDocName = getStudentDocName(student);
   const lessonTimeStamp = getTimeStamp(lessonUpdate.date);
   const lessonDate = getLessonDate(lessonTimeStamp);
-  const lessonRef = db.collection("groups").doc(student.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonDate);
+  const lessonRef = db.collection("schools").doc("alhimmah").collection("groups").doc(student.group).collection('students').doc(studentDocName).collection('lessons').doc(lessonDate);
   return await lessonRef.update({signedOff: lessonUpdate.signedOff}).then(() => {
     return { success: true };
   }).catch(( error ) => {
@@ -58,7 +58,7 @@ export async function update(student, lessonUpdate) {
 async function getStudentDateLesson(date, student) {
   const studentDocName = getStudentDocName(student);
   const lessonDate = getLessonDate(date);
-  const lessonDoc = await db.collection('groups').doc(student.group).collection('students').doc(studentDocName)
+  const lessonDoc = await db.collection("schools").doc("alhimmah").collection('groups').doc(student.group).collection('students').doc(studentDocName)
     .collection('lessons').doc(lessonDate).get();
   if (lessonDoc.exists) {
     return {student, lesson: lessonDoc.data()};
