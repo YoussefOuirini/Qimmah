@@ -1,7 +1,7 @@
 <template>
   <b-container>
-    <Teachers v-if="groups.length && users.length" v-bind:groups="groups" v-bind:users="users" @reloadGroups="loadGroups"/>
-    <b-form-row v-if="groups.length && users.length" class="mx-5">
+    <Teachers v-if="users.length" v-bind:groups="groups" v-bind:users="users" @reloadGroups="loadGroups"/>
+    <b-form-row v-if="users.length" class="mx-5">
       <b-form-group
         id="group"
         label="Creëer een nieuwe klas."
@@ -18,8 +18,17 @@
         </b-input-group>
       </b-form-group>
     </b-form-row>
+        <b-button  @click="registration($event.target)">Student inschrijven</b-button>
+    <b-modal
+      size="lg"
+      :id="registrationModal.id"
+      :ref="registrationModal.id"
+      title="Nieuwe student inschrijven"
+      ok-only ok-title="Niet inschrijven"
+    >
+      <RegistrationForm @reloadRegistrations="loadRegistrations"/>
+    </b-modal>
     <Students v-if="registrations.length" v-bind:registrations="registrations" v-bind:groups="groups" @reloadRegistrations="loadRegistrations"/>
-    <ImportStudentsForm @reloadRegistrations="loadRegistrations"/>
   </b-container>
 </template>
 

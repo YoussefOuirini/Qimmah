@@ -27,14 +27,15 @@ export default Vue.extend({
         parent: {
           name: {
             first: '',
-            last: ''
+            last: '',
+            email: ''
           }
         },
         education: null
       },
       loading: false,
       registrationResponseText: ""
-    }
+    };
   },
   computed: {
     completedForm() {
@@ -53,17 +54,17 @@ export default Vue.extend({
       return completedBasicForm;
     },
     completedParentForm() {
-      return this.form.parent.name.first && this.form.parent.name.last
+      return this.form.parent.name.first && this.form.parent.name.last && this.form.parent.email;
     },
     filledInAddress() {
-      const {streetname, houseNumber, zipCode, city} = this.form.address
-      return streetname && houseNumber && zipCode && city
+      const {streetname, houseNumber, zipCode, city} = this.form.address;
+      return streetname && houseNumber && zipCode && city;
     }
   },
   methods: {
     checkAge() {
       const birthDateTimeStamp = new Date(this.form.birthDate).getTime();
-      const ageLimitTimeStamp = this.getAgeLimitTimeStamp()
+      const ageLimitTimeStamp = this.getAgeLimitTimeStamp();
       if (birthDateTimeStamp > ageLimitTimeStamp) {
         this.form.underage = true;
       } else {
@@ -71,32 +72,40 @@ export default Vue.extend({
         this.form.parent = {
           name: {
             first: '',
-            last: ''
+            last: '',
+            email: ''
           }
         };
       }
     },
     getAgeLimitTimeStamp() {
       const date = new Date();
-      date.setFullYear(date.getFullYear() - config.ageOfConsent)
+      date.setFullYear(date.getFullYear() - config.ageOfConsent);
       const ageLimitTimeStamp = date.getTime();
-      return ageLimitTimeStamp
+      return ageLimitTimeStamp;
     },
     submit() {
-      this.loading = true
+      this.loading = true;
 
       const user = getCurrentUser();
       const registration = this.form;
-      registration.email = user.email;
+
+      if (!this.form.parent.email) {
+        registration.email = user.email;
+      }
       writeRegistration(registration).then((res)=> {
-        this.loading = false
+        this.loading = false;
         EventBus.reloadRegistration();
         if (res.success) {
-          this.registrationResponseText = "Inschrijving is successvol!"
+          this.registrationResponseText = "Inschrijving is successvol!";
+          this.reloadRegistrations();
         } else {
-          this.registrationResponseText = "Inschrijving is mislukt :( Sorry baas! Probeer het later opnieuw!"
+          this.registrationResponseText = "Inschrijving is mislukt :( Sorry baas! Probeer het later opnieuw!";
         }
       });
+    },
+    reloadRegistrations() {
+      this.$emit('reloadRegistrations', true);
     }
   }
-})
+});

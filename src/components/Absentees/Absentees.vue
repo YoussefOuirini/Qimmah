@@ -1,5 +1,5 @@
 <template>
-  <b-row>
+  <b-row v-if="absentees.length">
     <h1>Bekijk de afwezigheidsmeldingen</h1>
     <b-col lg="6" class="my-1">
       <b-form-group

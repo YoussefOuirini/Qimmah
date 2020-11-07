@@ -2,7 +2,7 @@ import { db, getStudentDocName } from './firebase';
 import { checkUserClaim, getUserEmail } from './auth';
 
 export async function getUsersRegistrations() {
-  const querySnapshot = await db.collection("registrations").where("email", "==", getUserEmail()).get();
+  const querySnapshot = await db.collection("schools").doc("alhimmah").collection("registrations").where("email", "==", getUserEmail()).get();
   let registrations = [];
   querySnapshot.forEach((doc) => {
     registrations.push(doc.data());
@@ -11,7 +11,7 @@ export async function getUsersRegistrations() {
 }
 
 export async function getAllRegistrations() {
-  const querySnapshot = await db.collection("registrations").get();
+  const querySnapshot = await db.collection("schools").doc("alhimmah").collection("registrations").get();
   let registrations = [];
   querySnapshot.forEach((doc) => {
     registrations.push(doc.data());
@@ -21,7 +21,7 @@ export async function getAllRegistrations() {
 
 export async function writeRegistration(registration) {
   const studentDocName = getStudentDocName(registration);
-  return db.collection("registrations").doc(studentDocName).set(registration)
+  return db.collection("schools").doc("alhimmah").collection("registrations").doc(studentDocName).set(registration)
     .then(()=> {
       return {success: true};
     })
@@ -36,7 +36,7 @@ export async function updateRegistration(registration, groupName) {
     return new Error('User not authorized.');
   }
   const studentDocName = getStudentDocName(registration);
-  const registrationRef = db.collection("registrations").doc(studentDocName);
+  const registrationRef = db.collection("schools").doc("alhimmah").collection("registrations").doc(studentDocName);
   return registrationRef.update({
     group: groupName
   }).then(() => {

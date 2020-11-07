@@ -2,7 +2,7 @@ import { db } from './firebase';
 import { checkUserClaim } from './auth';
 
 export async function getGroups() {
-  const querySnapshot = await db.collection("groups").get();
+  const querySnapshot = await db.collection("schools").doc("alhimmah").collection("groups").get();
   let groups = [];
   querySnapshot.forEach((doc) => {
     groups.push(doc.data());
@@ -15,7 +15,7 @@ export async function createGroup(group) {
   if (!userIsModerator) {
     return new Error('User not authorized.');
   }
-  return db.collection("groups").doc(group.groupName).set(group)
+  return db.collection("schools").doc("alhimmah").collection("groups").doc(group.groupName).set(group)
     .then(()=> {
       return {success: true};
     })

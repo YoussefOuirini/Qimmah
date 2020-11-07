@@ -11,7 +11,7 @@ export async function deleteStudent(student) {
 export async function removeStudentFromGroups(student, groups) {
   const studentDocName = getStudentDocName(student);
   groups.forEach((group) => {
-    db.collection('groups').doc(group.groupName).collection('students').doc(studentDocName).delete()
+    db.collection("schools").doc("alhimmah").collection('groups').doc(group.groupName).collection('students').doc(studentDocName).delete()
       .catch((error) => {
         return new Error("Error removing document: ", error);
       });
@@ -25,5 +25,5 @@ export async function writeStudentToGroup(student, groupName) {
   }
   const updatedStudent = Object.assign(student, {group: groupName});
   const studentDocName = getStudentDocName(student);
-  return db.collection('groups').doc(groupName).collection('students').doc(studentDocName).set(updatedStudent);
+  return db.collection("schools").doc("alhimmah").collection('groups').doc(groupName).collection('students').doc(studentDocName).set(updatedStudent);
 }

@@ -101,7 +101,7 @@ export default Vue.extend({
         key: 'group',
         label: 'Klas',
         sortable: true
-      }]
+      }],
     }
   },
   computed: {
