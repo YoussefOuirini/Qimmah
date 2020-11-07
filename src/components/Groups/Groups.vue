@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <Teachers v-if="groups.length && users.length" v-bind:groups="groups" v-bind:users="users" @reloadGroups="loadGroups"/>
+    <Teachers v-if="users.length" v-bind:groups="groups" v-bind:users="users" @reloadGroups="loadGroups"/>
     <b-form-row v-if="users.length" class="mx-5">
       <b-form-group
         id="group"
